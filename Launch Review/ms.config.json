@@ -1,0 +1,10 @@
+{
+  "appDisplayName": "Launch Review",
+  "appId": "709ff27e-269a-46b8-843a-c4eae1d9fe83",
+  "buildEntryPoint": "index.html",
+  "buildPath": "dist",
+  "environmentId": "71ea881b-016d-ec46-bde0-6d4b574f6012",
+  "repositoryId": "0a58bc13-e477-41e1-b243-cbc26a3c8e78",
+  "version": "0.0",
+  "buildCommand": "npm run build"
+}
