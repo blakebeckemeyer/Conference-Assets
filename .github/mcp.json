@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "dataverse-dtw-innovation": {
+      "type": "http",
+      "url": "https://dtw-innovation.crm.dynamics.com/api/mcp",
+      "tools": [
+        "search",
+        "describe",
+        "read_query",
+        "create_table",
+        "update_table",
+        "create_record"
+      ]
+    }
+  }
+}
