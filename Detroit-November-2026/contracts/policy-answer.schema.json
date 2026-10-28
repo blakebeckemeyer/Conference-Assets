@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "properties": {
+    "caseId": {"type": "string"},
+    "status": {"type": "string", "enum": ["answered", "insufficient_evidence"]},
+    "value": {"type": ["string", "null"]},
+    "documentId": {"type": ["string", "null"]},
+    "quote": {"type": ["string", "null"]}
+  },
+  "required": ["caseId", "status", "value", "documentId", "quote"],
+  "additionalProperties": false
+}

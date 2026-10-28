@@ -1,0 +1,49 @@
+{
+  "notice": "Independent, hand-authored oracle for v1 synthetic facts. Do not regenerate from source or an agent response. Change intentionally when the demo specification changes.",
+  "products": [
+    {
+      "productId": "drill-kit",
+      "listing": {
+        "sku": "LM-D1820-K2",
+        "title": "Lakeshore Motion Huron 18V Cordless Drill Kit",
+        "brand": "Lakeshore Motion",
+        "category": "Tools > Power Tools > Drills > Drill Kits",
+        "currency": "USD",
+        "msrp": 129,
+        "gtin": null,
+        "imageAssets": [],
+        "warrantyTerms": null,
+        "bullets": ["18V nominal battery platform.", "Includes two 2.0 Ah batteries and a charger.", "Maximum speed: 1,700 rpm.", "13 mm keyless chuck.", "Includes a carry bag."],
+        "specifications": {"nominalVoltageV": 18, "batteryCapacityAh": 2, "batteryCount": 2, "maxSpeedRpm": 1700, "maxTorqueNm": 50, "toolHolder": "13 mm keyless chuck", "massWithBatteryKg": 1.6}
+      },
+      "brief": {
+        "launchDate": "2027-03-15",
+        "audience": "DIY customers assembling furniture and completing household projects",
+        "inBox": ["Drill", "Two 2.0 Ah batteries", "Charger", "Carry bag"]
+      },
+      "blockerCodes": ["MISSING_GTIN", "MISSING_IMAGES", "MISSING_WARRANTY"]
+    },
+    {
+      "productId": "impact-driver-kit",
+      "listing": {
+        "sku": "LM-I1820-K2",
+        "title": "Lakeshore Motion Huron 18V Cordless Impact Driver Kit",
+        "brand": "Lakeshore Motion",
+        "category": "Tools > Power Tools > Impact Drivers > Driver Kits",
+        "currency": "USD",
+        "msrp": 139,
+        "gtin": null,
+        "imageAssets": [],
+        "warrantyTerms": null,
+        "bullets": ["18V nominal battery platform.", "Includes two 2.0 Ah batteries and a charger.", "Maximum speed: 2,800 rpm.", "6.35 mm hex collet.", "Includes a carry bag."],
+        "specifications": {"nominalVoltageV": 18, "batteryCapacityAh": 2, "batteryCount": 2, "maxSpeedRpm": 2800, "maxTorqueNm": 190, "toolHolder": "6.35 mm hex collet", "massWithBatteryKg": 1.4}
+      },
+      "brief": {
+        "launchDate": "2027-03-15",
+        "audience": "DIY customers planning screw-fastening projects",
+        "inBox": ["Impact driver", "Two 2.0 Ah batteries", "Charger", "Carry bag"]
+      },
+      "blockerCodes": ["MISSING_GTIN", "MISSING_IMAGES", "MISSING_WARRANTY"]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+:root { color-scheme: light; font-family: "Segoe UI", Arial, sans-serif; color: #102c46; background: #f5f7fa; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 1.5rem 2rem; max-width: 80rem; }
+h1 { font-size: 1.5rem; margin-top: 0; }
+h2 { font-size: 1.7rem; margin-top: .5rem; line-height: 1.25; }
+p, #speaker-notes { font-size: 1.15rem; line-height: 1.6; max-width: 75ch; }
+.warning { background: #fff1cc; color: #593d00; padding: 1rem; border: 1px solid #b7964c; }
+section { padding-block: 1rem; border-bottom: 1px solid #b9c8d8; }
+#position, #chapter { font-size: 1rem; color: #435b70; }
+nav { display: flex; gap: 1rem; margin-block: 1.3rem; }
+button { font: inherit; color: #102c46; background: white; border: 1px solid #879eb5; border-radius: 3px; min-height: 2.8rem; padding: .6rem 1rem; cursor: pointer; }
+button:hover:not(:disabled) { background: #e6eefb; }
+button:disabled { opacity: .55; cursor: default; }
+:focus-visible { outline: 3px solid #1746b5; outline-offset: 4px; }
+#elapsed { font-size: 2rem; font-variant-numeric: tabular-nums; display: block; margin-block: .7rem; }
+.timer button { margin-right: .5rem; }
+@media (max-width: 600px) { body { padding: 1rem; } }

@@ -1,0 +1,23 @@
+{
+  "synthetic": true,
+  "productId": "drill-kit",
+  "status": "needs_review",
+  "approvedBy": null,
+  "blockers": [
+    {
+      "field": "gtin",
+      "code": "MISSING_GTIN",
+      "message": "Manufacturer must supply a verified product GTIN; never invent one."
+    },
+    {
+      "field": "imageAssets",
+      "code": "MISSING_IMAGES",
+      "message": "Manufacturer must supply approved product images and usage rights."
+    },
+    {
+      "field": "warrantyTerms",
+      "code": "MISSING_WARRANTY",
+      "message": "Manufacturer must supply approved warranty terms."
+    }
+  ]
+}

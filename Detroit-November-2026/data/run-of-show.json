@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-10",
+  "location": "Detroit, Michigan",
+  "durationMinutes": 120,
+  "timing": "Elapsed minutes; actual start time is not yet specified.",
+  "segments": [
+    {"id": "opening", "startMinute": 0, "minutes": 8, "title": "Scenario, deliverables and agenda", "slides": [1, 2, 3, 4, 5]},
+    {"id": "m365", "startMinute": 8, "minutes": 15, "title": "Explain and build a focused M365 assistant", "slides": [6, 7, 8, 9, 10, 11]},
+    {"id": "cowork", "startMinute": 23, "minutes": 13, "title": "Build and refine a Launch Review app with Cowork's Frontier App skill", "slides": [12, 13, 14, 15, 16, 17]},
+    {"id": "lifecycle", "startMinute": 36, "minutes": 25, "title": "Hands-on: retrieve, edit, review and release the existing managed app", "slides": [18, 19, 20, 21, 22, 23, 24, 25]},
+    {"id": "reuse", "startMinute": 61, "minutes": 5, "title": "Copy the original agent to Studio and verify preserved behavior", "slides": [26, 27, 28]},
+    {"id": "break", "startMinute": 66, "minutes": 5, "title": "Break", "slides": [29]},
+    {"id": "studio", "startMinute": 71, "minutes": 24, "title": "Register a Dataverse retailer launch request and evaluate answers, rules and actions", "slides": [30, 31, 32, 33, 34, 35, 36, 37]},
+    {"id": "foundry", "startMinute": 95, "minutes": 18, "title": "Engineer and benchmark version-scoped retailer policy evidence", "slides": [38, 39, 40, 41, 42, 43, 44]},
+    {"id": "close", "startMinute": 113, "minutes": 7, "title": "Second product, tool choice and follow-up exercises", "slides": [45, 46, 47, 48]}
+  ]
+}

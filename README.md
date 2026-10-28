@@ -1,6 +1,11 @@
 # Conference-Assets
 See what talks I've given, the slide decks as PDFs, and any code assets I shared.
 
+- [Detroit - November 10, 2026: From spec sheet to shelf](Detroit-November-2026/README.md):
+  an evolving product-launch use case and offline HTML deck spanning M365
+  declarative agents, Microsoft 365 Copilot Cowork, Copilot Studio and Foundry.
+  Initial local foundation; platform integrations are not yet deployed.
+
 ## Detroit Dataverse MCP
 
 The repository-scoped server **`dataverse-dtw-innovation`** is configured in

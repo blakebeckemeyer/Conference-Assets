@@ -1,0 +1,136 @@
+{
+  "schemaVersion": "1.0",
+  "synthetic": true,
+  "generationMode": "deterministic-local-reference",
+  "productId": "impact-driver-kit",
+  "retailerId": "great-lakes-home",
+  "listing": {
+    "sku": "LM-I1820-K2",
+    "currency": "USD",
+    "msrp": 139,
+    "gtin": null,
+    "imageAssets": [],
+    "warrantyTerms": null,
+    "specifications": {
+      "nominalVoltageV": 18,
+      "batteryCapacityAh": 2,
+      "batteryCount": 2,
+      "maxSpeedRpm": 2800,
+      "maxTorqueNm": 190,
+      "toolHolder": "6.35 mm hex collet",
+      "massWithBatteryKg": 1.4
+    },
+    "title": "Lakeshore Motion Huron 18V Cordless Impact Driver Kit",
+    "brand": "Lakeshore Motion",
+    "category": "Tools > Power Tools > Impact Drivers > Driver Kits",
+    "bullets": [
+      "18V nominal battery platform.",
+      "Includes two 2.0 Ah batteries and a charger.",
+      "Maximum speed: 2,800 rpm.",
+      "6.35 mm hex collet.",
+      "Includes a carry bag."
+    ]
+  },
+  "brief": {
+    "launchDate": "2027-03-15",
+    "audience": "DIY customers planning screw-fastening projects",
+    "inBox": [
+      "Impact driver",
+      "Two 2.0 Ah batteries",
+      "Charger",
+      "Carry bag"
+    ],
+    "knownGaps": [
+      "Manufacturer must supply a verified product GTIN; never invent one.",
+      "Manufacturer must supply approved product images and usage rights.",
+      "Manufacturer must supply approved warranty terms."
+    ]
+  },
+  "handoff": {
+    "subject": "Review requested: LM-I1820-K2 retail launch draft",
+    "body": "Category reviewer and manufacturer fact owner: please review the Huron 18V Cordless Impact Driver Kit draft for Great Lakes Home & Hardware. Target launch: 2027-03-15. 3 required onboarding fields are unresolved. Resolve the blockers and verify source facts before submission. This is synthetic conference data; no approval or submission has occurred."
+  },
+  "evidence": [
+    {
+      "field": "/listing/sku",
+      "sourceId": "manufacturer-products-v1",
+      "pointer": "/products/1/sku"
+    },
+    {
+      "field": "/listing/currency",
+      "sourceId": "manufacturer-products-v1",
+      "pointer": "/products/1/currency"
+    },
+    {
+      "field": "/listing/msrp",
+      "sourceId": "manufacturer-products-v1",
+      "pointer": "/products/1/msrp"
+    },
+    {
+      "field": "/listing/gtin",
+      "sourceId": "manufacturer-products-v1",
+      "pointer": "/products/1/gtin"
+    },
+    {
+      "field": "/listing/imageAssets",
+      "sourceId": "manufacturer-products-v1",
+      "pointer": "/products/1/imageAssets"
+    },
+    {
+      "field": "/listing/warrantyTerms",
+      "sourceId": "manufacturer-products-v1",
+      "pointer": "/products/1/warrantyTerms"
+    },
+    {
+      "field": "/listing/specifications",
+      "sourceId": "manufacturer-products-v1",
+      "pointer": "/products/1/specifications"
+    },
+    {
+      "field": "/listing/brand",
+      "sourceId": "manufacturer-products-v1",
+      "pointer": "/manufacturer/brand"
+    },
+    {
+      "field": "/listing/bullets",
+      "sourceId": "manufacturer-products-v1",
+      "pointer": "/products/1/approvedBullets"
+    },
+    {
+      "field": "/brief/launchDate",
+      "sourceId": "manufacturer-products-v1",
+      "pointer": "/products/1/launchDate"
+    },
+    {
+      "field": "/brief/audience",
+      "sourceId": "manufacturer-products-v1",
+      "pointer": "/products/1/audience"
+    },
+    {
+      "field": "/brief/inBox",
+      "sourceId": "manufacturer-products-v1",
+      "pointer": "/products/1/inBox"
+    }
+  ],
+  "review": {
+    "status": "needs_review",
+    "approvedBy": null,
+    "blockers": [
+      {
+        "field": "gtin",
+        "code": "MISSING_GTIN",
+        "message": "Manufacturer must supply a verified product GTIN; never invent one."
+      },
+      {
+        "field": "imageAssets",
+        "code": "MISSING_IMAGES",
+        "message": "Manufacturer must supply approved product images and usage rights."
+      },
+      {
+        "field": "warrantyTerms",
+        "code": "MISSING_WARRANTY",
+        "message": "Manufacturer must supply approved warranty terms."
+      }
+    ]
+  }
+}

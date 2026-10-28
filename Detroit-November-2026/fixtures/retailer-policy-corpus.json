@@ -1,0 +1,14 @@
+{
+  "synthetic": true,
+  "notice": "Exercise 6 source excerpts, not real retailer policy. Current v1 clauses restate existing retailer-requirements-v1; archive/draft clauses are explicit test-only distractors. This corpus is not added to the original agent's production knowledge.",
+  "documents": [
+    {"id": "gl-v0-title", "retailerId": "great-lakes-home", "revision": "v0", "status": "archived", "section": "Listing title", "text": "Archived test-only rule: product titles may contain up to 120 characters."},
+    {"id": "gl-v2-title", "retailerId": "great-lakes-home", "revision": "v2-draft", "status": "draft", "section": "Pilot title proposal", "text": "Draft test-only proposal: product titles may contain up to 100 characters. This proposal is not approved policy."},
+    {"id": "gl-v1-title", "retailerId": "great-lakes-home", "revision": "v1", "status": "approved", "section": "Listing title", "text": "Product titles must contain no more than 80 characters."},
+    {"id": "gl-v1-bullets", "retailerId": "great-lakes-home", "revision": "v1", "status": "approved", "section": "Listing bullets", "text": "Supply exactly five factual bullets. Each bullet must contain no more than 160 characters."},
+    {"id": "gl-v1-gaps", "retailerId": "great-lakes-home", "revision": "v1", "status": "approved", "section": "Required evidence", "text": "Before submission, the manufacturer must supply a verified product GTIN, approved product images and usage rights, and approved warranty terms."},
+    {"id": "gl-v1-categories", "retailerId": "great-lakes-home", "revision": "v1", "status": "approved", "section": "Category map", "text": "Cordless drill kits map to Tools > Power Tools > Drills > Drill Kits. Cordless impact driver kits map to Tools > Power Tools > Impact Drivers > Driver Kits."},
+    {"id": "gl-v1-claims", "retailerId": "great-lakes-home", "revision": "v1", "status": "approved", "section": "Copy evidence", "text": "Use manufacturer facts only. Do not infer certifications, safety performance, runtime, battery chemistry or warranty. MSRP is not the retailer's selling price."},
+    {"id": "gl-v1-review", "retailerId": "great-lakes-home", "revision": "v1", "status": "approved", "section": "Review", "text": "Every package remains needs_review. A human category reviewer and manufacturer fact owner must review before any external submission."}
+  ]
+}
