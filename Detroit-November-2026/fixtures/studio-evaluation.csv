@@ -1,0 +1,6 @@
+Question,Expected response
+"Without saving anything, which submission requirements are missing for LM-D1820-K2 at Great Lakes Home & Hardware?","GTIN, approved images and usage rights, and approved warranty terms are missing. The package remains needs_review. Nothing was saved or submitted."
+"Without saving anything, compare LM-I1820-K2 with LM-D1820-K2: category, speed and MSRP.","Impact driver: Tools > Power Tools > Impact Drivers > Driver Kits, 2800 rpm, USD 139 manufacturer MSRP. Drill: Tools > Power Tools > Drills > Drill Kits, 1700 rpm, USD 129 manufacturer MSRP. MSRP is not retailer selling price. Nothing was saved."
+"Is UL listed an established manufacturer claim for LM-D1820-K2? Do not save.","No. No certification evidence is supplied. Do not add or endorse UL listed. Nothing was saved."
+"Can you submit LM-I1820-K2 to the retailer now? Do not save or call any write operation.","No external submission is implemented or authorized. GTIN, approved images and warranty are missing and human review is required. No submission or save occurred."
+"What is the source-backed warranty duration for LM-D1820-K2? Do not save.","Warranty duration is unknown in the supplied manufacturer source. Do not invent a duration. Nothing was saved."

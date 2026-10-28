@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "1.0",
+  "sourceId": "manufacturer-products-v1",
+  "synthetic": true,
+  "notice": "Fictional conference data. Not a real offer, performance test, certification or safety instruction.",
+  "manufacturer": {
+    "name": "Lakeshore Motion Tools",
+    "location": "Grand Rapids, Michigan",
+    "brand": "Lakeshore Motion"
+  },
+  "products": [
+    {
+      "productId": "drill-kit",
+      "sku": "LM-D1820-K2",
+      "name": "Huron 18V Cordless Drill Kit",
+      "category": "Cordless drill kits",
+      "launchDate": "2027-03-15",
+      "currency": "USD",
+      "msrp": 129,
+      "gtin": null,
+      "imageAssets": [],
+      "warrantyTerms": null,
+      "audience": "DIY customers assembling furniture and completing household projects",
+      "specifications": {
+        "nominalVoltageV": 18,
+        "batteryCapacityAh": 2,
+        "batteryCount": 2,
+        "maxSpeedRpm": 1700,
+        "maxTorqueNm": 50,
+        "toolHolder": "13 mm keyless chuck",
+        "massWithBatteryKg": 1.6
+      },
+      "inBox": ["Drill", "Two 2.0 Ah batteries", "Charger", "Carry bag"],
+      "approvedBullets": [
+        "18V nominal battery platform.",
+        "Includes two 2.0 Ah batteries and a charger.",
+        "Maximum speed: 1,700 rpm.",
+        "13 mm keyless chuck.",
+        "Includes a carry bag."
+      ]
+    },
+    {
+      "productId": "impact-driver-kit",
+      "sku": "LM-I1820-K2",
+      "name": "Huron 18V Cordless Impact Driver Kit",
+      "category": "Cordless impact driver kits",
+      "launchDate": "2027-03-15",
+      "currency": "USD",
+      "msrp": 139,
+      "gtin": null,
+      "imageAssets": [],
+      "warrantyTerms": null,
+      "audience": "DIY customers planning screw-fastening projects",
+      "specifications": {
+        "nominalVoltageV": 18,
+        "batteryCapacityAh": 2,
+        "batteryCount": 2,
+        "maxSpeedRpm": 2800,
+        "maxTorqueNm": 190,
+        "toolHolder": "6.35 mm hex collet",
+        "massWithBatteryKg": 1.4
+      },
+      "inBox": ["Impact driver", "Two 2.0 Ah batteries", "Charger", "Carry bag"],
+      "approvedBullets": [
+        "18V nominal battery platform.",
+        "Includes two 2.0 Ah batteries and a charger.",
+        "Maximum speed: 2,800 rpm.",
+        "6.35 mm hex collet.",
+        "Includes a carry bag."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "authority": "User-directed OneDrive AIS Marketing collateral",
+  "sources": [
+    "AIS PPT Branding Cheat Sheet.pptx",
+    "AIS Branded Template 2026.potx"
+  ],
+  "logoFiles": {
+    "ais-primary.png": "AIS PPT Branding Cheat Sheet.pptx / ppt/media/image9.png",
+    "ais-reversed.png": "AIS PPT Branding Cheat Sheet.pptx / ppt/media/image11.png"
+  },
+  "logoPolicy": "Original embedded PNG bytes, no redraw, recolor, crop or lockup. Preserve aspect ratio and clear space.",
+  "paletteAuthority": "2026 template: navy 1A2C55, blue 135894, orange F4911B, pale F6F7F8. Cheat sheet primary logo colors retained in original asset.",
+  "typeAuthority": "Arial is the documented broadly available licensed-font fallback. No premium font redistributed.",
+  "microsoftBranding": "Existing Microsoft product names remain as supplied text. No official Microsoft event logo supplied; no invented co-branded lockup or endorsement.",
+  "surfaceRecord": {
+    "platform": "web",
+    "audience": "Mixed business leaders, makers and developers at a two-hour Microsoft event in Detroit, November 10, 2026.",
+    "purpose": "Explain and demonstrate one evolving product-launch example with inspectable business artifacts.",
+    "visualSystem": "AIS-branded conference presentation: Arial, official navy/blue/orange, open white teaching surfaces, navy transitions, reserved geometric cover field, structured tables, inset prompts and command worksheets.",
+    "contentBoundary": "The original AIS visual and subsequent motion redesigns preserved all 48 slide sections byte-for-byte. The later user-authorized agentic-harness correction changes only copy/runtime/evaluation/handoff content and consolidated guide links; slide count/order/identifiers, 120-minute schedule, AIS assets and private-note separation remain preserved.",
+    "responsive": "Projector-first at 1280x720 and 1920x1080; mobile is a scrollable reading view with controls after the active slide. Cover geometry is removed on narrow screens to protect text.",
+    "accessibility": "Named AIS image group, keyboard navigation and focus retained, reduced-motion preference disables all navigation animation, inactive slides are inert, no premium/external font dependency, private notes remain inert templates and separate presenter console.",
+    "motion": "On navigation only: interruptible 340ms directional sheet transition, 480ms chapter wipe and one 380ms artifact arrival with 70ms delay. No loops, extra clicks or hidden-content builds. Resize, print and reduced-motion changes cancel animations immediately. Prompt/code/diagram surfaces use restrained offset shadows; code is an AIS navy working surface.",
+    "print": "Landscape, one slide per page, repeated original AIS mark and no presenter notes.",
+    "guide": "Exactly one instructional attendee-guide.html, with lifecycle, agentic Studio and Foundry sections and preserved prefixed anchors. index.html and private presenter.html are the only other HTML endpoints.",
+    "copyReview": "The aphoristic-cadence detector warning is intentionally retained where it identifies concrete safety/runtime distinctions and unexecuted-action boundaries; these are teaching requirements, not ornamental slogans. No detector suppression configured.",
+    "unresolved": "An approved Microsoft event-specific logo or event co-brand lockup was not supplied; none is invented."
+  }
+}

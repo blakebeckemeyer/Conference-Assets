@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0",
+  "sourceId": "retailer-requirements-v1",
+  "synthetic": true,
+  "retailerId": "great-lakes-home",
+  "retailerName": "Great Lakes Home & Hardware",
+  "notice": "Fictional retailer onboarding policy, not a real retailer's requirements.",
+  "titleMaxLength": 80,
+  "bulletCount": 5,
+  "bulletMaxLength": 160,
+  "currency": "USD",
+  "categoryMap": {
+    "Cordless drill kits": "Tools > Power Tools > Drills > Drill Kits",
+    "Cordless impact driver kits": "Tools > Power Tools > Impact Drivers > Driver Kits"
+  },
+  "requiredForSubmission": [
+    {"field": "gtin", "code": "MISSING_GTIN", "message": "Manufacturer must supply a verified product GTIN; never invent one."},
+    {"field": "imageAssets", "code": "MISSING_IMAGES", "message": "Manufacturer must supply approved product images and usage rights."},
+    {"field": "warrantyTerms", "code": "MISSING_WARRANTY", "message": "Manufacturer must supply approved warranty terms."}
+  ],
+  "copyPolicy": {
+    "factsOnly": true,
+    "prohibitedUnsubstantiatedClaims": ["certified", "safest", "best-in-class", "OSHA approved", "UL listed"],
+    "instructions": "Do not infer certifications, safety, compatibility beyond the stated platform, runtime, battery chemistry or warranty. MSRP is not the retailer's selling price. Preserve unknowns as null or empty arrays and record blockers."
+  },
+  "approvalPolicy": "Every package remains needs_review. A human category reviewer and manufacturer fact owner must review before any external submission. This foundation has no approval or submission integration."
+}

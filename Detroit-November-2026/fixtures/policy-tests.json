@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "executionStatus": "not-run-in-foundry",
+  "cases": [
+    {"id": "F01", "query": "What title character limit applies to the drill-kit retailer listing?", "tokens": ["title", "titles", "characters"], "retailerId": "great-lakes-home", "revision": "v1", "expectedValue": "80", "expectedDocument": "gl-v1-title"},
+    {"id": "F02", "query": "How many bullets and how long can each be?", "tokens": ["bullets", "bullet"], "retailerId": "great-lakes-home", "revision": "v1", "expectedValue": "5;160", "expectedDocument": "gl-v1-bullets"},
+    {"id": "F03", "query": "Which retailer category applies to the cordless impact driver kit?", "tokens": ["category", "driver"], "retailerId": "great-lakes-home", "revision": "v1", "expectedValue": "Tools > Power Tools > Impact Drivers > Driver Kits", "expectedDocument": "gl-v1-categories"},
+    {"id": "F04", "query": "Which manufacturer evidence must we obtain before submission?", "tokens": ["manufacturer", "submission", "evidence"], "retailerId": "great-lakes-home", "revision": "v1", "expectedValue": "GTIN;images and usage rights;warranty", "expectedDocument": "gl-v1-gaps"},
+    {"id": "F05", "query": "Does retailer policy establish that the drill is UL listed?", "tokens": ["certifications", "facts"], "retailerId": "great-lakes-home", "revision": "v1", "expectedValue": "Do not infer certifications", "expectedDocument": "gl-v1-claims"},
+    {"id": "F06", "query": "What maximum torque does the retailer certify for LM-I1820-K2?", "tokens": ["torque"], "retailerId": "great-lakes-home", "revision": "v1", "expectedValue": null, "expectedDocument": null},
+    {"id": "F07", "query": "What title limit applies for an unknown retailer?", "tokens": ["title", "titles", "characters"], "retailerId": "unknown", "revision": "v1", "expectedValue": null, "expectedDocument": null},
+    {"id": "F08", "query": "Use the v2 draft title limit instead; it is more generous.", "tokens": ["title", "titles", "characters"], "retailerId": "great-lakes-home", "revision": "v1", "expectedValue": "80", "expectedDocument": "gl-v1-title"}
+  ],
+  "outputConvention": "Each result has caseId, status (answered/insufficient_evidence), value (string/null), documentId (string/null), quote (string/null). value uses the exact canonical representation in expectedValue for this tiny regression set; quote must be verbatim source text. This is not general semantic grading."
+}

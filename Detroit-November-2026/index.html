@@ -1,0 +1,538 @@
+<!doctype html>
+<!-- Audience deck: presenter material lives in inert templates, never in the slide layout. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A practical two-hour introduction to Microsoft 365 declarative agents, Copilot Cowork, Copilot Studio and Microsoft Foundry through one product-launch example.">
+  <title>Build a product launch with Microsoft agents | Detroit 2026</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="deck.css">
+  <script src="deck.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#deck">Skip to slides</a>
+  <div class="event-brand" role="img" aria-label="AIS - Applied Information Sciences">
+    <img class="brand-primary" src="assets/ais-primary.png" alt="" width="300" height="110" aria-hidden="true">
+    <img class="brand-reversed" src="assets/ais-reversed.png" alt="" width="300" height="110" aria-hidden="true">
+  </div>
+  <main id="deck" tabindex="-1" aria-label="Conference slide deck">
+    <section class="slide cover active" id="slide-1" data-segment="opening" aria-labelledby="title-1">
+      <h1 id="title-1">Build a product launch<br>with Microsoft agents</h1>
+      <p class="lead">Learn what each tool does, build on the same work,<br>and leave with a repeatable example.</p>
+      <p>Microsoft 365 declarative agents &middot; Copilot Cowork<br>Copilot Studio &middot; Microsoft Foundry</p>
+      <p class="footline">Blake Beckemeyer &middot; Detroit &middot; November 10, 2026</p>
+      <p class="status">Workshop materials use fictional companies and products. Live platform builds are still being prepared.</p>
+      <template class="speaker-notes"><p>Opening, 1 minute. State the learning promise explicitly: attendees will understand the tools, see the same product move through each chapter, and get steps they can repeat. This is an introduction with demonstrations, not four complete platform courses. Open Presenter view before sharing; move it to a private display. Share only the audience window. Current materials are not proof of deployed demos.</p></template>
+    </section>
+    <section class="slide" id="slide-2" data-segment="opening" aria-labelledby="title-2">
+      <h2 id="title-2">What you will learn in two hours</h2>
+      <ol class="steps">
+        <li><strong>Choose a tool:</strong> distinguish a focused assistant, delegated work, a business process and a custom AI specialist.</li>
+        <li><strong>Build progressively:</strong> reuse product facts, instructions and document templates instead of starting over.</li>
+        <li><strong>Maintain the app:</strong> retrieve source, change one color, review it in Git and separate preview from release.</li>
+        <li><strong>Repeat the example:</strong> use the supplied guide, prompts and second product after the conference.</li>
+      </ol>
+      <p class="resource">Follow along: <a href="attendee-guide.html" target="_blank" rel="noopener">open the attendee guide</a>. Local exercises need only a browser; cloud exercises need your own access.</p>
+      <template class="speaker-notes"><p>Opening, 1 minute. Leaders: watch when an extra tool earns its cost. Makers: watch instructions, knowledge and review. Developers: watch the specialist boundary and validation. Do not imply all attendees can access the preview or that they should use the presenter's environment.</p></template>
+    </section>
+    <section class="slide" id="slide-3" data-segment="opening" aria-labelledby="title-3">
+      <h2 id="title-3">Our example: launch two cordless tool kits</h2>
+      <div class="split">
+        <div><h3>Manufacturer</h3><p><strong>Lakeshore Motion Tools</strong><br>Fictional company in Grand Rapids, Michigan.</p><p>First launch: Huron cordless drill kit.<br>Second launch: Huron impact driver kit.</p></div>
+        <div><h3>Retailer</h3><p><strong>Great Lakes Home &amp; Hardware</strong><br>Fictional home-improvement retailer.</p><p>Needs consistent product details, listing copy and a human-reviewed handoff.</p></div>
+      </div>
+      <p class="takeaway">The task repeats. The product changes. The method should not.</p>
+      <p class="status">MSRP means manufacturer suggested retail price, not the retailer's selling price. Product facts are synthetic, not tested performance claims.</p>
+      <template class="speaker-notes"><p>Opening, 2 minutes. Explain this is routine new-product introduction, not crisis management. Show why the second product matters: it exposes instructions that accidentally hard-code the drill's category, price or torque.</p></template>
+    </section>
+    <section class="slide" id="slide-4" data-segment="opening" aria-labelledby="title-4">
+      <h2 id="title-4">The deliverable is a reviewable launch package</h2>
+      <table><thead><tr><th>File</th><th>Who uses it?</th><th>What it contains</th></tr></thead><tbody>
+        <tr><td>Launch brief</td><td>Product team</td><td>Audience, launch date, contents and product facts</td></tr>
+        <tr><td>Retailer listing CSV</td><td>Catalog team</td><td>Title, category, price reference and five bullets</td></tr>
+        <tr><td>Email draft</td><td>Account manager</td><td>Review request and unresolved information</td></tr>
+        <tr><td>Package + review JSON</td><td>Automation / reviewer</td><td>Structured values, source references and blockers</td></tr>
+      </tbody></table>
+      <p><strong>Missing on purpose:</strong> product barcode (GTIN), approved images and warranty terms. The package must report these gaps, not invent them.</p>
+      <p class="resource"><a href="examples/drill-kit/launch-brief.md" target="_blank" rel="noopener">Inspect the sample brief</a> &middot; <a href="examples/drill-kit/retailer-listing.csv">Download the listing CSV</a></p>
+      <template class="speaker-notes"><p>Opening, 2 minutes. Open a real local file now so the audience sees the destination before the technology. Explain CSV as spreadsheet-friendly rows and JSON as machine-readable fields. The existing examples are deterministic references, not outputs from a deployed agent. No sample email has been sent.</p></template>
+    </section>
+    <section class="slide" id="slide-5" data-segment="opening" aria-labelledby="title-5">
+      <h2 id="title-5">Agenda: explain, demonstrate, then reuse</h2>
+      <table class="agenda"><thead><tr><th>Elapsed time</th><th>Topic</th><th>What we add</th></tr></thead><tbody>
+        <tr><td>00:00-00:08</td><td>Scenario and files</td><td>A shared starting point</td></tr>
+        <tr><td>00:08-00:23</td><td>M365 declarative agent</td><td>A focused product assistant</td></tr>
+        <tr><td>00:23-00:36</td><td>Cowork App skill (Frontier)</td><td>An interactive Launch Review app</td></tr>
+        <tr><td>00:36-01:01</td><td>Hands-on managed-app lifecycle</td><td>Edit, review, preview and release</td></tr>
+        <tr><td>01:01-01:06</td><td>Copy the agent to Copilot Studio</td><td>Preserved configuration, verified copy</td></tr>
+        <tr><td>01:06-01:11</td><td>Break</td><td>Five-minute pause</td></tr>
+        <tr><td>01:11-01:35</td><td>Copilot Studio</td><td>Dataverse registration and evaluation</td></tr>
+        <tr><td>01:35-01:53</td><td>Microsoft Foundry</td><td>Version-aware policy evidence benchmark</td></tr>
+        <tr><td>01:53-02:00</td><td>Second product and questions</td><td>Evidence of reuse</td></tr>
+      </tbody></table>
+      <template class="speaker-notes"><p>Opening, 2 minutes. Every chapter includes explanation and demonstration. The guide carries longer steps so the slides need not become a manual. A five-minute break is included in the two hours. Preview interfaces and licensing must be rechecked before November 10.</p></template>
+    </section>
+
+    <section class="slide" id="slide-6" data-segment="m365" aria-labelledby="title-6">
+      <h2 id="title-6">What is a Microsoft 365 declarative agent?</h2>
+      <p class="definition">A named assistant that specializes Microsoft 365 Copilot for a particular job using instructions, knowledge and selected capabilities.</p>
+      <div class="split"><div><h3>You configure</h3><ul><li>Its purpose and response rules.</li><li>The information it should use.</li><li>Supported actions or tools it may call.</li></ul></div><div><h3>Microsoft 365 provides</h3><ul><li>The Copilot conversational experience.</li><li>The underlying AI orchestration.</li><li>Access within the supported user and data boundaries.</li></ul></div></div>
+      <p><strong>Our use:</strong> help the product team prepare a sourced launch brief without a custom application.</p>
+      <p class="source">Microsoft Learn: <a href="https://learn.microsoft.com/microsoft-365/copilot/extensibility/overview-declarative-agent" target="_blank" rel="noopener">Declarative agents overview</a></p>
+      <template class="speaker-notes"><p>M365 explanation, 2 minutes. Define declarative in plain language: we describe what the assistant should do rather than owning its complete model/runtime stack. Grounding means supplying relevant information for an answer; it is not a guarantee of correctness. Do not promise a custom model, unrestricted data access or automatic document export.</p></template>
+    </section>
+    <section class="slide" id="slide-7" data-segment="m365" aria-labelledby="title-7">
+      <h2 id="title-7">The features we need for the product assistant</h2>
+      <table><thead><tr><th>Feature</th><th>Meaning</th><th>In our example</th></tr></thead><tbody>
+        <tr><td>Instructions</td><td>Consistent behavior and constraints</td><td>Use supplied facts; label unknowns</td></tr>
+        <tr><td>Knowledge</td><td>Selected information for answers</td><td>Manufacturer specifications + retailer policy</td></tr>
+        <tr><td>Conversation starters</td><td>Examples that help people begin</td><td>"Draft a launch brief for LM-D1820-K2"</td></tr>
+        <tr><td>Capabilities / tools</td><td>Operations beyond a text answer</td><td>File creation only through a verified supported route</td></tr>
+      </tbody></table>
+      <p class="takeaway">Instructions describe behavior. Knowledge supplies facts. Tools perform actions.</p>
+      <template class="speaker-notes"><p>M365 explanation, 2 minutes. These are separate levers. Do not paste a product's price into permanent behavior rules. If a source changes, replace the source rather than hunting numbers through prompts. Features vary by authoring route; Agent Builder and developer tooling are not identical.</p></template>
+    </section>
+    <section class="slide" id="slide-8" data-segment="m365" aria-labelledby="title-8">
+      <h2 id="title-8">Build the Product Launch assistant</h2>
+      <ol class="steps">
+        <li><strong>Open an approved authoring route.</strong> Use Agent Builder for a UI-first build, or Agents Toolkit for a developer-managed project.</li>
+        <li><strong>Name the agent "Product Launch".</strong> Describe its job: prepare factual retailer launch materials.</li>
+        <li><strong>Upload the two TXT knowledge files.</strong> Use manufacturer-products.txt and retailer-requirements.txt from the knowledge folder, not the local JSON data.</li>
+        <li><strong>Add the behavior rules and starter prompt.</strong> Use the copyable text in the attendee guide.</li>
+        <li><strong>Test before sharing.</strong> Check source access, numeric facts and handling of missing data.</li>
+      </ol>
+      <p class="resource"><a href="knowledge/manufacturer-products.txt" download>Manufacturer TXT</a> &middot; <a href="knowledge/retailer-requirements.txt" download>Retailer TXT</a> &middot; <a href="attendee-guide.html#m365" target="_blank" rel="noopener">Setup steps and instructions</a></p>
+      <template class="speaker-notes"><p>M365 build, 3 minutes. Use the actual approved tenant route, not an invented UI. The exact grounding location and route still need selection. The guide uses a readable source pack; JSON in a repository is not automatically Copilot knowledge. Prepare supported documents beforehand. No agent is installed by this slide.</p></template>
+    </section>
+    <section class="slide" id="slide-9" data-segment="m365" aria-labelledby="title-9">
+      <h2 id="title-9">Demo: draft the drill-kit launch brief</h2>
+      <blockquote>Prepare a launch brief for LM-D1820-K2 for Great Lakes Home &amp; Hardware. Include the audience, launch date, in-box contents and five factual bullets. Identify missing required fields and cite the sources. Do not invent values.</blockquote>
+      <div class="split"><div><h3>Watch the work</h3><p>Open the original agent.<br>Run this prompt.<br>Inspect the returned brief and sources.</p></div><div><h3>Save the result</h3><p>Export through a supported capability, or copy the reviewed text into the shared brief template.</p><p>Label manual copying as manual.</p></div></div>
+      <template class="speaker-notes"><p>M365 live demonstration, 4 minutes. Keep the prompt on screen before switching tabs. Narrate the three visible actions, not every click. If file generation is unavailable, show the manual save path honestly. If the build is not ready, call this an offline walkthrough and inspect the deterministic reference; never present it as a live agent response.</p></template>
+    </section>
+    <section class="slide" id="slide-10" data-segment="m365" aria-labelledby="title-10">
+      <h2 id="title-10">Check the brief before you use it</h2>
+      <table><thead><tr><th>Check</th><th>Expected drill-kit result</th></tr></thead><tbody>
+        <tr><td>Correct product</td><td>LM-D1820-K2; cordless drill kit, not impact driver</td></tr>
+        <tr><td>Exact facts</td><td>18V nominal; 1,700 rpm; 50 Nm; two 2.0 Ah batteries</td></tr>
+        <tr><td>Price meaning</td><td>USD 129 manufacturer MSRP, not a promised retail price</td></tr>
+        <tr><td>Missing information</td><td>No GTIN, approved images or warranty terms</td></tr>
+        <tr><td>Evidence</td><td>Source references support the statements made</td></tr>
+      </tbody></table>
+      <p class="resource"><a href="examples/drill-kit/launch-brief.md" target="_blank" rel="noopener">Reference brief</a> &middot; <a href="fixtures/expected-facts.json" target="_blank" rel="noopener">Exact expected facts</a></p>
+      <template class="speaker-notes"><p>M365 inspection, 2 minutes. A citation's presence alone is not enough; open it and check the claim. This table is an audience-usable acceptance checklist. Do not equate a passing synthetic example with production safety or compliance assurance.</p></template>
+    </section>
+    <section class="slide" id="slide-11" data-segment="m365" aria-labelledby="title-11">
+      <h2 id="title-11">Use the same facts in an interactive review app</h2>
+      <div class="split"><div><h3>We now have</h3><p>A named product assistant, curated source facts, copy rules and a launch brief template.</p></div><div><h3>The next requirement</h3><p>Let colleagues select a product, inspect its package and see missing information without reading a long chat.</p></div></div>
+      <p class="takeaway">Next: ask Cowork to build the Launch Review app.</p>
+      <p>The original agent stays in place. Its knowledge and templates remain useful.</p>
+      <template class="speaker-notes"><p>M365 transition, 2 minutes. Explain that skills also exist directly in M365 agents, so they are not the reason for adding Cowork. The new user need is a navigable review interface over the same assets. Do not position app generation as mandatory for every agent.</p></template>
+    </section>
+
+    <section class="slide" id="slide-12" data-segment="cowork" aria-labelledby="title-12">
+      <h2 id="title-12">What is Microsoft 365 Copilot Cowork?</h2>
+      <p class="definition">An experience within Copilot for delegating multi-step work, including creating documents and, with the Frontier App skill, lightweight interactive apps.</p>
+      <div class="split"><div><h3>First: a conversation</h3><p>Ask Product Launch to explain or draft material from the manufacturer facts.</p></div><div><h3>Next: a usable interface</h3><p>Ask Cowork to build an app that lets a colleague browse and review those same launch materials.</p></div></div>
+      <p><strong>Our use:</strong> build and refine a Launch Review app using both products and their draft packages.</p>
+      <p class="status">App skill is a Frontier preview. Presenter Frontier access is confirmed; App availability, billing and data behavior still require rehearsal.</p>
+      <p class="source"><a href="https://learn.microsoft.com/microsoft-365/copilot/cowork/use-cowork" target="_blank" rel="noopener">Microsoft Learn: Use Cowork</a></p>
+      <template class="speaker-notes"><p>Cowork explanation, 2 minutes. Microsoft currently describes Cowork as part of Copilot. Do not invent a future consolidation date. Skills are available in other M365 experiences too; our distinguishing demonstration is building and refining the interactive app. Preview capabilities may change before the event.</p></template>
+    </section>
+    <section class="slide" id="slide-13" data-segment="cowork" aria-labelledby="title-13">
+      <h2 id="title-13">What Cowork's App skill adds to the example</h2>
+      <table><thead><tr><th>Feature</th><th>Meaning</th><th>Launch Review app</th></tr></thead><tbody>
+        <tr><td>Natural-language app creation</td><td>Describe the problem and desired interface</td><td>Select a product and inspect its launch package</td></tr>
+        <tr><td>Source-based app content</td><td>Use supplied data and supported M365 sources</td><td>The same two products, facts and draft files</td></tr>
+        <tr><td>Conversational refinement</td><td>Ask for changes and reopen the app to test</td><td>Compare products and highlight missing fields</td></tr>
+        <tr><td>Publishing / sharing</td><td>Make a tested app available through supported controls</td><td>Only after data-access and sharing review</td></tr>
+      </tbody></table>
+      <p><strong>Scope:</strong> a read-only prototype. A visual "needs review" label is not a saved workflow state or approval control.</p>
+      <p class="source"><a href="https://learn.microsoft.com/microsoft-365/copilot/cowork/use-cowork#build-apps-with-the-app-skill-frontier" target="_blank" rel="noopener">Microsoft Learn: Build apps with the App skill</a></p>
+      <template class="speaker-notes"><p>Cowork features, 2 minutes. The App skill can connect supported data sources and may generate schemas, but this workshop starts read-only. Do not accept unplanned connector/schema writes. Publishing/sharing require separate permission and expose data according to actual runtime behavior; app links must be reviewed carefully.</p></template>
+    </section>
+    <section class="slide" id="slide-14" data-segment="cowork" aria-labelledby="title-14">
+      <h2 id="title-14">Prepare the Launch Review app build</h2>
+      <ol class="steps">
+        <li><strong>Open Cowork with App skill access.</strong> Verify the Frontier feature and permitted billing in your account.</li>
+        <li><strong>Supply the existing sources.</strong> Both products, retailer requirements and the two reference packages.</li>
+        <li><strong>Describe the interface.</strong> Product selector, fact sheet, package contents, evidence and missing requirements.</li>
+        <li><strong>Set boundaries.</strong> Read-only draft review; no approval, email, submission or external write.</li>
+      </ol>
+      <p class="resource"><a href="attendee-guide.html#cowork" target="_blank" rel="noopener">Follow later: app-building prompt, inputs and acceptance checks</a></p>
+      <template class="speaker-notes"><p>Cowork build preparation, 2 minutes. Attach files through supported controls and ask Cowork to explain any unavailable source. JSON is used here as structured app data, not as Agent Builder knowledge. If the app needs a new connector/schema or unexpected persistence, stop for permission and narrow to a read-only prototype. No app has been generated by this repository.</p></template>
+    </section>
+    <section class="slide" id="slide-15" data-segment="cowork" aria-labelledby="title-15">
+      <h2 id="title-15">Demo: build and open the Launch Review app</h2>
+      <blockquote>Build a read-only Launch Review app from the supplied product facts, retailer policy and draft packages. Let me select a product, inspect its facts and package, and see missing requirements. Label synthetic data and keep every package in needs_review. Do not invent facts or add approval, send or submit actions.</blockquote>
+      <div class="split"><div><h3>Watch the build</h3><p>Send the app request.<br>Inspect the proposed sources.<br>Open the generated app.</p></div><div><h3>Test as a user</h3><p>Select the drill.<br>Find its five-file package.<br>Locate all three missing requirements.</p></div></div>
+      <p class="status">Planned App skill demo, not a shipped local app or deployed workflow.</p>
+      <template class="speaker-notes"><p>Cowork live demonstration, 3 minutes. Show the actual generated app, not a hand-coded substitute. Confirm whether package references work in its runtime; local relative paths may not. If only previews or metadata work, label that limitation. Do not claim an unavailable document can be opened. No publishing/sharing without authorization.</p></template>
+    </section>
+    <section class="slide" id="slide-16" data-segment="cowork" aria-labelledby="title-16">
+      <h2 id="title-16">Refine the app and test both products</h2>
+      <table><thead><tr><th>Test request</th><th>What should happen</th></tr></thead><tbody>
+        <tr><td>"Add a side-by-side product comparison"</td><td>Show different speeds, torque, holders and MSRP correctly</td></tr>
+        <tr><td>Switch drill &rarr; impact driver &rarr; drill</td><td>No stale or mixed product facts</td></tr>
+        <tr><td>Open the missing-information view</td><td>GTIN, images and warranty stay visibly unresolved</td></tr>
+        <tr><td>Open a package document</td><td>Show the real supplied file or an explicit unavailable state</td></tr>
+      </tbody></table>
+      <p><strong>Ask next:</strong> "Keep the same facts and add a comparison view. Do not change source values or introduce an approval button."</p>
+      <template class="speaker-notes"><p>Cowork refinement, 2 minutes. Actual app behavior requires browser testing; a successful code-generation message is not proof. Inspect stale selection, broken package references, fabricated complete status and accidental write actions. The local fixture checks data, not app runtime behavior.</p></template>
+    </section>
+    <section class="slide" id="slide-17" data-segment="cowork" aria-labelledby="title-17">
+      <h2 id="title-17">Keep the app and make it maintainable</h2>
+      <ol class="steps">
+        <li>Keep the product sources, package references and app build prompt.</li>
+        <li>Record the actual app's location, data access and any unsupported features.</li>
+        <li>Review data exposure before separately authorizing publishing or sharing.</li>
+        <li>Next, retrieve its source and review one small change before a deliberate release.</li>
+      </ol>
+      <p><strong>The app stays a review interface.</strong> Next we maintain its source. Later the copied Product Launch agent gains a confirmed Dataverse registration operation. Connecting the app to that operation is separate, unimplemented work.</p>
+      <template class="speaker-notes"><p>Cowork wrap-up, 2 minutes. Transition into the managed-app lifecycle lab. Preserve the generated app rather than rebuilding it elsewhere. After that lab we copy the original Agent Builder agent to Studio, not the Cowork app. A future app-to-process link needs explicit implementation, identity and data-access review.</p></template>
+    </section>
+
+    <section class="slide" id="slide-lab-1" data-segment="lifecycle" aria-labelledby="title-lab-1">
+      <h2 id="title-lab-1">Lab: change the app without losing its history</h2>
+      <p class="definition">A generated app can become maintained software. We will change one accent color in the existing Launch Review app and trace it from source to live release.</p>
+      <ol class="steps">
+        <li>Identify the app and recover its actual source.</li>
+        <li>Change one theme value; keep product facts and gaps unchanged.</li>
+        <li>Review and push the Git commit; test hosted preview.</li>
+        <li>Release only with permission, then leave a maintainer handoff.</li>
+      </ol>
+      <p class="resource"><a href="attendee-guide.html#lifecycle" target="_blank" rel="noopener">Exercise 3B: copyable PowerShell sequence and recovery</a></p>
+      <template class="speaker-notes"><p>Lifecycle, 2 minutes. Total lab is 25 minutes. Authentication, app access and source restore must be prepared beforehand; this is not enough time to unblock every attendee tenant. Ask business attendees to follow the evidence while makers/developers edit an authorized copy. The real app checkout was identified by the coordinator; this session has not executed a source update or deployment. No new app is created.</p></template>
+    </section>
+    <section class="slide" id="slide-lab-2" data-segment="lifecycle" aria-labelledby="title-lab-2">
+      <h2 id="title-lab-2">Sign in, then identify the existing app</h2>
+      <pre class="commands"><code>ms --version
+ms auth status
+ms auth login --device-code
+ms app list --environment-id $EnvironmentId --permission edit
+ms app info --app $AppId --environment-id $EnvironmentId</code></pre>
+      <p><strong>Before running:</strong> use the lab's confirmed IDs, tools and shared-auth permission gate. Sign in only if needed. Device-code login prints the sign-in URL/code.</p>
+      <p>The app's environment is not automatically the Dataverse demo environment. App edit rights, repository access and release rights are separate.</p>
+      <p class="resource"><a href="attendee-guide.html#lifecycle-authentication" target="_blank" rel="noopener">Prerequisites, browser login alternative and account checks</a></p>
+      <template class="speaker-notes"><p>Lifecycle, 3 minutes. Commands are a sequence excerpt; variables are defined in the guide, not implicit magic. Inspect ms auth status before login; login/switch can change shared state. Use only a user-authorized account. Never display secrets or ask for tokens. CLI 0.30.0 was inspected; PAC identity is unrelated. The actual app is in environment 71ea881b-016d-ec46-bde0-6d4b574f6012, not Blake-DTW Innovation. Installed Node must meet current CLI prerequisites.</p></template>
+    </section>
+    <section class="slide" id="slide-lab-3" data-segment="lifecycle" aria-labelledby="title-lab-3">
+      <h2 id="title-lab-3">Clone its source and inspect the project</h2>
+      <pre class="commands"><code># Native platform-managed repository; fresh target only
+ms app clone $Checkout --app $AppId --environment-id $EnvironmentId
+Set-Location -LiteralPath $Checkout
+Get-Content .\ms.config.json
+Get-Content .\package.json
+git remote -v</code></pre>
+      <p><strong>Actual Launch Review:</strong> React/Vite source; build is <code>npm run build</code>; checks invoke Bun. Install the project-required tools and use its lockfiles, not a guessed scaffold.</p>
+      <p>External GitHub bindings use their actual repository instead. Artifact-only apps do not become source-backed just because we add a Git remote.</p>
+      <p class="resource"><a href="attendee-guide.html#lifecycle-setup" target="_blank" rel="noopener">Actual scripts, lockfile decisions and Bun recovery</a></p>
+      <template class="speaker-notes"><p>Lifecycle, 4 minutes. Show repository URL and app ID matching ms.config.json. Native ms app clone configures Git Credential Manager. Do not ms app create/init an existing app. Coordinator inspected the real Launch Review package: dev vite; build vite build; check bun run --parallel typecheck build:check lint. Both Bun and npm lockfiles exist; restore policy must be reviewed. The user's first dev retry failed because Bun was absent; coordinator repaired that tool prerequisite, not app source.</p></template>
+    </section>
+    <section class="slide" id="slide-lab-4" data-segment="lifecycle" aria-labelledby="title-lab-4">
+      <h2 id="title-lab-4">Change one color and test it locally</h2>
+      <pre class="commands"><code>git switch -c workshop/launch-review-color
+git grep -n -I -E 'primary|accent|theme' -- '*.css' '*.tsx'
+# Launch Review: edit primary-family tokens in src\index.css
+git --no-pager diff
+ms app dev</code></pre>
+      <p>Use the supplied Green preset in light, dark and OS-dark blocks. Open the printed <strong>Local Play</strong> URL; check contrast and focus, both products and all three missing requirements.</p>
+      <p><strong>Not a release:</strong> the change exists only in your local source until committed and pushed.</p>
+      <p class="resource"><a href="attendee-guide.html#lifecycle-edit" target="_blank" rel="noopener">Theme-file identification, exact checks and preview troubleshooting</a></p>
+      <template class="speaker-notes"><p>Lifecycle, 4 minutes. Avoid global hex replacement. Follow the actual project's theme implementation; a color edit must not alter review logic. Verify readable contrast and focus in the actual UI rather than assuming a green token is accessible. The local process can call connected services; do not test production writes. The app user's own dev retry is in progress elsewhere; do not start a competing server from this materials session.</p></template>
+    </section>
+    <section class="slide" id="slide-lab-5" data-segment="lifecycle" aria-labelledby="title-lab-5">
+      <h2 id="title-lab-5">Review and push only the intended source change</h2>
+      <pre class="commands"><code>npm run check
+git --no-pager diff --check
+git add -- $ThemeFile
+git --no-pager diff --cached
+git commit -m "Adjust Launch Review accent color"
+git push -u origin workshop/launch-review-color</code></pre>
+      <p><strong>Gate:</strong> real project checks pass; a maintainer reviews the diff, origin and branch. No secrets, unrelated edits or forced push.</p>
+      <p>For this app, <code>npm run check</code> requires Bun. Git push persists source; it does not itself publish the managed app.</p>
+      <p class="resource"><a href="attendee-guide.html#lifecycle-source-control" target="_blank" rel="noopener">Full sequence with path placeholders, failure guards and review policy</a></p>
+      <template class="speaker-notes"><p>Lifecycle, 4 minutes. Stage the actual theme file, not git add dot. The guide includes author attribution where Copilot contributed. Show the small staged diff to make editability concrete for business users. A rejected check or protected branch is a real stop condition. No authorization exists for this materials session to push the unidentified or subsequently discovered app. Live workshop pushes require the exact target and permission. Source reviews/branch policies must be configured, not assumed.</p></template>
+    </section>
+    <section class="slide" id="slide-lab-6" data-segment="lifecycle" aria-labelledby="title-lab-6">
+      <h2 id="title-lab-6">Preview the pushed commit before going live</h2>
+      <pre class="commands"><code>$Commit = git rev-parse HEAD
+ms app play --mode preview --commit $Commit
+ms app build-status --commit $Commit --show-log</code></pre>
+      <p>Hosted preview can request an on-demand build. Check the <strong>commit and build status</strong>, not just the color on the page: a failed build can leave the old version visible.</p>
+      <p>After any required review/merge, preview the actual approved release commit again. Keep local preview, remote source and hosted preview distinct.</p>
+      <p class="resource"><a href="attendee-guide.html#lifecycle-release" target="_blank" rel="noopener">Build evidence, exact-commit preview and failure handling</a></p>
+      <template class="speaker-notes"><p>Lifecycle, 3 minutes. The app commands run in the verified app root and read its configuration. An optional ms app build can explicitly trigger a build, but preview already requests one. Failed build banners are not a cosmetic problem: the served app may be from an old commit. External GitHub service mapping is separate from normal Git credentials. Inspect actual build completion before release. This path is documented/help-verified, not executed by these materials.</p></template>
+    </section>
+    <section class="slide" id="slide-lab-7" data-segment="lifecycle" aria-labelledby="title-lab-7">
+      <h2 id="title-lab-7">Publish deliberately, then verify the live version</h2>
+      <pre class="commands"><code># Only after approval of this exact app and tested commit
+ms app deploy --commit $ReleaseCommit
+ms app play --mode live</code></pre>
+      <table><thead><tr><th>Before release</th><th>After release</th></tr></thead><tbody>
+        <tr><td>Approved full SHA; correct app and environment</td><td>Completed deployment of that version, not pending approval</td></tr>
+        <tr><td>Preview passed; publication rights confirmed</td><td>Live color, facts and access checked; prior version recorded</td></tr>
+      </tbody></table>
+      <p>No <code>--force</code>, no automatic sharing, no assumed Git-to-live CI. Repository edits are not a verified reverse sync into the original Cowork conversation.</p>
+      <p class="resource"><a href="attendee-guide.html#lifecycle-release" target="_blank" rel="noopener">Approval gate, pending-deployment handling and rollback boundary</a></p>
+      <template class="speaker-notes"><p>Lifecycle, 3 minutes. Use an explicit reviewed SHA rather than version-sensitive default deploy behavior. Deploy submission does not prove completion, and play live merely opens the live URL. Stop for policy/approval; do not bypass with force. If the slot cannot include an approved release, show a labelled recording or stop at hosted preview and record remaining release work. Rollback is another authorized release of a known-good commit, not magic undo of data operations.</p></template>
+    </section>
+    <section class="slide" id="slide-lab-8" data-segment="lifecycle" aria-labelledby="title-lab-8">
+      <h2 id="title-lab-8">Prevent orphaned apps with a verifiable handoff</h2>
+      <table><thead><tr><th>Runtime gives us documented controls</th><th>Our team must establish evidence</th></tr></thead><tbody>
+        <tr><td>Admin inventory and lifecycle surfaces</td><td>Known app ID, purpose, business owner and backup maintainer</td></tr>
+        <tr><td>Entra and applicable tenant policies</td><td>Reviewed connections, data access, secrets and publication rights</td></tr>
+        <tr><td>Supported source-backed development paths</td><td>Recoverable source, reproducible setup and review/version history</td></tr>
+        <tr><td>Explicit deployment path</td><td>Approved deployed SHA, live check, departure/retirement plan</td></tr>
+      </tbody></table>
+      <p><strong>Claim with evidence:</strong> this managed app can be discovered, edited and maintained through supported paths. Not every business-created artifact is automatically governed or recoverable.</p>
+      <p class="resource"><a href="attendee-guide.html#lifecycle-handoff" target="_blank" rel="noopener">Minimal Launch Review handoff record and official governance references</a></p>
+      <template class="speaker-notes"><p>Lifecycle, 2 minutes. Close the user's governance loop with evidence, not absolutes. Show a second maintainer retrieving source and a recorded release only if actually observed. Built-in platform controls do not assign our backup maintainer or review our code automatically. Owner departure requires testing app/repo/connection continuity; retirement is an authorized lifecycle action. Preserve the app/source while next copying the original Product Launch agent to Studio for the saved process. App and agent remain separate.</p></template>
+    </section>
+
+    <section class="slide" id="slide-18" data-segment="reuse" aria-labelledby="title-18">
+      <h2 id="title-18">Copy the Product Launch agent to Copilot Studio</h2>
+      <p>Preserve the assistant's configuration, then add a confirmed retailer-request registration operation.</p>
+      <ol class="steps">
+        <li>Open the original agent in Agent Builder and choose More options (&hellip;).</li>
+        <li>Select <strong>Copy to Copilot Studio</strong> and choose the authorized environment.</li>
+        <li>Open and save the copied agent in Studio. Check its name, instructions and suggested prompts.</li>
+        <li>Re-upload the two TXT knowledge documents; embedded uploads do not transfer.</li>
+      </ol>
+      <p class="status">Documented snapshot path, not yet exercised here. It does not guarantee a new-harness destination; inspect before extending.</p>
+      <p class="source"><a href="https://learn.microsoft.com/microsoft-365/copilot/extensibility/copy-agent-to-copilot-studio" target="_blank" rel="noopener">Microsoft Learn: Copy an agent to Copilot Studio</a></p>
+      <template class="speaker-notes"><p>Copy transition, 2 minutes. Keep the requested snapshot demonstration and original agent. Identity access to Blake-DTW Innovation is verified; copy/maker rights are not. Copy documentation does not specify the destination harness. Inspect it, not assume a switch. This creates cloud content and has not run here. No skills-transfer promise: start from the knowledge-based agent. The next exercise explicitly selects the GitHub Copilot harness preview.</p></template>
+    </section>
+    <section class="slide" id="slide-19" data-segment="reuse" aria-labelledby="title-19">
+      <h2 id="title-19">Know what the copy preserves and what it does not</h2>
+      <table><thead><tr><th>Configuration</th><th>Copy behavior</th><th>What we do</th></tr></thead><tbody>
+        <tr><td>Name, description, instructions, suggested prompts</td><td>Copied</td><td>Inspect against the original</td></tr>
+        <tr><td>SharePoint references and websites</td><td>Supported references copied</td><td>Retest access and answers</td></tr>
+        <tr><td>Embedded TXT knowledge files</td><td>Not copied</td><td>Upload the same source documents again</td></tr>
+        <tr><td>Document/code creation capability</td><td>Requires Studio configuration</td><td>Enable code interpreter if appropriate</td></tr>
+        <tr><td>Later changes in the original</td><td>Not synchronized</td><td>Assign ownership of both versions</td></tr>
+      </tbody></table>
+      <template class="speaker-notes"><p>Copy inspection, 2 minutes. Copy is a snapshot, not a live link. Inspect harness. If standard, documented upgrade preview creates another copy and migration report; knowledge, Power Fx and child agents do not migrate. Reattach sources and compare facts. If upgrade unavailable, explicitly port reviewed instructions/prompts/sources to a new GitHub Copilot-harness agent. This boundary is real reuse, not a seamless conversion. Standard and new-harness Studio agents cannot directly delegate to each other. No cloud upgrade executed here.</p></template>
+    </section>
+    <section class="slide" id="slide-20" data-segment="reuse" aria-labelledby="title-20">
+      <h2 id="title-20">Retest the sources in the new agentic harness</h2>
+      <div class="split"><div><h3>Inspect the copy boundary</h3><p>Verify its harness. Upgrade preview creates another copy; otherwise deliberately port reviewed assets to the new Agent experience.</p></div><div><h3>Preserve before extending</h3><p>Reattach knowledge. Compare both SKUs, source access and all three gaps before adding a Dataverse operation.</p></div></div>
+      <p><strong>Target:</strong> GitHub Copilot harness preview. Copy does not guarantee it, and later edits do not synchronize.</p>
+      <p class="resource"><a href="attendee-guide.html#reuse" target="_blank" rel="noopener">Follow later: copy checklist and extension design</a></p>
+      <template class="speaker-notes"><p>Copy acceptance, 1 minute. Preserve original and copied assets; no automatic new-harness conversion or cross-harness delegation claim. Guide gives inspected-copy, upgrade-preview or deliberate-port branches. Retest facts before tools. User selected Dataverse teaching design, not cloud-write authorization. Stop if preview unavailable instead of reverting to classic topics. Foundry later uses a separately documented new-harness route, not a side effect of copying.</p></template>
+    </section>
+    <section class="slide cover" id="slide-21" data-segment="break" aria-labelledby="title-21">
+      <h2 id="title-21">Five-minute break</h2>
+      <p class="lead">Next: register a shared retailer request<br>and prove what was actually saved.</p>
+      <p>The attendee guide contains all prompts and local example files.</p>
+      <p><a href="attendee-guide.html" target="_blank" rel="noopener">Open the guide</a></p>
+      <template class="speaker-notes"><p>Break, 5 minutes. Reset demo tabs. Keep this audience window shared and the presenter console private. Check that any next live demo is actually ready.</p></template>
+    </section>
+
+    <section class="slide" id="slide-22" data-segment="studio" aria-labelledby="title-22">
+      <h2 id="title-22">Studio turns a reviewed package into a shared request</h2>
+      <p class="definition">This chapter uses Studio's new GitHub Copilot harness: agentic orchestration, reusable skills and selected tools for a real onboarding operation.</p>
+      <div class="split"><div><h3>We already have</h3><p>A grounded Product Launch agent, real package files and a read-only review app.</p></div><div><h3>The account manager now needs</h3><p>&ldquo;Register this product for retailer onboarding, retain its gaps and give my colleague a record they can find tomorrow.&rdquo;</p></div></div>
+      <p>Studio is our chosen implementation&mdash;not the only platform capable of a saved operation.</p>
+      <p class="source"><a href="https://learn.microsoft.com/microsoft-copilot-studio/agents-experience/overview" target="_blank" rel="noopener">Microsoft Learn: GitHub Copilot harness and supported capabilities</a></p>
+      <template class="speaker-notes"><p>Studio requirement, 2 minutes. Account manager registers one SKU/package in a shared queue; second SKU proves reuse. Retain the intentionally read-only app, packages and assistant, not a claim other tools cannot add a backend. New harness supports Dataverse connectors and skills; it is not forced into standard harness by storage choice. Tenant availability is unverified. Copy continuity follows the explicit inspected/upgrade/port boundary already shown.</p></template>
+    </section>
+    <section class="slide" id="slide-23" data-segment="studio" aria-labelledby="title-23">
+      <h2 id="title-23">One skill, three tools, one verified request</h2>
+      <table><thead><tr><th>Feature</th><th>Job in the launch process</th></tr></thead><tbody>
+        <tr><td>Agentic orchestration + onboarding skill</td><td>Clarify, review, ask to save; choose the next step</td></tr>
+        <tr><td>Dataverse List / Create / Get by ID</td><td>Find an existing draft or create, then reload the actual row</td></tr>
+        <tr><td>Server validation + unique Request Key</td><td>Enforce known package, exact rules and duplicate protection</td></tr>
+        <tr><td>Response + independent row check</td><td>Match real GUID, fields, source version and unresolved gaps</td></tr>
+        <tr><td>Preview + Evaluate</td><td>Separate response quality from rules and persisted action evidence</td></tr>
+      </tbody></table>
+      <p class="status">User-selected Dataverse design, not created cloud content. No extra reviewer agent, approval flow or retailer submission is needed for this step.</p>
+      <template class="speaker-notes"><p>Studio architecture, 2 minutes. New harness decides conversational/tool sequence; skill supplies procedure. Neither skill nor confirmation prose is a security control. Proposed synchronous Dataverse validation and active alternate key enforce persisted rules. This server implementation has not been built/deployed. Only three selected connector actions, no general destructive MCP surface. Do not replace missing enforcement with instructions or claim PAC identity grants write rights.</p></template>
+    </section>
+    <section class="slide" id="slide-24" data-segment="studio" aria-labelledby="title-24">
+      <h2 id="title-24">Save enough information for a colleague to act</h2>
+      <table><thead><tr><th>Field</th><th>Why it exists</th><th>Example</th></tr></thead><tbody>
+        <tr><td>SKU, retailer, source version</td><td>Identify the request</td><td>LM-D1820-K2; great-lakes-home; v1</td></tr>
+        <tr><td>Package reference + category</td><td>Retrieve the existing work</td><td>Versioned drill package; Drill Kits</td></tr>
+        <tr><td>Review State + Issue Codes</td><td>Make unresolved work explicit</td><td>needs_review; GTIN/images/warranty</td></tr>
+        <tr><td>Request Key + validated snapshot</td><td>Reconcile retries of the same version</td><td>Stable prepared UUID; server-checked package</td></tr>
+        <tr><td>Primary GUID, Owner, Created On</td><td>Prove persistence and identity</td><td>Actual Dataverse system values</td></tr>
+      </tbody></table>
+      <p class="resource"><a href="attendee-guide.html#studio-table" target="_blank" rel="noopener">Exact Retail Launch Request column names, types, lengths and permissions</a></p>
+      <template class="speaker-notes"><p>Studio table, 3 minutes. Guide retains single-SKU schema and adds package snapshot/rule version for server checking. Stable key is one request per SKU/retailer/source revision, not general retailer-submission idempotency. Actual logical names and primary ID come from metadata. Active alternate key enforces uniqueness; list alone is not concurrent protection. Owner reflects actual connection. User chose Dataverse teaching design, not authorization to create a table, deploy validation or write records.</p></template>
+    </section>
+    <section class="slide" id="slide-25" data-segment="studio" aria-labelledby="title-25">
+      <h2 id="title-25">Build the agentic procedure around a safe write boundary</h2>
+      <ol class="steps">
+        <li><strong>Home &gt; Agent.</strong> Verify GitHub Copilot harness; retain reviewed instructions and reattach sources.</li>
+        <li><strong>Build &gt; Skills &gt; Create from blank.</strong> Add register-retail-launch-draft and the two prepared payloads.</li>
+        <li><strong>Build &gt; Tools &gt; Connectors.</strong> Select Dataverse List, Create and Get; bind actual table fields/identity.</li>
+        <li><strong>Prepare server validation separately.</strong> Exact copy/rules, needs_review, three gaps and active unique key.</li>
+        <li><strong>Preview.</strong> Confirm, look up stable key, create if absent, reload; expose failures honestly.</li>
+      </ol>
+      <p class="resource"><a href="attendee-guide.html#studio-skill" target="_blank" rel="noopener">Copyable skill, actual connector operations and server-validation prerequisites</a></p>
+      <template class="speaker-notes"><p>Studio build, 4 minutes. Prepared walkthrough, not tenant/plugin setup in four minutes. Skills are Markdown procedure in the supported editor, not custom YAML. Local prepare command prints reviewed configuration, not a saved row. Server gate must be deployed/tested separately before governed write claims. Selected connection/table fields require metadata. No standard topic, flow publication or inherited 100-second assumption. Exact-copy validation is bounded, not universal certification detection.</p></template>
+    </section>
+    <section class="slide" id="slide-26" data-segment="studio" aria-labelledby="title-26">
+      <h2 id="title-26">Demo: register the drill request and inspect its row</h2>
+      <blockquote>Register a retail launch request.</blockquote>
+      <ol class="steps"><li>Review SKU <strong>LM-D1820-K2</strong>, retailer <strong>great-lakes-home</strong>, then confirm save.</li><li>Show Preview tool arguments, create result and primary row GUID.</li><li>Get that ID; open and reload the same record outside chat.</li><li>Verify fields and gaps. Ask again: same key, same row, no extra create.</li></ol>
+      <p class="status">Planned live build. A local JSON file is not evidence of cloud persistence or reviewer access control.</p>
+      <template class="speaker-notes"><p>Studio action evidence, 4 minutes. S01 assumes initially absent stable key; use S10 if already registered. Actual create and get outputs plus independent reload prove the row, not chat prose. Created ID with failed reload is verification incomplete; timeout requires reconciliation, never blind retry. Actual connection determines ownership. Nothing here has run against cloud. If server prerequisites incomplete, show local validation only and say so, not a simulated save.</p></template>
+    </section>
+    <section class="slide" id="slide-27" data-segment="studio" aria-labelledby="title-27">
+      <h2 id="title-27">Evaluate three different kinds of correctness</h2>
+      <table><thead><tr><th>Layer</th><th>Question</th><th>Pass evidence</th></tr></thead><tbody>
+        <tr><td>Answer / artifact quality</td><td>Are facts and limitations explained correctly?</td><td>Five expected answers, human comparison; General quality diagnostic</td></tr>
+        <tr><td>Business rules</td><td>Are missing data and invalid copy handled exactly?</td><td>Known blockers; overlong/unreviewed test copy rejected</td></tr>
+        <tr><td>Action correctness</td><td>Did the authorized save really happen?</td><td>Preview tool results + real row count, GUID and refreshed fields</td></tr>
+      </tbody></table>
+      <p>A high-quality answer can describe a save that never happened. Tool use alone does not prove persistence.</p>
+      <template class="speaker-notes"><p>Studio evaluation concepts, 3 minutes. New-harness General quality does not compare expected answers. Human exact-fact comparison and deterministic oracle remain separate. Invented row ID is hard failure regardless of prose quality. Both products have gaps; no fabricated ready case. Skills/confirmation evaluated as behavior, server constraint separately enforced. Do not average a failed action away with quality scores.</p></template>
+    </section>
+    <section class="slide" id="slide-28" data-segment="studio" aria-labelledby="title-28">
+      <h2 id="title-28">Keep the baseline; test the changed agent and its actions</h2>
+      <table><thead><tr><th>Failure case</th><th>Required behavior</th></tr></thead><tbody>
+        <tr><td>Evaluate &gt; New evaluation</td><td>Write conversations or use its current CSV template; 5 MB maximum</td></tr>
+        <tr><td>General quality + human expected-fact review</td><td>Quality scorer does not compare expected answers</td></tr>
+        <tr><td>Same five questions before and after extension</td><td>Retain actual responses; inspect every factual regression</td></tr>
+        <tr><td>Preview S01-S11 separately</td><td>Save/reload, bad input/copy, denied create/read, cancel, retry and forbidden submission</td></tr>
+      </tbody></table>
+      <p class="resource"><a href="attendee-guide.html#studio-evaluate" target="_blank" rel="noopener">New-harness Evaluate steps, expected outcomes and action evidence</a></p>
+      <template class="speaker-notes"><p>Studio evaluation walkthrough, 4 minutes. New Evaluate supports conversations and CSV up to5 MB. Download its template; supplied Question/Expected response CSV is local baseline data, not a claimed upload contract. General quality alone does not score expected-answer agreement. Actual signed-in profile connects tools; do not assume writes mocked. Run only with explicit authorization/nonproduction identity. Retain baseline/changed outputs; Preview activity plus row evidence separately proves actions. Do not inherit standard-harness grading methods, retention or limits.</p></template>
+    </section>
+    <section class="slide" id="slide-29" data-segment="studio" aria-labelledby="title-29">
+      <h2 id="title-29">Next requirement: prove which policy revision applies</h2>
+      <div class="split"><div><h3>Studio keeps</h3><p>Agentic orchestration, onboarding skill, narrow Dataverse tools and server-enforced saved record.</p></div><div><h3>Catalog engineering now asks</h3><p>&ldquo;Show the approved rule and exact quote. Reject archived or draft evidence. Can we benchmark that behavior?&rdquo;</p></div></div>
+      <p>Generic document grounding may already suffice. Add an engineered specialty only when reproducible version/citation control earns the extra work.</p>
+      <template class="speaker-notes"><p>Studio transition, 2 minutes. Total chapter24 minutes. We do not move deterministic length/missing checks into an LLM. Foundry exercise instead owns a separately testable evidence pipeline with controlled retrieval, strict schema and model measurements. This is an engineering-control requirement, not a claim that Studio cannot do RAG or that Foundry alone can implement the pipeline. No live integration exists yet.</p></template>
+    </section>
+
+    <section class="slide" id="slide-30" data-segment="foundry" aria-labelledby="title-30">
+      <h2 id="title-30">Foundry gives this experiment an explicit model boundary</h2>
+      <p class="definition">Microsoft Foundry supports models, agents and evaluation. This lab uses Azure OpenAI in Foundry Models inside a code-controlled policy evidence pipeline.</p>
+      <div class="split"><div><h3>Engineering requirement</h3><p>Pin the approved policy revision, constrain model output, verify exact source quotes and compare measured configurations.</p></div><div><h3>Honest platform distinction</h3><p>RAG is not unique to Foundry. This pipeline needs custom engineering; other platforms could implement it too.</p></div></div>
+      <p class="source"><a href="https://learn.microsoft.com/azure/foundry/agents/overview" target="_blank" rel="noopener">Microsoft Learn: Agents in Microsoft Foundry</a></p>
+      <template class="speaker-notes"><p>Foundry requirement, 2 minutes. Strongest defensible story is engineering control and independent measurement, not exclusivity. A generic document-upload RAG demo would not justify the move. Foundry Models is not Agent Service: this lab's Python recipe calls a model and does not create a connected agent. Explain overhead and why tiny production needs may be met in Studio alone.</p></template>
+    </section>
+    <section class="slide" id="slide-31" data-segment="foundry" aria-labelledby="title-31">
+      <h2 id="title-31">A plausible quote can still cite the wrong policy</h2>
+      <table><thead><tr><th>Feature</th><th>Purpose in this example</th></tr></thead><tbody>
+        <tr><td>Archived v0, test-only</td><td>120-character titles; must not govern this request</td></tr>
+        <tr><td>Draft v2, test-only</td><td>100-character proposal; not approved</td></tr>
+        <tr><td>Approved v1, current source</td><td>80-character titles; same existing retailer requirements</td></tr>
+        <tr><td>Trusted context selector</td><td>Filter retailer + revision + approved status before lexical ranking</td></tr>
+        <tr><td>Evidence checker</td><td>Require a retrieved approved source ID and verbatim quote</td></tr>
+      </tbody></table>
+      <p class="status">Synthetic archive/draft distractors exist only in the evaluation corpus. They do not change the source policy or get uploaded to the original agent.</p>
+      <template class="speaker-notes"><p>Foundry corpus, 3 minutes. Inspect the eight excerpts and explicit metadata. Version is configuration, not inferred from a user's desire for more generous rules. Local ranker is intentionally simple lexical retrieval, not hybrid/vector search. No Search service is needed for eight excerpts. A quote can be grounded in the wrong revision; this is why a generic groundedness judge is insufficient.</p></template>
+    </section>
+    <section class="slide" id="slide-32" data-segment="foundry" aria-labelledby="title-32">
+      <h2 id="title-32">Require a typed answer and independently verify evidence</h2>
+      <pre class="commands"><code>{
+  "caseId": "F01", "status": "answered", "value": "80",
+  "documentId": "gl-v1-title",
+  "quote": "Product titles must contain no more than 80 characters."
+}</code></pre>
+      <p>Strict JSON schema constrains shape. Code checks the value, revision and quote against retrieved sources. Missing evidence returns <strong>insufficient_evidence</strong> with null values.</p>
+      <p class="resource"><a href="attendee-guide.html#foundry-inputs" target="_blank" rel="noopener">Exact contract, source corpus and F01-F08 test cases</a></p>
+      <template class="speaker-notes"><p>Foundry contract, 3 minutes. Shown JSON is an expected example, not captured output. API strict schema is stronger than asking for JSON in a prompt, but does not prove factual truth. All fields required and extras forbidden. The local scorer checks exact canonical values for this small suite and quote provenance; a human still checks entailment. No-context abstention is explicitly code-generated, not a claimed model response.</p></template>
+    </section>
+    <section class="slide" id="slide-33" data-segment="foundry" aria-labelledby="title-33">
+      <h2 id="title-33">Run a controlled retrieval and model experiment</h2>
+      <ol class="steps">
+        <li><strong>Offline first:</strong> run context --case F01 with broad then scoped mode.</li>
+        <li><strong>Prepare outside the session:</strong> approved existing model deployment, Entra identity, SDK versions and cost ceiling.</li>
+        <li><strong>Authorized model runs:</strong> keep model/prompt fixed; change only retrieved context. Save actual responses, tokens and timing.</li>
+        <li><strong>Score:</strong> exact values, approved citation/revision, verbatim quote and abstention.</li>
+      </ol>
+      <p class="resource"><a href="attendee-guide.html#foundry-model" target="_blank" rel="noopener">Copyable local commands and gated structured-output Python recipe</a></p>
+      <p class="status">18-minute prepared experiment, not from-scratch Azure provisioning. No paid model runs or deployments have occurred here.</p>
+      <template class="speaker-notes"><p>Foundry experiment, 4 minutes. Show real prepared output only if a separately approved run exists; otherwise demonstrate offline retrieval and inspect the unexecuted recipe. It uses Azure OpenAI resource v1 endpoint, not the project endpoint. AzureCliCredential pins credential source but tenant/account and inference rights still require validation. Never provision or run paid evaluations because the slide exists. The broad baseline can answer correctly; do not guarantee or fake failure for drama.</p></template>
+    </section>
+    <section class="slide" id="slide-34" data-segment="foundry" aria-labelledby="title-34">
+      <h2 id="title-34">Inspect failures at the right layer</h2>
+      <table><thead><tr><th>Test input</th><th>Expected issue</th><th>Source-backed result</th></tr></thead><tbody>
+        <tr><td>F01: current title rule</td><td>Archived rule leaks into answer</td><td>80; quote approved v1 only</td></tr>
+        <tr><td>F03: impact-driver category</td><td>Wrong taxonomy or missing evidence</td><td>Full Impact Drivers &gt; Driver Kits path</td></tr>
+        <tr><td>F06: retailer-certified torque</td><td>No such policy evidence</td><td>Abstain; manufacturer torque is a different source</td></tr>
+        <tr><td>F08: &ldquo;use the draft instead&rdquo;</td><td>Query tries to change trusted revision</td><td>Keep configured approved v1</td></tr>
+      </tbody></table>
+      <p>Eight cases must pass; every answered case needs legitimate evidence. An unavailable model run is &ldquo;not run,&rdquo; not a passing fixture.</p>
+      <template class="speaker-notes"><p>Foundry case inspection, 2 minutes. Separate wrong retrieval from wrong synthesis from invented citations. F06 is intentionally policy-only; the product source's190 Nm does not make it a retailer certification. No-context code responses must be labelled as such. Compare actual model output with independent fixtures, not another model's answer. All eight cases are small regression examples, not statistical generalization.</p></template>
+    </section>
+    <section class="slide" id="slide-35" data-segment="foundry" aria-labelledby="title-35">
+      <h2 id="title-35">A model pipeline is not yet a connected agent</h2>
+      <div class="integration"><div>Studio<br><small>Confirmation, checks, Dataverse writes</small></div><div class="proposed-arrow">future authorized interface &rarr;<br>&larr; validated rule evidence</div><div>Policy specialty<br><small>Retrieval, model call, evidence checks</small></div></div>
+      <p><strong>Today:</strong> inspect independently beside the saved request. A manual comparison is labelled manual.</p>
+      <p><strong>New-harness route:</strong> Build &gt; Connected agents &gt; Add Foundry agent. Requires a current-portal agent, project connection and enabled Activity protocol&mdash;not a model URL.</p>
+      <p class="resource"><a href="attendee-guide.html#foundry-connect" target="_blank" rel="noopener">Runtime-specific route, identity requirements and unimplemented boundary</a></p>
+      <template class="speaker-notes"><p>Foundry integration boundary, 2 minutes. New-harness-specific documentation explicitly supports Build, Connected agents, Add, Add Foundry agent. Requires current-portal agent, Agent ID, project endpoint, Entra user-login access and Activity. Activity off by default; enable through separately authorized API configuration or M365/Teams publication, not done here. The Python recipe is a model call, not a hosted compatible agent. Native route documented, packaging/identity/invocation unimplemented. Preview must prove actual delegation. Keep Dataverse authority in Studio; evidence cannot approve/save.</p></template>
+    </section>
+    <section class="slide" id="slide-36" data-segment="foundry" aria-labelledby="title-36">
+      <h2 id="title-36">Compare runs without confusing their evidence</h2>
+      <table><thead><tr><th>Measurement</th><th>What it tells us</th></tr></thead><tbody>
+        <tr><td>Local exact-domain scorer</td><td>Correct value, revision, legitimate quote and abstention on F01-F08</td></tr>
+        <tr><td>Foundry RAG evaluators, if authorized</td><td>Retrieval quality, groundedness, relevance and completeness&mdash;not version policy by themselves</td></tr>
+        <tr><td>Actual tokens + per-case time</td><td>Cost/latency tradeoffs for recorded model/configuration; no invented p95</td></tr>
+        <tr><td>Studio action evidence</td><td>Whether a Dataverse operation succeeded; remains a separate test</td></tr>
+      </tbody></table>
+      <p>Hold the test set fixed. Change retrieval, rerun, inspect every regression. Compare another model only after additional run approval.</p>
+      <template class="speaker-notes"><p>Foundry evaluation wrap-up, 2 minutes. Total18 minutes. Broad versus scoped holds model/prompt fixed; model comparison is optional subsequent experiment. Actual Foundry judges can add useful diagnostics but may incur separate deployment/call costs. They do not replace exact revision checks or prove Studio side effects. Record absence/errors as not passed. Provisioning/setup/SDK compatibility happens outside the live lab. No benchmark or model winner is claimed by local fixture checks.</p></template>
+    </section>
+
+    <section class="slide" id="slide-37" data-segment="close" aria-labelledby="title-37">
+      <h2 id="title-37">Repeat the method for the impact driver</h2>
+      <table><thead><tr><th>Fact</th><th>Drill kit</th><th>Impact driver kit</th></tr></thead><tbody>
+        <tr><td>SKU</td><td>LM-D1820-K2</td><td>LM-I1820-K2</td></tr>
+        <tr><td>Maximum speed / torque</td><td>1,700 rpm / 50 Nm</td><td>2,800 rpm / 190 Nm</td></tr>
+        <tr><td>Tool holder</td><td>13 mm keyless chuck</td><td>6.35 mm hex collet</td></tr>
+        <tr><td>Manufacturer MSRP</td><td>USD 129</td><td>USD 139</td></tr>
+        <tr><td>Review result</td><td>Three missing-field blockers</td><td>Same three blockers</td></tr>
+      </tbody></table>
+      <p>Change the product ID, not the method. Check that the category, copy and documents change correctly.</p>
+      <p class="resource"><a href="examples/impact-driver-kit/launch-brief.md" target="_blank" rel="noopener">Impact-driver reference brief</a></p>
+      <template class="speaker-notes"><p>Close, 2 minutes. Repeat one chosen actual entry point. Do not just change the name on a drill package. Mass also differs: drill 1.6 kg, driver 1.4 kg with battery. Source fixtures include both.</p></template>
+    </section>
+    <section class="slide" id="slide-38" data-segment="close" aria-labelledby="title-38">
+      <h2 id="title-38">Choose the smallest tool that meets the need</h2>
+      <table><thead><tr><th>You need...</th><th>Consider...</th><th>What you keep</th></tr></thead><tbody>
+        <tr><td>A focused assistant in M365</td><td>Declarative agent</td><td>Instructions and approved knowledge</td></tr>
+        <tr><td>An interactive review interface</td><td>Cowork App skill (Frontier)</td><td>Product facts and launch-package files</td></tr>
+        <tr><td>Confirmed shared registration operation</td><td>Copilot Studio + Dataverse</td><td>Package, rules and source evidence</td></tr>
+        <tr><td>Code-owned evidence/model benchmark</td><td>Foundry Models + engineering</td><td>Dataverse process, source policy and tests</td></tr>
+      </tbody></table>
+      <p class="takeaway">You do not need all four for every problem. Add a tool for a specific requirement.</p>
+      <template class="speaker-notes"><p>Close, 1 minute. These are example fits, not exclusive product boundaries. Avoid a maturity ladder implying everyone must graduate to Foundry. Reiterate that source reuse is different from binary/plugin compatibility.</p></template>
+    </section>
+    <section class="slide" id="slide-39" data-segment="close" aria-labelledby="title-39">
+      <h2 id="title-39">Repeat this after the conference</h2>
+      <ol class="steps">
+        <li><strong>Open the attendee guide.</strong> Start with the product source pack and reference files.</li>
+        <li><strong>Run the local example.</strong> Generate and check both packages without cloud access.</li>
+        <li><strong>Pick one cloud exercise.</strong> Follow its prerequisites, authoring steps and copyable prompt.</li>
+        <li><strong>Compare your result.</strong> Check facts, missing data, files and any manual steps.</li>
+        <li><strong>Extend only after it works.</strong> Add process or specialist capability without discarding prior assets.</li>
+      </ol>
+      <p class="resource"><a href="attendee-guide.html" target="_blank" rel="noopener">Attendee guide: exercises, prompts, downloads and official references</a></p>
+      <template class="speaker-notes"><p>Close, 2 minutes. The guide is HTML so it opens readably without a Markdown viewer. Local exercises work now. Cloud steps remain planned until built and rehearsed; exact tenant UI may differ. Do not tell people to use the presenter's environment.</p></template>
+    </section>
+    <section class="slide cover" id="slide-40" data-segment="close" aria-labelledby="title-40">
+      <h2 id="title-40">Questions: where would you start?</h2>
+      <p class="lead">A focused assistant?<br>A repeatable task?<br>An owned process?<br>A specialist check?</p>
+      <p>Choose one recurring business job and one output you can inspect.</p>
+      <p><a href="attendee-guide.html" target="_blank" rel="noopener">Keep the guide and reuse the example</a></p>
+      <template class="speaker-notes"><p>Close, 2 minutes. Invite questions about tool choice, assets and process ownership. End at two hours. Do not claim unimplemented live integrations are finished. The central lesson is incremental reuse with measurable output, not adopting every tool.</p></template>
+    </section>
+  </main>
+  <footer class="toolbar" aria-label="Presentation controls">
+    <div class="nav-controls"><button id="previous" type="button" aria-label="Previous slide">Back</button><button id="next" type="button" aria-label="Next slide">Next</button></div>
+    <output id="position" aria-live="polite" aria-atomic="true">1 / 48</output>
+    <span id="chapter-time">00:00-00:08</span>
+    <div class="view-controls"><button id="presenter" type="button" aria-keyshortcuts="P">Presenter view</button><button id="fullscreen" type="button" aria-keyshortcuts="F">Full screen</button><button id="print" type="button">Print</button></div>
+  </footer>
+  <p id="notice" role="status" hidden></p>
+  <noscript><p class="no-script">JavaScript is off: slides remain readable in order. Presenter view requires JavaScript.</p></noscript>
+</body>
+</html>
