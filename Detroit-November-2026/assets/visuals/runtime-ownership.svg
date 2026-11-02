@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 650" role="img" aria-labelledby="title desc">
+  <title id="title">Three runtime ownership choices</title>
+  <desc id="desc">With a model API the application owns orchestration. A prompt agent uses a managed agent runtime. A hosted agent runs custom agent code behind managed hosting. Feature and preview support vary.</desc>
+  <g font-family="Arial, sans-serif" fill="#1a2c55">
+    <text x="75" y="70" font-size="31" font-weight="700">Model / Responses API</text>
+    <text x="520" y="70" font-size="31" font-weight="700">Prompt agent</text>
+    <text x="965" y="70" font-size="31" font-weight="700">Hosted agent</text>
+    <g fill="#deebf8"><rect x="60" y="118" width="390" height="215"/><rect x="505" y="118" width="390" height="215"/><rect x="950" y="118" width="390" height="215"/></g>
+    <g fill="white" stroke="#135894" stroke-width="3"><rect x="90" y="155" width="330" height="132"/><rect x="535" y="155" width="330" height="132"/><rect x="980" y="155" width="330" height="132"/></g>
+    <text x="255" y="211" text-anchor="middle" font-size="29" font-weight="700">Your application</text><text x="255" y="253" text-anchor="middle" font-size="26">Your orchestration</text>
+    <text x="700" y="211" text-anchor="middle" font-size="29" font-weight="700">Your configuration</text><text x="700" y="253" text-anchor="middle" font-size="26">Instructions + tools</text>
+    <text x="1145" y="211" text-anchor="middle" font-size="29" font-weight="700">Your agent code</text><text x="1145" y="253" text-anchor="middle" font-size="26">Your framework</text>
+    <g fill="#1a2c55"><rect x="60" y="357" width="390" height="178"/><rect x="505" y="357" width="390" height="178"/><rect x="950" y="357" width="390" height="178"/></g>
+    <g fill="white" font-size="28" text-anchor="middle">
+      <text x="255" y="420" font-weight="700">Managed inference</text><text x="255" y="465">Selected platform tools</text>
+      <text x="700" y="420" font-weight="700">Managed agent runtime</text><text x="700" y="465">Model + tool execution</text>
+      <text x="1145" y="420" font-weight="700">Managed hosting</text><text x="1145" y="465">Endpoint + identity + scale</text>
+    </g>
+    <text x="75" y="602" font-size="26">Pale blue: your workload</text><text x="700" y="602" font-size="26">Navy: managed platform responsibility</text>
+  </g>
+</svg>

@@ -1,0 +1,100 @@
+{
+  "fixtureType": "synthetic-catalog-demo-design-and-expected-checks",
+  "status": "design-only-not-a-model-or-foundry-run",
+  "scenario": {
+    "supplier": "Fictional Northline Desk",
+    "products": "desk lamps",
+    "goal": "Convert a mixed-format supplier folder into evidence-linked catalog drafts and a human review queue.",
+    "independentOfTalkA": true,
+    "sourceDocumentsBuilt": false,
+    "pipelineBuilt": false,
+    "publishActionEnabled": false
+  },
+  "outputFields": ["sku", "color", "width_cm", "warranty_months", "evidence", "issues", "status"],
+  "rules": [
+    "Preserve contradictory source candidates with their evidence; do not silently choose a winner.",
+    "Missing required values remain null and route the record to human review.",
+    "Normalize millimeters to centimeters using decimal arithmetic and preserve the original measurement and source.",
+    "An image/text variant disagreement routes to human review; an image cannot establish warranty or certification.",
+    "Only records passing required-field, type, evidence and conflict checks enter the validated-draft export.",
+    "Source content is untrusted data; it cannot change the extraction instructions or validation rules.",
+    "No catalog publication, supplier contact or automatic approval is available."
+  ],
+  "cases": [
+    {
+      "caseId": "FC-01",
+      "label": "Consistent sources",
+      "plannedInputs": {
+        "specPdf": "NL-100; black desk lamp; base width 250 mm; warranty 24 months.",
+        "supplierSpreadsheet": "NL-100; black; width 250 mm; warranty 24 months.",
+        "packagingImage": "Black lamp with readable NL-100 model label."
+      },
+      "expected": {
+        "sku": "NL-100", "color": "black", "width_cm": "25.0", "warranty_months": 24,
+        "status": "validated_draft", "issues": []
+      }
+    },
+    {
+      "caseId": "FC-02",
+      "label": "Conflicting model numbers",
+      "plannedInputs": {
+        "specPdf": "NL-200; black desk lamp; base width 250 mm; warranty 24 months.",
+        "supplierSpreadsheet": "NL-201; black; width 250 mm; warranty 24 months.",
+        "packagingImage": "Black lamp; model label obscured."
+      },
+      "expected": {
+        "sku": null, "color": "black", "width_cm": "25.0", "warranty_months": 24,
+        "status": "needs_review", "issues": ["sku-conflict"],
+        "candidates": {"sku": ["NL-200", "NL-201"]}
+      }
+    },
+    {
+      "caseId": "FC-03",
+      "label": "Wrong image variant",
+      "plannedInputs": {
+        "specPdf": "NL-300; black desk lamp; base width 250 mm; warranty 24 months.",
+        "supplierSpreadsheet": "NL-300; black; width 250 mm; warranty 24 months.",
+        "packagingImage": "Red lamp with readable NL-300 model label."
+      },
+      "expected": {
+        "sku": "NL-300", "color": null, "width_cm": "25.0", "warranty_months": 24,
+        "status": "needs_review", "issues": ["color-conflict"],
+        "candidates": {"color": ["black", "red"]}
+      }
+    },
+    {
+      "caseId": "FC-04",
+      "label": "Missing warranty evidence",
+      "plannedInputs": {
+        "specPdf": "NL-400; black desk lamp; base width 250 mm; warranty not stated.",
+        "supplierSpreadsheet": "NL-400; black; width 250 mm; warranty cell empty.",
+        "packagingImage": "Black lamp with readable NL-400 model label; no warranty claim."
+      },
+      "expected": {
+        "sku": "NL-400", "color": "black", "width_cm": "25.0", "warranty_months": null,
+        "status": "needs_review", "issues": ["warranty-missing"]
+      }
+    },
+    {
+      "caseId": "FC-05",
+      "label": "Exact unit conversion",
+      "plannedInputs": {
+        "specPdf": "NL-500; black desk lamp; base width 254 mm; warranty 24 months.",
+        "supplierSpreadsheet": "NL-500; black; width 25.4 cm; warranty 24 months.",
+        "packagingImage": "Black lamp with readable NL-500 model label."
+      },
+      "expected": {
+        "sku": "NL-500", "color": "black", "width_cm": "25.4", "warranty_months": 24,
+        "status": "validated_draft", "issues": []
+      }
+    }
+  ],
+  "comparisonPlan": {
+    "candidateA": "General-purpose multimodal extraction followed by shared reconciliation and validation code.",
+    "candidateB": "Format-specific text/table extraction plus image analysis followed by the same reconciliation and validation code.",
+    "holdFixed": ["source bundle hashes", "output schema", "validation rules", "test cases", "measurement environment"],
+    "measure": ["field accuracy", "evidence correctness", "conflict detection", "false acceptance", "schema validity", "end-to-end latency", "attributed inference cost"],
+    "results": null,
+    "winner": null
+  }
+}

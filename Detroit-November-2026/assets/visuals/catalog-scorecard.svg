@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 660" role="img" aria-labelledby="title desc">
+  <title id="title">Compare two implementations against the same acceptance tests</title>
+  <desc id="desc">Candidate A uses general-purpose multimodal extraction. Candidate B separates text/table extraction and image analysis. Both share validation rules. Compare evidence, false acceptance, latency and attributed cost; results are not yet measured.</desc>
+  <g font-family="Arial, sans-serif" fill="#1a2c55">
+    <rect x="50" y="55" width="625" height="140" fill="#deebf8"/><text x="80" y="105" font-size="31" font-weight="700">A · Multimodal extraction</text><text x="80" y="157" font-size="27">One extraction path → shared validator</text>
+    <rect x="725" y="55" width="625" height="140" fill="#deebf8"/><text x="755" y="105" font-size="31" font-weight="700">B · Format-specific pipeline</text><text x="755" y="157" font-size="27">Text / table + image → shared validator</text>
+    <text x="700" y="250" text-anchor="middle" font-size="29" font-weight="700">Same input hashes · schema · rules · test set</text>
+    <rect x="50" y="285" width="1300" height="60" fill="#1a2c55"/>
+    <g fill="white" font-size="27" font-weight="700"><text x="75" y="325">Measure</text><text x="800" y="325">A</text><text x="1110" y="325">B</text></g>
+    <g font-size="27"><text x="75" y="390">Field + evidence correctness</text><text x="75" y="450">False acceptance of conflicts / missing facts</text><text x="75" y="510">End-to-end latency + attributed inference cost</text><text x="745" y="390">Unmeasured</text><text x="1055" y="390">Unmeasured</text><text x="745" y="450">Unmeasured</text><text x="1055" y="450">Unmeasured</text><text x="745" y="510">Unmeasured</text><text x="1055" y="510">Unmeasured</text></g>
+    <text x="700" y="610" text-anchor="middle" font-size="29">Choose from real results. Five demonstration cases are not a production benchmark.</text>
+  </g>
+</svg>

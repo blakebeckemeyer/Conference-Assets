@@ -16,19 +16,20 @@
   <main>
     <p id="connection" role="status">Waiting for the audience deck. Open this console using Presenter view in the deck.</p>
     <section aria-labelledby="current-title">
-      <p id="position">No slide connected</p>
+      <p id="position">No talk connected</p>
       <h2 id="current-title">Current slide</h2>
       <p id="chapter"></p>
       <div id="speaker-notes"></div>
     </section>
     <section aria-labelledby="next-label"><h2 id="next-label">Next slide</h2><p id="next-title">Waiting for the deck</p></section>
     <nav aria-label="Control audience slides"><button id="back" disabled>Previous slide</button><button id="forward" disabled>Next slide</button></nav>
+    <nav aria-label="Start a presentation"><button id="start-talk-a" type="button">Start Talk A · 60 min</button><button id="start-talk-b" type="button">Start Talk B · 30 min</button></nav>
     <section class="timer" aria-labelledby="timer-title">
-      <h2 id="timer-title">Session timer</h2>
-      <output id="elapsed" aria-label="Elapsed session time">00:00:00</output>
+      <h2 id="timer-title">Talk timer</h2>
+      <output id="elapsed" aria-label="Elapsed talk time">00:00:00</output>
       <button id="timer-toggle">Start timer</button>
       <button id="timer-reset">Reset timer</button>
-      <p>The timer stays in this private console. Chapter times are elapsed schedule targets.</p>
+      <p id="timer-target">Choose a talk. Its timer starts when you select Start timer and resets when you switch talks.</p>
     </section>
   </main>
 </body>

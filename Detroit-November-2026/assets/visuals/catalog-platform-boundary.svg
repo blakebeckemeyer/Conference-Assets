@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 660" role="img" aria-labelledby="title desc">
+  <title id="title">Business agent and engineered AI service are different responsibilities</title>
+  <desc id="desc">Copilot Studio provides a business interaction and workflow surface. A developer-owned catalog service processes files, runs models, preserves evidence and enforces a schema. Foundry supplies model and optional agent runtime capabilities plus evaluation and observability. Studio can call that service; this talk does not build that integration.</desc>
+  <g font-family="Arial, sans-serif" fill="#1a2c55">
+    <rect x="55" y="100" width="400" height="375" fill="#deebf8"/>
+    <text x="85" y="157" font-size="32" font-weight="700">Copilot Studio</text>
+    <g font-size="28"><text x="85" y="230">Business interaction</text><text x="85" y="290">Actions + workflows</text><text x="85" y="350">Channels + ALM</text><text x="85" y="425">Can call a service</text></g>
+    <path d="M475 290h85l-20-20m20 20-20 20" fill="none" stroke="#f4911b" stroke-width="5"/>
+    <rect x="590" y="100" width="755" height="375" fill="#1a2c55"/>
+    <text x="625" y="157" fill="white" font-size="32" font-weight="700">Developer-owned catalog service</text>
+    <g fill="white" font-size="28"><text x="625" y="230">Batch orchestration + evidence + schema</text><text x="625" y="290">Model / extraction choices + measured tradeoffs</text><text x="625" y="350">Foundry models · optional agent runtime</text><text x="625" y="425">Foundry evaluation + trace investigation</text></g>
+    <text x="700" y="550" text-anchor="middle" font-size="30" font-weight="700">The distinction is where the engineering lives—not “Studio cannot.”</text>
+    <text x="700" y="605" text-anchor="middle" font-size="26">Optional service call shown conceptually · no Studio integration required for this talk</text>
+  </g>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 660" role="img" aria-labelledby="title desc">
+  <title id="title">One supplier folder, three kinds of evidence</title>
+  <desc id="desc">Synthetic input specimens show a specification PDF, supplier spreadsheet and packaging image for desk lamps. Text says black NL-300 while the image shows red, creating a reviewable variant conflict.</desc>
+  <g font-family="Arial, sans-serif" fill="#1a2c55">
+    <rect x="45" y="65" width="400" height="490" fill="#f6f7f8" stroke="#135894" stroke-width="2"/>
+    <rect x="45" y="65" width="400" height="65" fill="#1a2c55"/><text x="70" y="108" fill="white" font-size="29" font-weight="700">Specification.pdf</text>
+    <text x="75" y="190" font-size="33" font-weight="700">NL-300 desk lamp</text>
+    <path d="M75 220h320M75 245h270" stroke="#c9d6e3" stroke-width="9"/>
+    <text x="75" y="305" font-size="29">Color: black</text><text x="75" y="360" font-size="29">Base width: 250 mm</text><text x="75" y="415" font-size="29">Warranty: 24 months</text>
+    <text x="75" y="508" font-size="24">Evidence: page + field</text>
+    <rect x="495" y="65" width="400" height="490" fill="white" stroke="#135894" stroke-width="2"/>
+    <rect x="495" y="65" width="400" height="65" fill="#135894"/><text x="520" y="108" fill="white" font-size="29" font-weight="700">Supplier.xlsx</text>
+    <path d="M520 175h350M520 250h350M520 325h350M520 400h350M520 475h350M680 175v300" stroke="#c9d6e3" stroke-width="2"/>
+    <g font-size="27"><text x="530" y="225">Model</text><text x="700" y="225">NL-300</text><text x="530" y="300">Color</text><text x="700" y="300">Black</text><text x="530" y="375">Width</text><text x="700" y="375">250 mm</text><text x="530" y="450">Warranty</text><text x="700" y="450">24 months</text></g>
+    <text x="520" y="508" font-size="24">Evidence: sheet + cell</text>
+    <rect x="945" y="65" width="410" height="490" fill="#f6f7f8" stroke="#135894" stroke-width="2"/>
+    <text x="970" y="112" font-size="29" font-weight="700">Packaging image</text>
+    <path d="M1110 420h130M1175 420V280l-75-45" stroke="#b53a32" stroke-width="22" fill="none"/>
+    <path d="m1050 200 65 10 5 75-115-60z" fill="#b53a32"/>
+    <rect x="990" y="450" width="315" height="68" fill="white" stroke="#c9d6e3"/><text x="1010" y="494" font-size="29">NL-300 · red lamp</text>
+    <path d="M940 305h-40" stroke="#f4911b" stroke-width="5"/><circle cx="920" cy="305" r="20" fill="#f4911b"/><text x="914" y="315" font-size="29" font-weight="700">!</text>
+    <text x="700" y="620" text-anchor="middle" font-size="27">Synthetic source specimens · a visual mismatch must survive extraction</text>
+  </g>
+</svg>

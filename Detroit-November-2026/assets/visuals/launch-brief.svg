@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Synthetic launch brief and its source checks</title>
+  <desc id="desc">Document specimen for the Huron drill kit: 18 volts nominal, two 2.0 amp-hour batteries, maximum 1,700 rpm and 50 newton metres. MSRP is 129 US dollars. Barcode, images and warranty remain unknown.</desc>
+  <g font-family="Arial, sans-serif" fill="#1a2c55">
+    <path d="M120 45h650v600H120Z" fill="white" stroke="#c9d6e3" stroke-width="3"/>
+    <rect x="120" y="45" width="650" height="28" fill="#135894"/>
+    <text x="165" y="130" font-size="23" fill="#46576c">SYNTHETIC LAUNCH BRIEF</text>
+    <text x="165" y="188" font-size="37" font-weight="700">Huron cordless drill kit</text>
+    <text x="165" y="228" font-size="27">LM-D1820-K2 · Great Lakes Home &amp; Hardware</text>
+    <path d="M165 258h560" stroke="#c9d6e3" stroke-width="2"/>
+    <text x="165" y="310" font-size="28">18 V nominal</text><text x="165" y="358" font-size="28">Two 2.0 Ah batteries + charger</text>
+    <text x="165" y="406" font-size="28">1,700 rpm max · 50 Nm max</text>
+    <text x="165" y="454" font-size="28">USD 129 manufacturer MSRP</text>
+    <rect x="165" y="493" width="560" height="103" fill="#deebf8"/>
+    <text x="188" y="535" font-size="25" font-weight="700">Needs review</text>
+    <text x="188" y="573" font-size="25">GTIN · approved images · warranty</text>
+    <path d="M725 313h98m-98 143h98m-98 88h98" stroke="#f4911b" stroke-width="4"/>
+    <circle cx="840" cy="313" r="8" fill="#f4911b"/><circle cx="840" cy="456" r="8" fill="#f4911b"/><circle cx="840" cy="544" r="8" fill="#f4911b"/>
+    <text x="866" y="310" font-size="27" font-weight="700">Exact units</text><text x="866" y="346" font-size="24">Check the source</text>
+    <text x="866" y="451" font-size="27" font-weight="700">Price ≠ selling price</text><text x="866" y="487" font-size="24">Preserve the label</text>
+    <text x="866" y="545" font-size="27" font-weight="700">Unknown stays unknown</text><text x="866" y="581" font-size="24">Ask for evidence</text>
+  </g>
+</svg>

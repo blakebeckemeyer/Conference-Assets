@@ -14,16 +14,16 @@
   "microsoftBranding": "Existing Microsoft product names remain as supplied text. No official Microsoft event logo supplied; no invented co-branded lockup or endorsement.",
   "surfaceRecord": {
     "platform": "web",
-    "audience": "Mixed business leaders, makers and developers at a two-hour Microsoft event in Detroit, November 10, 2026.",
-    "purpose": "Explain and demonstrate one evolving product-launch example with inspectable business artifacts.",
-    "visualSystem": "AIS-branded conference presentation: Arial, official navy/blue/orange, open white teaching surfaces, navy transitions, reserved geometric cover field, structured tables, inset prompts and command worksheets.",
-    "contentBoundary": "The original AIS visual and subsequent motion redesigns preserved all 48 slide sections byte-for-byte. The later user-authorized agentic-harness correction changes only copy/runtime/evaluation/handoff content and consolidated guide links; slide count/order/identifiers, 120-minute schedule, AIS assets and private-note separation remain preserved.",
+    "audience": "Mixed business leaders, makers and developers at two independent Detroit conference talks on November 10, 2026.",
+    "purpose": "Present a 60-minute Microsoft 365 Copilot, Cowork and Copilot Studio story, then a separate 30-minute Foundry decision/demo story.",
+    "visualSystem": "AIS-branded visual-first conference presentation: documented Arial fallback, official navy/blue/orange, product journey, IQ map, synthetic brief/app specimens, theme edit, lifecycle and catalog-processing diagrams. One attributed app-runtime conference figure is excerpted; other conference insights are adapted into original scenario artwork. Text supports the visual; operational detail lives in the guide and private notes.",
+    "contentBoundary": "The user-approved two-talk reconfiguration replaces the former single 120-minute story with 19 Talk A slides and 13 independent Talk B slides. Talk A retains its product launch. Talk B now engineers a standalone mixed-format desk-lamp catalog service and compares implementations; the rejected warehouse-quote demo is removed. Speaker notes remain isolated in the private presenter console.",
     "responsive": "Projector-first at 1280x720 and 1920x1080; mobile is a scrollable reading view with controls after the active slide. Cover geometry is removed on narrow screens to protect text.",
     "accessibility": "Named AIS image group, keyboard navigation and focus retained, reduced-motion preference disables all navigation animation, inactive slides are inert, no premium/external font dependency, private notes remain inert templates and separate presenter console.",
     "motion": "On navigation only: interruptible 340ms directional sheet transition, 480ms chapter wipe and one 380ms artifact arrival with 70ms delay. No loops, extra clicks or hidden-content builds. Resize, print and reduced-motion changes cancel animations immediately. Prompt/code/diagram surfaces use restrained offset shadows; code is an AIS navy working surface.",
     "print": "Landscape, one slide per page, repeated original AIS mark and no presenter notes.",
-    "guide": "Exactly one instructional attendee-guide.html, with lifecycle, agentic Studio and Foundry sections and preserved prefixed anchors. index.html and private presenter.html are the only other HTML endpoints.",
-    "copyReview": "The aphoristic-cadence detector warning is intentionally retained where it identifies concrete safety/runtime distinctions and unexecuted-action boundaries; these are teaching requirements, not ornamental slogans. No detector suppression configured.",
+    "guide": "Exactly one demo-only attendee-guide.html: M365 brief, Cowork app, IDE color edit, Studio governed lifecycle/model/web walkthrough and standalone Foundry catalog processing. Foundry has source inspection, processing, review/export, comparison and trace steps; actual source files/application/runs remain explicitly unbuilt. index.html and private presenter.html are the only other HTML endpoints.",
+    "copyReview": "Audience readiness asides removed, not hidden. Intrinsic synthetic/example labels and preview boundaries retained. Private notes and guide carry rehearsal, authorization and implementation status. Arial detector finding is intentional under the documented AIS brand authority; no design-hook suppression is configured.",
     "unresolved": "An approved Microsoft event-specific logo or event co-brand lockup was not supplied; none is invented."
   }
 }

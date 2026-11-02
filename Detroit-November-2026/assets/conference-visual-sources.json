@@ -1,0 +1,65 @@
+{
+  "sourceCollection": "Power_Platform_Community_Conference_2026_Documents",
+  "sourceLocation": "User-provided local OneDrive conference-materials folder, Session_Documents",
+  "reusePolicy": "One bounded app-runtime figure excerpt inspected from the original PDF; no complete slides or decks redistributed. Its original labels are retained and attribution is visible. Other concepts, including catalog failure inspection, are redrawn in AIS colors with source attribution. No implication of Microsoft endorsement or a captured demo run.",
+  "sources": [
+    {
+      "title": "Code Meets Low Code: Building with Copilot Managed Runtime and Power Platform",
+      "authors": ["Elaiza Benitez", "Rami Mounla"],
+      "filename": "slides_code_meets_low_code_building_with_copilot_managed_runtime_and_power_platform.pdf",
+      "sha256": "5B3EF693B1BB5D2C24A11F1BBD621464F07FCAD6373D51711B3201B8821C30D0",
+      "pages": [23],
+      "usedOnSlides": ["a-ownership-handoff"],
+      "assets": ["visuals/conference-managed-runtime.png"],
+      "cropPdfPoints": [48, 104, 906, 359],
+      "adaptation": "Bounded creation-path and app-runtime portion of the architecture figure, rendered at 2x. Lower governance endpoints omitted for projector legibility; conceptual/preview status retained in the audience caption. Used only for app lifecycle; not evidence of agent conversion, host iframe support or tenant availability.",
+      "currentReference": "https://learn.microsoft.com/microsoft-365/managed-apps/"
+    },
+    {
+      "title": "The Copilot Compass: Finding True North Across Copilot, Cowork, Scout, and Agents",
+      "authors": ["April Dunnam", "Bryan Wofford"],
+      "filename": "slides_the_copilot_compass_finding_true_north_across_copilot,_cowork,_scout,_and_agents.pdf",
+      "sha256": "EA3F69074A0A1F1C6E32DD095632CD17E1DF53A2DF9468FC48C18B6DF417FC36",
+      "pages": [22, 29, 30],
+      "usedOnSlides": ["a-cowork-context", "a-cowork-interface"],
+      "assets": ["visuals/cowork-deliverables.svg", "visuals/launch-app.svg"],
+      "adaptation": "Original AIS illustrations translate the outcome/delegate/build-a-tool distinction into a retailer launch. No compass artwork, product logo, UI screenshot or availability claim copied.",
+      "currentReference": "https://learn.microsoft.com/microsoft-365/copilot/cowork/use-cowork"
+    },
+    {
+      "title": "From Black Box to Glass Box: Enterprise Observability for your AI Assets",
+      "authors": ["Chris Garty", "Apostolis Papaioannou"],
+      "filename": "slides_from_black_box_to_glass_box_observability_for_your_ai_assets.pdf",
+      "sha256": "94463C72DC8856BCE2ACAAA1AEC770D0651AC8047392FA1A04EF24C2C293B631",
+      "pages": [3],
+      "usedOnSlides": ["b-demo-trace"],
+      "assets": ["visuals/catalog-failure.svg"],
+      "adaptation": "Original catalog-specific illustrated failure path inspired by page 3's silent-tool-failure lesson. Source session concerns Copilot Studio observability. No source figure, vendor trace UI or measured failure is reproduced; the new diagram shows candidate loss and inadequate validation as an explicit teaching hypothesis.",
+      "currentReference": "https://learn.microsoft.com/azure/foundry/observability/concepts/trace-agent-concept"
+    },
+    {
+      "title": "What Is Agent Quality and How Do I Get There?",
+      "authors": ["Natasha Eibich"],
+      "filename": "slides_what_is_agent_quality,_and_how_do_i_get_there.pdf",
+      "sha256": "DC19A325EC22B1C2D40B0FD654F310D52F2DD2809524850C8F7BD9B8FB30E900",
+      "pages": [6, 7],
+      "usedOnSlides": ["b-evaluate"],
+      "assets": ["visuals/evaluation-coverage.svg"],
+      "adaptation": "Original scenario-specific matrix separates task outcomes, process and boundary cases. Expected assertions, not a completed evaluation or a copy of the source slide.",
+      "currentReference": "https://learn.microsoft.com/azure/foundry/concepts/evaluation-evaluators/agent-evaluators"
+    }
+  ],
+  "originalIllustrations": {
+    "directory": "visuals",
+    "creator": "Original local SVG artwork for this presentation",
+    "treatment": "AIS palette; generic pictograms, synthetic document and app specimens, explanatory Indigo-to-Green theme edit, architecture and ownership diagrams. studio-lifecycle.svg is original DEV/TEST/PROD conceptual artwork. catalog-inputs/pipeline/evidence/review/scorecard/platform-boundary.svg are original fictional Northline Desk scenario illustrations based on the design fixture, not actual supplier files, application screenshots or measured runs. No invented model winner, latency measurement or cloud-run evidence.",
+    "basis": [
+      "../fixtures/expected-facts.json",
+      "../fixtures/foundry-catalog-processing.json",
+      "https://learn.microsoft.com/en-us/microsoft-iq",
+      "https://learn.microsoft.com/microsoft-copilot-studio/agents-experience/authoring-select-agent-model",
+      "https://learn.microsoft.com/microsoft-copilot-studio/agents-experience/publication-channels-overview",
+      "https://learn.microsoft.com/azure/foundry/agents/overview"
+    ]
+  }
+}

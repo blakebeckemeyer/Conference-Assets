@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 660" role="img" aria-labelledby="title desc">
+  <title id="title">A code-owned catalog processing pipeline</title>
+  <desc id="desc">Versioned input bundle flows through text and image extraction, evidence reconciliation and schema validation. Validated drafts go to an export; conflicts go to human review. Model work and deterministic code are distinct.</desc>
+  <g font-family="Arial, sans-serif" fill="#1a2c55">
+    <text x="60" y="70" font-size="29" font-weight="700">Version inputs · preserve evidence · measure the whole run</text>
+    <rect x="50" y="200" width="220" height="175" fill="#1a2c55"/><text x="75" y="253" fill="white" font-size="28" font-weight="700">Input bundle</text><text x="75" y="299" fill="white" font-size="25">PDF / XLSX</text><text x="75" y="339" fill="white" font-size="25">Image + hashes</text>
+    <rect x="330" y="130" width="250" height="130" fill="#deebf8"/><text x="355" y="179" font-size="28" font-weight="700">Text + tables</text><text x="355" y="223" font-size="25">Format extraction</text>
+    <rect x="330" y="310" width="250" height="130" fill="#deebf8"/><text x="355" y="359" font-size="28" font-weight="700">Image evidence</text><text x="355" y="403" font-size="25">Multimodal model</text>
+    <rect x="640" y="200" width="250" height="175" fill="#deebf8"/><text x="665" y="253" font-size="28" font-weight="700">Reconcile</text><text x="665" y="299" font-size="25">Keep candidates</text><text x="665" y="339" font-size="25">Do not fill gaps</text>
+    <rect x="950" y="200" width="220" height="175" fill="#1a2c55"/><text x="975" y="253" fill="white" font-size="28" font-weight="700">Validate</text><text x="975" y="299" fill="white" font-size="25">Schema + units</text><text x="975" y="339" fill="white" font-size="25">Required fields</text>
+    <path d="M270 287h25V195h35M295 287v88h35M580 195h30v92h30M580 375h30v-88M890 287h60M1170 287h40V170h40M1210 287v153h40" stroke="#f4911b" stroke-width="5" fill="none"/>
+    <text x="1230" y="120" font-size="25" font-weight="700">Draft export</text><path d="M1250 150h105v90h-105z" fill="#deebf8"/><path d="M1270 175h65m-65 22h65m-65 22h40" stroke="#135894" stroke-width="5"/>
+    <text x="1215" y="490" font-size="25" font-weight="700">Review queue</text><path d="M1250 395h105v60h-105z" fill="#fff0de" stroke="#f4911b" stroke-width="2"/><text x="1295" y="438" font-size="35" font-weight="700">!</text>
+    <path d="M60 535h1110" stroke="#135894" stroke-width="2"/><text x="60" y="585" font-size="28">Your code owns branching, retries, validation and output—not a chat transcript.</text>
+  </g>
+</svg>

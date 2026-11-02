@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 650" role="img" aria-labelledby="title desc">
+  <title id="title">Design the test set before judging the agent</title>
+  <desc id="desc">Five designed catalog cases cover consistent evidence, model number conflict, wrong image variant, missing warranty and exact unit conversion. These are expected assertions, not evaluation results.</desc>
+  <g font-family="Arial, sans-serif" fill="#1a2c55">
+    <rect x="60" y="60" width="1280" height="65" fill="#1a2c55"/>
+    <g fill="white" font-size="28" font-weight="700"><text x="87" y="102">TEST CASE</text><text x="590" y="102">EXPECTED OUTCOME</text><text x="1110" y="102">PATH CHECK</text></g>
+    <g fill="#f6f7f8"><rect x="60" y="125" width="1280" height="86"/><rect x="60" y="297" width="1280" height="86"/><rect x="60" y="469" width="1280" height="86"/></g>
+    <g font-size="28">
+      <text x="87" y="180">FC-01 · Consistent sources</text><text x="590" y="180">Validated draft</text><text x="1110" y="180">Evidence</text>
+      <text x="87" y="266">FC-02 · Model conflict</text><text x="590" y="266">SKU null + review</text><text x="1110" y="266">Candidates</text>
+      <text x="87" y="352">FC-03 · Wrong image variant</text><text x="590" y="352">Color null + review</text><text x="1110" y="352">Image + text</text>
+      <text x="87" y="438">FC-04 · Warranty missing</text><text x="590" y="438">Warranty null + review</text><text x="1110" y="438">No invention</text>
+      <text x="87" y="524">FC-05 · 254 mm / 25.4 cm</text><text x="590" y="524">Validated draft</text><text x="1110" y="524">Exact units</text>
+    </g>
+    <text x="700" y="616" text-anchor="middle" font-size="28" font-weight="700">Test design—not a completed evaluation run.</text>
+  </g>
+</svg>

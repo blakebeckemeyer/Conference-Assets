@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 620" role="img" aria-labelledby="title desc">
+  <title id="title">Delegate an outcome; review tangible deliverables</title>
+  <desc id="desc">A single Cowork task can work toward documents, presentations, spreadsheet analyses, meeting and email preparation, or an app with the App skill. Availability and action approval depend on the tenant.</desc>
+  <defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="m0 0 8 4-8 4" fill="#f4911b"/></marker></defs>
+  <g font-family="Arial, sans-serif" fill="#1a2c55">
+    <path d="M60 230h320v155H60Z" fill="#1a2c55"/>
+    <path d="m92 276 14 29 30 14-30 14-14 29-14-29-30-14 30-14Z" fill="#f4911b"/>
+    <text x="145" y="285" font-size="32" fill="white" font-weight="700">Prepare the</text>
+    <text x="145" y="329" font-size="32" fill="white" font-weight="700">retailer launch</text>
+    <path d="M380 306h100V128h75M480 306h75M480 306v180h75" fill="none" stroke="#f4911b" stroke-width="4" marker-end="url(#a)"/>
+    <g transform="translate(590 45)">
+      <path d="M0 0h85l20 20v120H0Z" fill="#deebf8" stroke="#135894" stroke-width="4"/><path d="M19 48h65M19 70h65M19 92h47" stroke="#135894" stroke-width="4"/>
+      <text x="142" y="52" font-size="33" font-weight="700">Briefs &amp; documents</text><text x="142" y="98" font-size="27">Research, compare, draft</text>
+    </g>
+    <g transform="translate(590 230)">
+      <path d="M0 0h115v122H0Z" fill="white" stroke="#135894" stroke-width="4"/><path d="M0 30h115M35 30v92M74 30v92M0 60h115M0 91h115" stroke="#135894" stroke-width="3"/><rect width="115" height="30" fill="#135894"/>
+      <text x="142" y="49" font-size="33" font-weight="700">Analyses &amp; presentations</text><text x="142" y="94" font-size="27">Spreadsheets, plans, decks</text>
+    </g>
+    <g transform="translate(590 415)">
+      <rect width="115" height="120" fill="#deebf8" stroke="#135894" stroke-width="4"/><path d="M0 25h115M35 25v95" stroke="#135894" stroke-width="4"/><rect x="50" y="42" width="48" height="26" fill="#f4911b"/>
+      <text x="142" y="50" font-size="33" font-weight="700">Apps &amp; coordination</text><text x="142" y="95" font-size="27">App skill, email, meetings</text>
+    </g>
+    <text x="60" y="590" font-size="28" font-weight="700">A task has a finish line. The output is something you can inspect.</text>
+  </g>
+</svg>

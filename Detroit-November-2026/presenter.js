@@ -7,7 +7,14 @@
   let lastUpdate = 0;
   let runningSince = null;
   let accumulated = 0;
+  let activeTalk = null;
 
+  function resetTimer() {
+    accumulated = 0;
+    runningSince = null;
+    document.getElementById('timer-toggle').textContent = 'Start timer';
+    document.getElementById('elapsed').textContent = '00:00:00';
+  }
   function send(action) {
     if (audience && !audience.closed && connected) {
       audience.postMessage({ type: 'detroit-presenter-command', action }, '*');
@@ -18,21 +25,29 @@
     const state = event.data;
     if (!Number.isInteger(state.index) || !Number.isInteger(state.count) ||
         state.index < 0 || state.index >= state.count ||
+        !Number.isInteger(state.talkIndex) || !Number.isInteger(state.talkCount) ||
+        !Number.isInteger(state.talkDuration) || typeof state.talkName !== 'string' ||
         !['title', 'nextTitle', 'time', 'notes'].every(key => typeof state[key] === 'string')) return;
+    if (activeTalk !== null && activeTalk !== state.talk) resetTimer();
+    activeTalk = state.talk;
     connected = true;
     lastUpdate = Date.now();
     connection.textContent = 'Connected. Navigation here updates the audience window; notes remain here.';
-    document.getElementById('position').textContent = `Slide ${state.index + 1} of ${state.count}`;
+    document.getElementById('position').textContent =
+      `${state.talkName} · Slide ${state.talkIndex + 1} of ${state.talkCount}`;
     document.getElementById('current-title').textContent = state.title;
     document.getElementById('next-title').textContent = state.nextTitle.replace(/\s+/g, ' ').trim();
-    document.getElementById('chapter').textContent = `Chapter schedule: ${state.time}`;
-    // Only the known opener supplies the deck's own trusted note templates.
+    document.getElementById('chapter').textContent = `${state.talkName} target: ${state.time}`;
+    document.getElementById('timer-target').textContent =
+      `${state.talkName} runs ${state.talkDuration} minutes. Switching talks resets the timer; start it when you begin.`;
     document.getElementById('speaker-notes').innerHTML = state.notes;
-    back.disabled = state.index === 0;
-    forward.disabled = state.index === state.count - 1;
+    back.disabled = state.talkIndex === 0;
+    forward.disabled = state.talkIndex === state.talkCount - 1;
   });
   back.addEventListener('click', () => send('previous'));
   forward.addEventListener('click', () => send('next'));
+  document.getElementById('start-talk-a').addEventListener('click', () => send('talk-a'));
+  document.getElementById('start-talk-b').addEventListener('click', () => send('talk-b'));
   document.addEventListener('keydown', event => {
     if (event.altKey || event.ctrlKey || event.metaKey || event.target.tagName === 'BUTTON') return;
     if (['ArrowRight', 'PageDown', ' '].includes(event.key)) { event.preventDefault(); send('next'); }
@@ -48,12 +63,7 @@
       event.target.textContent = 'Resume timer';
     }
   });
-  document.getElementById('timer-reset').addEventListener('click', () => {
-    accumulated = 0;
-    runningSince = null;
-    document.getElementById('timer-toggle').textContent = 'Start timer';
-    document.getElementById('elapsed').textContent = '00:00:00';
-  });
+  document.getElementById('timer-reset').addEventListener('click', resetTimer);
   setInterval(() => {
     const seconds = Math.floor((accumulated + (runningSince === null ? 0 : performance.now() - runningSince)) / 1000);
     document.getElementById('elapsed').textContent = [Math.floor(seconds / 3600), Math.floor(seconds / 60) % 60, seconds % 60]

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 530" role="img" aria-labelledby="title desc">
+  <title id="title">Launch Review app: interface concept</title>
+  <desc id="desc">A synthetic interface concept, not a screenshot. Product navigation selects the drill kit. Its fact sheet shows 18 V, 1,700 rpm, 50 Nm and 129 dollars MSRP. Three missing requirements remain visible.</desc>
+  <g font-family="Arial, sans-serif" fill="#1a2c55">
+    <rect x="40" y="30" width="1320" height="440" fill="white" stroke="#c9d6e3" stroke-width="3"/>
+    <rect x="40" y="30" width="1320" height="75" fill="#1a2c55"/>
+    <text x="75" y="79" font-size="32" fill="white" font-weight="700">Launch Review</text><text x="1325" y="78" text-anchor="end" font-size="24" fill="white">Interface concept</text>
+    <rect x="40" y="105" width="290" height="365" fill="#f6f7f8"/>
+    <text x="73" y="159" font-size="25" font-weight="700">PRODUCTS</text>
+    <rect x="57" y="187" width="255" height="88" fill="#135894"/><text x="77" y="223" font-size="27" fill="white" font-weight="700">Drill kit</text><text x="77" y="258" font-size="23" fill="white">LM-D1820-K2</text>
+    <text x="77" y="326" font-size="27" font-weight="700">Impact driver kit</text><text x="77" y="363" font-size="23">LM-I1820-K2</text>
+    <text x="377" y="166" font-size="37" font-weight="700">Huron cordless drill kit</text>
+    <text x="377" y="208" font-size="27">Great Lakes Home &amp; Hardware</text>
+    <path d="M377 233h925" stroke="#c9d6e3" stroke-width="2"/>
+    <text x="377" y="282" font-size="29" font-weight="700">18 V nominal</text><text x="720" y="282" font-size="29" font-weight="700">1,700 rpm max</text>
+    <text x="377" y="328" font-size="29" font-weight="700">50 Nm max</text><text x="720" y="328" font-size="29" font-weight="700">USD 129 MSRP</text>
+    <rect x="377" y="354" width="925" height="90" fill="#deebf8"/>
+    <text x="404" y="392" font-size="29" font-weight="700">Needs review · 3 missing requirements</text>
+    <text x="404" y="430" font-size="27">GTIN · approved images · warranty terms</text>
+    <text x="700" y="515" text-anchor="middle" font-size="27">Select a product → inspect facts → open the package → see the gaps</text>
+  </g>
+</svg>

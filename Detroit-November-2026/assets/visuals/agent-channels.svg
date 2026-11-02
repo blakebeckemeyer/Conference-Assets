@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 650" role="img" aria-labelledby="title desc">
+  <title id="title">One configured Studio agent, multiple delivery surfaces</title>
+  <desc id="desc">A Studio agent connects to a demo website, a web app through iframe, and Teams or Microsoft Copilot. This is a channel diagram, not a claim that the Cowork app embeds the agent or shares its sessions.</desc>
+  <g font-family="Arial, sans-serif" fill="#1a2c55">
+    <circle cx="287" cy="320" r="173" fill="#1a2c55"/>
+    <path d="m287 202 16 35 36 16-36 16-16 35-16-35-36-16 36-16Z" fill="#f4911b"/>
+    <text x="287" y="350" fill="white" text-anchor="middle" font-size="36" font-weight="700">Studio agent</text><text x="287" y="399" fill="white" text-anchor="middle" font-size="26">Sources + model + task</text>
+    <path d="M460 320h160V125h144M620 320h144M620 320v195h144" fill="none" stroke="#f4911b" stroke-width="5"/>
+    <g fill="white" stroke="#135894" stroke-width="4">
+      <rect x="790" y="50" width="150" height="105"/><path d="M790 75h150M840 155v22m-25 0h50"/>
+      <rect x="790" y="249" width="150" height="105"/><path d="M790 274h150"/>
+      <path d="m820 303-12 12 12 12m88-24 12 12-12 12m-39-29-13 34"/>
+      <path d="M790 448h150v100h-60l-28 25v-25h-62Z"/>
+    </g>
+    <text x="990" y="114" font-size="35" font-weight="700">Demo website</text><text x="990" y="157" font-size="27">Test the published agent</text>
+    <text x="990" y="311" font-size="35" font-weight="700">Web app</text><text x="990" y="354" font-size="27">Iframe in an approved host</text>
+    <text x="990" y="507" font-size="35" font-weight="700">Teams / Copilot</text><text x="990" y="550" font-size="27">Reach the internal team</text>
+  </g>
+</svg>
