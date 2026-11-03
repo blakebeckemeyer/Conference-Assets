@@ -5,16 +5,30 @@
   const notice = document.getElementById('notice');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const printMedia = window.matchMedia('print');
+  const talkNames = { 'talk-a': 'Talk A', 'talk-b': 'Talk B' };
+  const talkDurations = { 'talk-a': 60, 'talk-b': 30 };
+  const times = {
+    'a-context': '00:00-00:05',
+    'a-m365': '00:05-00:17',
+    'a-cowork': '00:17-00:32',
+    'a-studio': '00:32-00:50',
+    'a-ownership': '00:50-00:55',
+    'a-questions': '00:55-01:00',
+    'b-why': '00:00-00:05',
+    'b-demo': '00:05-00:17',
+    'b-proof': '00:17-00:25',
+    'b-decision': '00:25-00:30'
+  };
+  const talkRanges = Object.fromEntries(Object.keys(talkNames).map(id => {
+    const indices = slides.flatMap((slide, index) => slide.dataset.talk === id ? [index] : []);
+    return [id, { first: indices[0], last: indices.at(-1), count: indices.length }];
+  }));
   let motion = [];
   let departingSlide = null;
   let initialized = false;
   let presenterWindow = null;
-  const times = {
-    opening: '00:00-00:08', m365: '00:08-00:23', cowork: '00:23-00:36',
-    lifecycle: '00:36-01:01', reuse: '01:01-01:06', break: '01:06-01:11',
-    studio: '01:11-01:35', foundry: '01:35-01:53', close: '01:53-02:00'
-  };
   let current = 0;
+
   function stopMotion() {
     motion.forEach(animation => animation.cancel());
     motion = [];
@@ -25,7 +39,8 @@
   }
   function transition(outgoing, incoming, direction) {
     if (reducedMotion.matches || printMedia.matches || !incoming.animate) return;
-    const chapterChange = outgoing.dataset.segment !== incoming.dataset.segment;
+    const chapterChange = outgoing.dataset.segment !== incoming.dataset.segment ||
+      outgoing.dataset.talk !== incoming.dataset.talk;
     const desktop = window.matchMedia('(min-width: 761px)').matches;
     const options = { duration: chapterChange ? 480 : 340, easing: 'cubic-bezier(0.16, 1, 0.3, 1)' };
     if (desktop) {
@@ -41,7 +56,6 @@
       };
       motion.push(exit);
     }
-    // Chapter changes turn a new sheet; within a chapter the work moves forward.
     motion.push(incoming.animate(chapterChange ? [
       { opacity: 0.2, clipPath: direction > 0 ? 'inset(0 0 0 10%)' : 'inset(0 10% 0 0)' },
       { opacity: 1, clipPath: 'inset(0 0 0 0)' }
@@ -49,7 +63,7 @@
       { opacity: 0, transform: `translateX(${direction * (desktop ? 40 : 16)}px)` },
       { opacity: 1, transform: 'translateX(0)' }
     ], options));
-    const artifact = incoming.querySelector('.commands, blockquote, .integration');
+    const artifact = incoming.querySelector('.commands, blockquote, .architecture-flow');
     if (artifact) {
       motion.push(artifact.animate([
         { transform: 'translateY(12px)', opacity: 0.45 },
@@ -57,31 +71,49 @@
       ], { ...options, duration: 380, delay: 70 }));
     }
   }
+  function activeRange() {
+    return talkRanges[slides[current].dataset.talk];
+  }
   function updatePresenter() {
     if (!presenterWindow || presenterWindow.closed) return;
     const slide = slides[current];
+    const talk = slide.dataset.talk;
+    const range = talkRanges[talk];
     presenterWindow.postMessage({
       type: 'detroit-presenter-state',
       index: current,
       count: slides.length,
+      talk,
+      talkName: talkNames[talk],
+      talkIndex: current - range.first,
+      talkCount: range.count,
+      talkDuration: talkDurations[talk],
+      talkStart: range.first,
+      talkEnd: range.last,
       title: slide.querySelector('h1, h2').innerText.replace(/\s+/g, ' ').trim(),
-      nextTitle: slides[current + 1]?.querySelector('h1, h2').textContent ?? 'End of deck',
+      nextTitle: current < range.last
+        ? slides[current + 1].querySelector('h1, h2').textContent
+        : `End of ${talkNames[talk]}`,
       time: times[slide.dataset.segment],
       notes: slide.querySelector('template.speaker-notes').innerHTML
     }, '*');
   }
-  function show(index, updateHash = true) {
+  function show(index, updateHash = true, changeTalk = false) {
     const oldIndex = current;
+    const currentRange = activeRange();
+    const range = changeTalk ? null : currentRange;
     stopMotion();
-    current = Math.max(0, Math.min(slides.length - 1, index));
+    current = Math.max(range?.first ?? 0, Math.min(range?.last ?? slides.length - 1, index));
     slides.forEach((slide, i) => {
       slide.classList.toggle('active', i === current);
       slide.setAttribute('aria-hidden', String(i !== current));
       slide.inert = i !== current;
     });
-    previous.disabled = current === 0;
-    next.disabled = current === slides.length - 1;
-    document.getElementById('position').textContent = `${current + 1} / ${slides.length}`;
+    const active = activeRange();
+    previous.disabled = current === active.first;
+    next.disabled = current === active.last;
+    document.getElementById('position').textContent =
+      `${talkNames[slides[current].dataset.talk]} · ${current - active.first + 1}/${active.count}`;
     document.getElementById('chapter-time').textContent = times[slides[current].dataset.segment];
     document.title = `${slides[current].querySelector('h1, h2').innerText.replace(/\s+/g, ' ').trim()} | Detroit 2026`;
     if (updateHash) history.replaceState(null, '', `#${slides[current].id}`);
@@ -92,9 +124,12 @@
     }
     initialized = true;
   }
+  function jumpToTalk(talk) {
+    show(talkRanges[talk].first, true, true);
+  }
   function fromHash() {
     const index = slides.findIndex(slide => `#${slide.id}` === location.hash);
-    show(index < 0 ? 0 : index, false);
+    show(index < 0 ? 0 : index, false, true);
   }
   function openPresenter() {
     notice.hidden = true;
@@ -115,6 +150,8 @@
     if (event.data?.type !== 'detroit-presenter-command') return;
     if (event.data.action === 'previous') show(current - 1);
     if (event.data.action === 'next') show(current + 1);
+    if (event.data.action === 'talk-a') jumpToTalk('talk-a');
+    if (event.data.action === 'talk-b') jumpToTalk('talk-b');
   });
   async function fullscreen() {
     notice.hidden = true;
@@ -133,16 +170,19 @@
   }
   previous.addEventListener('click', () => show(current - 1));
   next.addEventListener('click', () => show(current + 1));
+  document.getElementById('jump-talk-a').addEventListener('click', () => jumpToTalk('talk-a'));
+  document.getElementById('jump-talk-b').addEventListener('click', () => jumpToTalk('talk-b'));
   document.getElementById('presenter').addEventListener('click', openPresenter);
   document.getElementById('fullscreen').addEventListener('click', fullscreen);
   document.getElementById('print').addEventListener('click', () => window.print());
   window.addEventListener('hashchange', fromHash);
   document.addEventListener('keydown', event => {
     if (event.altKey || event.ctrlKey || event.metaKey || /^(INPUT|TEXTAREA|SELECT|BUTTON|A)$/.test(event.target.tagName)) return;
+    const range = activeRange();
     const actions = {
       ArrowRight: () => show(current + 1), PageDown: () => show(current + 1),
       ' ': () => show(current + 1), ArrowLeft: () => show(current - 1),
-      PageUp: () => show(current - 1), Home: () => show(0), End: () => show(slides.length - 1),
+      PageUp: () => show(current - 1), Home: () => show(range.first), End: () => show(range.last),
       p: openPresenter, P: openPresenter, f: fullscreen, F: fullscreen
     };
     if (actions[event.key]) {
@@ -150,7 +190,6 @@
       actions[event.key]();
     }
   });
-  // Print exposes every slide, so remove screen-only accessibility hiding too.
   reducedMotion.addEventListener('change', stopMotion);
   printMedia.addEventListener('change', stopMotion);
   window.addEventListener('resize', stopMotion);

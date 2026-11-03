@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 660" role="img" aria-labelledby="title desc">
+  <title id="title">One theme edit, same application</title>
+  <desc id="desc">Illustrated theme edit in src/index.css replaces the existing Indigo preset with Green. The Green primary value is oklch 0.45 0.12 150 in light mode and oklch 0.64 0.13 150 in dark mode. App content and needs-review state stay unchanged.</desc>
+  <g font-family="Arial, sans-serif" fill="#1a2c55">
+    <rect x="35" y="50" width="730" height="530" rx="5" fill="#1a2c55"/>
+    <path d="M35 115h730M220 115v465" stroke="#5c7297" stroke-width="2"/>
+    <text x="65" y="91" fill="white" font-size="27">SOURCE DIFF · src\index.css</text>
+    <text x="61" y="172" fill="#deebf8" font-size="23">src</text><text x="86" y="216" fill="#deebf8" font-size="23">index.css</text>
+    <g font-family="Consolas, monospace" font-size="25" fill="white">
+      <text x="250" y="188">THEME PRESET CHANGE</text>
+      <text x="250" y="253" fill="#ffc078">− Indigo theme tokens</text>
+      <text x="250" y="320" fill="#b7dcff">+ Green theme tokens</text>
+      <text x="250" y="388">Light --primary:</text><text x="280" y="425">oklch(0.45 0.12 150)</text>
+      <text x="250" y="483">Dark --primary:</text><text x="280" y="520">oklch(0.64 0.13 150)</text>
+    </g>
+    <path d="M795 320h65l-17-15m17 15-17 15" fill="none" stroke="#f4911b" stroke-width="5"/>
+    <rect x="900" y="55" width="455" height="205" fill="white" stroke="#c9d6e3" stroke-width="3"/><rect x="900" y="55" width="455" height="49" fill="#4f46a5"/>
+    <text x="925" y="89" fill="white" font-size="25" font-weight="700">Launch Review · before</text>
+    <text x="925" y="153" font-size="28" font-weight="700">Huron drill kit</text><text x="925" y="202" font-size="25">Needs review · same 3 gaps</text>
+    <path d="M1127 277v50l-15-16m15 16 15-16" fill="none" stroke="#f4911b" stroke-width="5"/>
+    <rect x="900" y="352" width="455" height="205" fill="white" stroke="#c9d6e3" stroke-width="3"/><rect x="900" y="352" width="455" height="49" fill="#33734c"/>
+    <text x="925" y="386" fill="white" font-size="25" font-weight="700">Launch Review · after</text>
+    <text x="925" y="450" font-size="28" font-weight="700">Huron drill kit</text><text x="925" y="499" font-size="25">Needs review · same 3 gaps</text>
+    <text x="700" y="630" font-size="28" text-anchor="middle">Color-change walkthrough · one source edit, no new feature or backend</text>
+  </g>
+</svg>

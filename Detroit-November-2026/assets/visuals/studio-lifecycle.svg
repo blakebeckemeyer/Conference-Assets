@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 620" role="img" aria-labelledby="title desc">
+  <title id="title">Operate the launch assistant through DEV, TEST and PROD</title>
+  <desc id="desc">Environment roles govern who can change and release the agent. A versioned solution moves from development to test, then through an approved release to production. Keep test evidence and the previous release. Full ALM applies to both Studio harnesses.</desc>
+  <g font-family="Arial, sans-serif" fill="#1a2c55">
+    <path d="M60 92h1280" stroke="#135894" stroke-width="4"/>
+    <text x="700" y="65" text-anchor="middle" font-size="31" font-weight="700">Environment roles · solution versions · controlled releases</text>
+    <g fill="#deebf8"><rect x="60" y="150" width="360" height="270"/><rect x="520" y="150" width="360" height="270"/></g>
+    <rect x="980" y="150" width="360" height="270" fill="#1a2c55"/>
+    <path d="M440 282h60l-18-15m18 15-18 15m398-15h60l-18-15m18 15-18 15" fill="none" stroke="#f4911b" stroke-width="6"/>
+    <g text-anchor="middle">
+      <text x="240" y="217" font-size="42" font-weight="700">DEV</text><text x="240" y="286" font-size="30">Configure &amp; compare</text><text x="240" y="336" font-size="27">Package a version</text>
+      <text x="700" y="217" font-size="42" font-weight="700">TEST</text><text x="700" y="286" font-size="30">Check both products</text><text x="700" y="336" font-size="27">Retain test evidence</text>
+      <g fill="white"><text x="1160" y="217" font-size="42" font-weight="700">PROD</text><text x="1160" y="286" font-size="30">Release the version</text><text x="1160" y="336" font-size="27">Publish &amp; monitor</text></g>
+    </g>
+    <path d="M240 446v56h920v-56" fill="none" stroke="#135894" stroke-width="3" stroke-dasharray="10 8"/>
+    <text x="700" y="550" text-anchor="middle" font-size="29">Keep the release record and previous version.</text>
+    <text x="700" y="600" text-anchor="middle" font-size="27" font-weight="700">Full ALM in both Studio harnesses.</text>
+  </g>
+</svg>

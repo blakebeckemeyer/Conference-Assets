@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 650" role="img" aria-labelledby="title desc">
+  <title id="title">Foundry capability map as an operating system for the workload</title>
+  <desc id="desc">Inputs flow through a selected model and an agent to a bounded tool and review artifact. Evaluation compares output to expected facts, tracing inspects the execution path, and governance surrounds access, data and spend.</desc>
+  <g font-family="Arial, sans-serif" fill="#1a2c55">
+    <path d="M60 100h1280v445H60Z" fill="#f6f7f8" stroke="#c9d6e3" stroke-width="3"/>
+    <rect x="60" y="100" width="1280" height="63" fill="#1a2c55"/>
+    <text x="90" y="143" font-size="29" font-weight="700" fill="white">GOVERNANCE</text><text x="1310" y="143" text-anchor="end" font-size="26" fill="white">Identity · data · network · spend</text>
+    <path d="M163 240h90l20 20v124H163Z" fill="white" stroke="#135894" stroke-width="4"/><path d="M180 282h66m-66 23h66m-66 23h40" stroke="#135894" stroke-width="4"/>
+    <path d="M294 310h73m240 0h73m200 0h73m227 0h63" stroke="#f4911b" stroke-width="6"/>
+    <circle cx="495" cy="310" r="104" fill="#deebf8" stroke="#135894" stroke-width="4"/>
+    <path d="m495 236 38 25v48l-38 25-38-25v-48Zm-38 25 76 48m0-48-76 48" fill="none" stroke="#135894" stroke-width="4"/>
+    <text x="495" y="375" text-anchor="middle" font-size="30" font-weight="700">Model</text>
+    <rect x="695" y="213" width="180" height="194" fill="#1a2c55"/><text x="785" y="323" text-anchor="middle" font-size="34" fill="white" font-weight="700">Agent</text>
+    <path d="M974 228h188v163H974Z" fill="white" stroke="#135894" stroke-width="4"/><path d="m1000 263 18 17-18 17m40 0h35M998 328h138m-138 25h95" stroke="#135894" stroke-width="4" fill="none"/>
+    <text x="1068" y="440" font-size="29" text-anchor="middle" font-weight="700">Bounded tool</text>
+    <text x="220" y="440" font-size="29" text-anchor="middle" font-weight="700">Your inputs</text>
+    <path d="M360 503h770" stroke="#135894" stroke-width="3" stroke-dasharray="10 10"/>
+    <text x="480" y="595" text-anchor="middle" font-size="29" font-weight="700">Evaluation: did it work?</text>
+    <text x="1020" y="595" text-anchor="middle" font-size="29" font-weight="700">Tracing: how did it work?</text>
+  </g>
+</svg>

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 620" role="img" aria-labelledby="title desc">
+  <title id="title">From Michigan manufacturer to retailer launch</title>
+  <desc id="desc">An illustrated drill kit travels from a factory, through a sourced launch package, to a retailer shelf. Barcode, images and warranty are still missing.</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="m0 0 8 5-8 5" fill="#f4911b"/></marker></defs>
+  <g font-family="Arial, sans-serif" fill="#1a2c55">
+    <path d="M75 310V190l85 45v-45l85 45v-45l85 45v190H75Z" fill="#deebf8" stroke="#135894" stroke-width="5"/>
+    <path d="M275 200V110h38v110M99 270h45v40H99zm80 0h45v40h-45zm80 0h45v40h-45z" fill="#135894"/>
+    <path d="M155 425v-68h80v68" fill="white" stroke="#135894" stroke-width="5"/>
+    <text x="202" y="488" text-anchor="middle" font-size="31" font-weight="700">Lakeshore Motion Tools</text>
+    <text x="202" y="527" text-anchor="middle" font-size="25">Grand Rapids, Michigan</text>
+    <path d="M365 290h120" stroke="#f4911b" stroke-width="5" marker-end="url(#arrow)"/>
+    <path d="M545 127h245l55 58v247H545Z" fill="white" stroke="#135894" stroke-width="4"/>
+    <path d="M790 127v58h55" fill="#deebf8" stroke="#135894" stroke-width="4"/>
+    <text x="579" y="202" font-size="26" font-weight="700">LAUNCH PACKAGE</text>
+    <g transform="translate(593 230)">
+      <path d="M0 0h128l30 25v45h-60l-20 65H34l15-65H0Z" fill="#f4911b" stroke="#1a2c55" stroke-width="4"/>
+      <path d="M158 19h41v41h-41M35 135h54v22H35" fill="#1a2c55"/>
+      <path d="M17 25h59M17 40h45" stroke="#1a2c55" stroke-width="5"/>
+    </g>
+    <text x="695" y="488" text-anchor="middle" font-size="31" font-weight="700">Huron drill kit</text>
+    <text x="695" y="527" text-anchor="middle" font-size="25">LM-D1820-K2</text>
+    <path d="M880 290h100" stroke="#f4911b" stroke-width="5" marker-end="url(#arrow)"/>
+    <path d="M1040 235h290v190h-290z" fill="#deebf8" stroke="#135894" stroke-width="5"/>
+    <path d="M1025 235l35-75h250l35 75Z" fill="#135894"/>
+    <path d="M1100 180v55m55-55v55m55-55v55m55-55v55" stroke="white" stroke-width="17"/>
+    <path d="M1065 275h125v100h-125zM1220 275h75v150" fill="white" stroke="#135894" stroke-width="5"/>
+    <text x="1185" y="488" text-anchor="middle" font-size="29" font-weight="700">Great Lakes</text>
+    <text x="1185" y="527" text-anchor="middle" font-size="25">Home &amp; Hardware</text>
+    <path d="M555 565h750" stroke="#c9d6e3" stroke-width="2"/>
+    <text x="930" y="602" text-anchor="middle" font-size="25">Still needed: GTIN · approved images · warranty terms</text>
+  </g>
+</svg>

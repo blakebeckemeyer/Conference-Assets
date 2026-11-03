@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 660" role="img" aria-labelledby="title desc">
+  <title id="title">A catalog draft export and a useful review queue</title>
+  <desc id="desc">Five designed cases produce two validated drafts and three review records: model conflict, image variant conflict and missing warranty. These are expected outcomes, not a deployed interface or measured result.</desc>
+  <g font-family="Arial, sans-serif" fill="#1a2c55">
+    <text x="55" y="65" font-size="30" font-weight="700">Five synthetic records → two distinct outputs</text>
+    <rect x="50" y="105" width="790" height="435" fill="#f6f7f8"/>
+    <rect x="50" y="105" width="790" height="65" fill="#1a2c55"/><text x="75" y="148" fill="white" font-size="29" font-weight="700">Human review queue</text>
+    <g font-size="28">
+      <text x="80" y="225" font-weight="700">FC-02</text><text x="240" y="225">NL-200 vs NL-201</text><text x="240" y="263">Resolve model evidence</text>
+      <text x="80" y="340" font-weight="700">FC-03</text><text x="240" y="340">Black in text / red in image</text><text x="240" y="378">Resolve variant evidence</text>
+      <text x="80" y="455" font-weight="700">FC-04</text><text x="240" y="455">Warranty not supplied</text><text x="240" y="493">Request missing source</text>
+    </g>
+    <path d="M75 285h735M75 400h735" stroke="#c9d6e3" stroke-width="2"/>
+    <rect x="900" y="105" width="450" height="435" fill="#deebf8"/>
+    <text x="930" y="158" font-size="29" font-weight="700">Validated draft export</text>
+    <g font-size="28"><text x="935" y="242">FC-01 · NL-100</text><text x="935" y="287">250 mm → 25.0 cm</text><text x="935" y="377">FC-05 · NL-500</text><text x="935" y="422">254 mm → 25.4 cm</text></g>
+    <text x="935" y="497" font-size="25">JSON / CSV + evidence</text>
+    <text x="700" y="600" text-anchor="middle" font-size="28">Expected outcomes · no retailer publication or automatic approval</text>
+  </g>
+</svg>

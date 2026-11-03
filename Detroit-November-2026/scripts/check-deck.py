@@ -1,156 +1,255 @@
-"""Dependency-free structural checks, not a substitute for browser inspection."""
+"""Dependency-free checks for the two-talk deck and its local evidence fixtures."""
 import csv
 import json
 import re
+from decimal import Decimal
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlsplit
+from xml.etree import ElementTree
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-class Deck(HTMLParser):
+class HtmlPage(HTMLParser):
     def __init__(self):
         super().__init__()
         self.ids = []
         self.links = []
         self.slides = []
         self.notes = 0
-        self.headings = []
-        self.references = []
+        self.heading_refs = []
+        self._slide = None
+        self._note = None
+        self._capture_heading = False
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if "id" in attrs:
             self.ids.append(attrs["id"])
         if tag == "section" and "slide" in attrs.get("class", "").split():
-            self.slides.append((attrs["id"], attrs["data-segment"]))
-            self.references.append(attrs["aria-labelledby"])
+            self._slide = {
+                "id": attrs.get("id"),
+                "talk": attrs.get("data-talk"),
+                "segment": attrs.get("data-segment"),
+                "label": attrs.get("aria-labelledby"),
+                "headingId": None,
+                "title": "",
+                "minutes": None,
+                "noteCount": 0,
+                "images": [],
+            }
+            self.heading_refs.append(attrs.get("aria-labelledby"))
         if tag == "template" and "speaker-notes" in attrs.get("class", "").split():
             self.notes += 1
-        assert not (tag == "aside" and "notes" in attrs.get("class", "").split()), "Audience must not contain inline notes"
-        if tag in ("h1", "h2"):
-            self.headings.append(attrs.get("id"))
+            if self._slide is not None:
+                self._slide["noteCount"] += 1
+            self._note = []
+        if tag == "aside" and "notes" in attrs.get("class", "").split():
+            raise AssertionError("Private notes must not be inline audience content")
+        if self._slide and self._note is None:
+            assert "status" not in attrs.get("class", "").split(), "Presenter status asides must not be on slides"
+            if tag == "img":
+                assert attrs.get("alt"), "Teaching visuals need meaningful alternate text"
+                assert "display:none" not in attrs.get("style", "").replace(" ", ""), "Do not hide visuals to pass coverage"
+                self._slide["images"].append(attrs["src"])
+        if self._slide and tag in ("h1", "h2") and not self._slide["title"]:
+            self._capture_heading = True
+            self._slide["headingId"] = attrs.get("id")
         for field in ("href", "src"):
             if field in attrs:
                 self.links.append(attrs[field])
 
+    def handle_endtag(self, tag):
+        if tag in ("h1", "h2") and self._capture_heading:
+            self._capture_heading = False
+        if tag == "template" and self._note is not None:
+            note = " ".join(self._note)
+            match = re.search(r"\b(\d+)\s+minutes?\.", note)
+            self._slide["minutes"] = int(match.group(1)) if match else None
+            self._note = None
+        if tag == "section" and self._slide:
+            self.slides.append(self._slide)
+            self._slide = None
 
-deck = Deck()
-deck.feed((ROOT / "index.html").read_text(encoding="utf-8"))
-assert len(deck.ids) == len(set(deck.ids)), "Duplicate element IDs"
-assert len(deck.slides) == 48 and deck.notes == 48, "Missing slides or inert presenter notes"
-assert deck.headings == deck.references, "Slide headings/accessible names differ"
-assert [sid for sid, _ in deck.slides] == (
-    [f"slide-{n}" for n in range(1, 18)]
-    + [f"slide-lab-{n}" for n in range(1, 9)]
-    + [f"slide-{n}" for n in range(18, 41)]
-), "Existing slide anchors and inserted lab order must stay stable"
+    def handle_data(self, data):
+        if self._capture_heading and self._slide is not None:
+            self._slide["title"] += data
+        if self._note is not None:
+            self._note.append(data)
 
 
-def check_link(link, ids):
+def parse_page(filename):
+    page = HtmlPage()
+    page.feed((ROOT / filename).read_text(encoding="utf-8"))
+    assert len(page.ids) == len(set(page.ids)), f"Duplicate IDs in {filename}"
+    return page
+
+
+def check_link(source, link, all_pages):
     parts = urlsplit(link)
     if parts.scheme == "https":
-        assert parts.netloc == "learn.microsoft.com", f"Unexpected reference host: {link}"
+        assert parts.hostname == "learn.microsoft.com", f"Unexpected external host in {source}: {link}"
         return
-    assert not parts.scheme and not parts.netloc, f"External dependency: {link}"
+    assert not parts.scheme and not parts.netloc, f"Unexpected external dependency in {source}: {link}"
     if parts.path:
         target = (ROOT / unquote(parts.path)).resolve()
-        assert target.is_relative_to(ROOT), f"Out-of-scope link: {link}"
-        assert target.is_file(), f"Broken local link: {link}"
+        assert target.is_relative_to(ROOT.resolve()), f"Out-of-scope link in {source}: {link}"
+        assert target.is_file(), f"Broken local link in {source}: {link}"
+        if target in all_pages and parts.fragment:
+            assert parts.fragment in all_pages[target].ids, f"Missing page anchor in {source}: {link}"
     elif parts.fragment:
-        assert parts.fragment in ids, f"Broken anchor: {link}"
+        assert parts.fragment in all_pages[(ROOT / source).resolve()].ids, f"Broken anchor in {source}: {link}"
 
 
-for link in deck.links:
-    check_link(link, deck.ids)
-documents = {"index.html": deck}
-html_files = list(ROOT.rglob("*.html"))
-assert len(html_files) == 3 and {path.name for path in html_files} == {"index.html", "attendee-guide.html", "presenter.html"}, "Only slides, one attendee guide and the private presenter console are allowed"
-for name in ("attendee-guide.html",):
-    page = Deck()
-    page.feed((ROOT / name).read_text(encoding="utf-8"))
-    assert len(page.ids) == len(set(page.ids)), f"Duplicate anchors in {name}"
-    documents[name] = page
-for name, page in documents.items():
-    for link in page.links:
-        check_link(link, page.ids)
-        parts = urlsplit(link)
-        if parts.path in documents and parts.fragment:
-            assert parts.fragment in documents[parts.path].ids, f"Missing linked section: {name}: {link}"
-guide = documents["attendee-guide.html"]
-assert {"lifecycle", "studio", "foundry"}.issubset(set(guide.ids))
-guide_text = (ROOT / "attendee-guide.html").read_text(encoding="utf-8")
-studio = re.search(r'<section id="studio">(.*?)</section>', guide_text, re.S)[1]
-for required in ("Retail Launch Request", "GitHub Copilot harness",
-                 "register-retail-launch-draft", "General quality", "5 MB",
-                 "PreOperation", "CreateRecord", "GetItem", "ListRecords",
-                 "fixtures/studio-evaluation.csv", "fixtures/studio-tests.json",
-                 "S01-S11", "verification incomplete"):
-    assert required in studio, f"Missing Studio exercise detail: {required}"
-foundry = re.search(r'<section id="foundry">(.*?)</section>', guide_text, re.S)[1]
-model_recipe = next(block for block in re.findall(r"<pre><code>(.*?)</code></pre>", foundry, re.S)
-                    if "from openai import OpenAI" in block)
-from html import unescape
-compile(unescape(model_recipe), "embedded-foundry-recipe", "exec")
-for required in ("not unique", "Activity", "Add Foundry agent", "GitHub Copilot harness", "fixtures/policy-tests.json",
-                 "contracts/policy-answer.schema.json", "max_retries=0", "--allow-paid-calls"):
-    assert required in foundry, f"Missing Foundry boundary: {required}"
-assert "Flows &gt; New flow" not in studio and "Topic.Sku" not in studio
-assert "Compare meaning &ge;85" not in studio and "standard-harness Foundry connected-agent" not in foundry
-deck_js = (ROOT / "deck.js").read_text(encoding="utf-8")
-assert "toggleNotes" not in deck_js and "notes-visible" not in deck_js
-assert "presenter.html" in deck_js and "event.source !== presenterWindow" in deck_js
-assert "aria-pressed" not in (ROOT / "index.html").read_text(encoding="utf-8"), "No audience notes toggle is allowed"
-presenter = Deck()
-presenter.feed((ROOT / "presenter.html").read_text(encoding="utf-8"))
-for link in presenter.links:
-    check_link(link, presenter.ids)
-assert "Share only the audience window" in (ROOT / "presenter.html").read_text(encoding="utf-8")
+deck = parse_page("index.html")
+assert len(deck.slides) == deck.notes == 32, "Expected 32 slides with one inert private note template each"
+assert all(item["label"] == item["headingId"] and item["noteCount"] == 1 for item in deck.slides), (
+    "Each slide needs an accessible title and one private note template"
+)
+assert all(item["title"] and item["minutes"] for item in deck.slides), "A slide title or note duration is missing"
+assert sum(bool(item["images"]) for item in deck.slides) >= 28, "Keep the deck visual-led"
+svg_assets = set()
+for slide in deck.slides:
+    for image in slide["images"]:
+        if image.endswith(".svg"):
+            svg_assets.add(ROOT / image)
+for asset in svg_assets:
+    svg = ElementTree.parse(asset).getroot()
+    assert svg.attrib.get("viewBox"), f"Scalable viewBox missing from {asset.name}"
+    assert svg.find("{http://www.w3.org/2000/svg}title") is not None, f"Visual title missing: {asset.name}"
+    assert not list(svg.iter("{http://www.w3.org/2000/svg}script")), "Visual assets must be inert"
 
 schedule = json.loads((ROOT / "data" / "run-of-show.json").read_text(encoding="utf-8"))
-elapsed = 0
-covered = []
-notes = re.findall(r'<template class="speaker-notes">(.*?)</template>', (ROOT / "index.html").read_text(encoding="utf-8"), re.S)
-durations = [int(re.search(r", (\d+) minutes?\.", note)[1]) for note in notes]
-for segment in schedule["segments"]:
-    assert segment["startMinute"] == elapsed, "Timing gap or overlap"
-    assert segment["minutes"] > 0
-    elapsed += segment["minutes"]
-    actual = [n for n, (_, name) in enumerate(deck.slides, 1) if name == segment["id"]]
-    assert actual == segment["slides"], f"Chapter mapping differs: {segment['id']}"
-    assert sum(durations[n - 1] for n in actual) == segment["minutes"], f"Presenter pacing differs: {segment['id']}"
-    covered.extend(actual)
-    start = segment["startMinute"]
-    label = f"{start // 60:02}:{start % 60:02}-{elapsed // 60:02}:{elapsed % 60:02}"
-    assert label in (ROOT / "deck.js").read_text(encoding="utf-8"), f"Toolbar timing differs: {label}"
-    assert label in (ROOT / "index.html").read_text(encoding="utf-8"), f"Agenda timing differs: {label}"
-    assert label in (ROOT / "attendee-guide.html").read_text(encoding="utf-8"), f"Guide timing differs: {label}"
-    assert label in (ROOT / "README.md").read_text(encoding="utf-8"), f"Setup timing differs: {label}"
-assert elapsed == schedule["durationMinutes"] == 120
-assert covered == list(range(1, 49)), "Unscheduled or duplicate slide"
-lab = re.search(r'<section id="lifecycle">(.*?)</section>', guide_text, re.S)[1]
-for required in (
-    "ms auth status", "ms auth login --device-code", "ms app clone",
-    "ms app dev", "git push -u origin", "ms app play --mode preview --commit",
-    "ms app build-status", "ms app deploy --commit", "ms app play --mode live",
-    "src\\index.css", "bun run --parallel typecheck build:check lint",
-    "oklch(0.45 0.12 150)", "oklch(0.64 0.13 150)",
-    "709ff27e-269a-46b8-843a-c4eae1d9fe83", "71ea881b-016d-ec46-bde0-6d4b574f6012",
-):
-    assert required in lab, f"Missing lifecycle recipe detail: {required}"
+presentations = schedule["presentations"]
+assert schedule["totalPresentationMinutes"] == 90
+assert [(item["id"], item["durationMinutes"]) for item in presentations] == [
+    ("talk-a", 60), ("talk-b", 30)
+]
+scheduled_slides = []
+for presentation in presentations:
+    first, last = presentation["firstSlide"], presentation["lastSlide"]
+    talk_slides = list(range(first, last + 1))
+    actual = [index for index, slide in enumerate(deck.slides, 1)
+              if slide["talk"] == presentation["id"]]
+    assert actual == talk_slides, f"Unexpected slide range for {presentation['id']}"
+    assert deck.slides[first - 1]["id"] == presentation["startAnchor"]
+    assert sum(deck.slides[index - 1]["minutes"] for index in talk_slides) == presentation["durationMinutes"]
+    segment_coverage = []
+    elapsed = 0
+    for segment in presentation["segments"]:
+        slides = segment["slides"]
+        assert slides and slides == list(range(slides[0], slides[-1] + 1)), "Segment slides must be contiguous"
+        assert all(deck.slides[index - 1]["talk"] == presentation["id"] and
+                   deck.slides[index - 1]["segment"] == segment["id"] for index in slides), (
+            f"Slide mapping differs for {segment['id']}"
+        )
+        assert sum(deck.slides[index - 1]["minutes"] for index in slides) == segment["minutes"], (
+            f"Presenter note pacing differs for {segment['id']}"
+        )
+        segment_coverage.extend(slides)
+        end = elapsed + segment["minutes"]
+        label = f"{elapsed // 60:02}:{elapsed % 60:02}-{end // 60:02}:{end % 60:02}"
+        for filename in ("index.html", "attendee-guide.html", "deck.js"):
+            assert label in (ROOT / filename).read_text(encoding="utf-8"), (
+                f"Talk-relative timing {label} missing from {filename}"
+            )
+        elapsed = end
+    assert elapsed == presentation["durationMinutes"]
+    assert segment_coverage == talk_slides, f"Unscheduled/duplicate slides in {presentation['id']}"
+    scheduled_slides.extend(talk_slides)
+assert scheduled_slides == list(range(1, 33)), "Talks must cover each slide exactly once"
 
-fixture = json.loads((ROOT / "fixtures" / "expected-facts.json").read_text(encoding="utf-8"))
-for product in fixture["products"]:
+html_files = list(ROOT.rglob("*.html"))
+assert len(html_files) == 3 and {path.name for path in html_files} == {
+    "index.html", "attendee-guide.html", "presenter.html"
+}, "Only the audience deck, consolidated attendee guide and private presenter console are allowed"
+guide = parse_page("attendee-guide.html")
+for section in ("start", "local", "m365", "cowork", "lifecycle", "studio", "foundry", "checks", "references"):
+    assert section in guide.ids, f"Missing attendee guide section #{section}"
+presenter = parse_page("presenter.html")
+all_pages = {
+    (ROOT / "index.html").resolve(): deck,
+    (ROOT / "attendee-guide.html").resolve(): guide,
+    (ROOT / "presenter.html").resolve(): presenter,
+}
+for filename, page in (("index.html", deck), ("attendee-guide.html", guide), ("presenter.html", presenter)):
+    for link in page.links:
+        check_link(filename, link, all_pages)
+
+deck_js = (ROOT / "deck.js").read_text(encoding="utf-8")
+presenter_js = (ROOT / "presenter.js").read_text(encoding="utf-8")
+presenter_html = (ROOT / "presenter.html").read_text(encoding="utf-8")
+assert "jump-talk-a" in deck_js and "jump-talk-b" in deck_js
+assert "talk-a" in presenter_js and "talk-b" in presenter_js and "talkDuration" in presenter_js
+assert "Start Talk A" in presenter_html and "Start Talk B" in presenter_html
+assert "resets when you switch talks" in presenter_html
+assert "aria-pressed" not in (ROOT / "index.html").read_text(encoding="utf-8")
+
+visuals = json.loads((ROOT / "assets" / "conference-visual-sources.json").read_text(encoding="utf-8"))
+assert visuals["sources"]
+for source in visuals["sources"]:
+    assert source["title"] and source["pages"] and source["adaptation"]
+    assert set(source["usedOnSlides"]).issubset({slide["id"] for slide in deck.slides})
+    assert source["authors"] and source["filename"] and re.fullmatch(r"[A-F0-9]{64}", source["sha256"])
+    for asset in source["assets"]:
+        assert (ROOT / "assets" / asset).is_file(), f"Missing attributed visual {asset}"
+brand = json.loads((ROOT / "assets" / "brand-sources.json").read_text(encoding="utf-8"))
+assert "19 Talk A slides and 13 independent Talk B slides" in brand["surfaceRecord"]["contentBoundary"]
+
+expected = json.loads((ROOT / "fixtures" / "expected-facts.json").read_text(encoding="utf-8"))
+for product in expected["products"]:
     folder = ROOT / "examples" / product["productId"]
     with (folder / "retailer-listing.csv").open(encoding="utf-8", newline="") as stream:
         rows = list(csv.DictReader(stream))
-    assert len(rows) == 1 and None not in rows[0], "CSV quoting or row shape failed"
+    listing = product["listing"]
+    assert len(rows) == 1 and None not in rows[0], f"Invalid listing CSV for {product['productId']}"
     row = rows[0]
-    expected = product["listing"]
-    assert row["sku"] == expected["sku"] and row["title"] == expected["title"]
-    assert row["manufacturer_msrp"] == f'{expected["msrp"]:.2f}'
-    assert [row[f"bullet_{n}"] for n in range(1, 6)] == expected["bullets"]
+    assert row["sku"] == listing["sku"] and row["title"] == listing["title"]
+    assert row["manufacturer_msrp"] == f'{listing["msrp"]:.2f}'
+    assert [row[f"bullet_{n}"] for n in range(1, 6)] == listing["bullets"]
     assert row["status"] == "needs_review" and row["synthetic"] == "true"
     assert row["gtin"] == row["image_assets"] == row["warranty_terms"] == ""
-print("Deck: exactly three HTML files, 48 slides, 48 inert notes, one consolidated attendee guide with valid deep links, 120 contiguous minutes with matching note pacing, model-recipe syntax and two CSVs checked.")
+
+foundry = json.loads((ROOT / "fixtures" / "foundry-catalog-processing.json").read_text(encoding="utf-8"))
+assert foundry["status"] == "design-only-not-a-model-or-foundry-run"
+assert foundry["scenario"]["independentOfTalkA"] is True
+assert foundry["scenario"]["publishActionEnabled"] is False
+assert foundry["scenario"]["sourceDocumentsBuilt"] is False and foundry["scenario"]["pipelineBuilt"] is False
+cases = foundry["cases"]
+assert [case["caseId"] for case in cases] == [f"FC-{n:02}" for n in range(1, 6)]
+for case in cases:
+    inputs, result = case["plannedInputs"], case["expected"]
+    assert set(inputs) == {"specPdf", "supplierSpreadsheet", "packagingImage"}
+    assert all(inputs.values())
+    # This checks the design oracle, not extraction accuracy or a deployed validator.
+    for source in ("specPdf", "supplierSpreadsheet"):
+        measurement = re.search(r"(\d+(?:\.\d+)?) (mm|cm)", inputs[source])
+        assert measurement, f"Missing designed measurement for {case['caseId']}"
+        normalized = Decimal(measurement[1]) / (10 if measurement[2] == "mm" else 1)
+        assert Decimal(result["width_cm"]) == normalized
+    expected_status = "needs_review" if result["issues"] else "validated_draft"
+    assert result["status"] == expected_status
+    assert {"sku", "color", "width_cm", "warranty_months", "issues", "status"} <= set(result)
+assert cases[1]["expected"]["sku"] is None
+assert cases[1]["expected"]["candidates"]["sku"] == ["NL-200", "NL-201"]
+assert cases[2]["expected"]["color"] is None
+assert cases[2]["expected"]["candidates"]["color"] == ["black", "red"]
+assert cases[3]["expected"]["warranty_months"] is None
+assert [case["caseId"] for case in cases if case["expected"]["status"] == "validated_draft"] == ["FC-01", "FC-05"]
+assert foundry["comparisonPlan"]["results"] is None and foundry["comparisonPlan"]["winner"] is None
+
+guide_text = (ROOT / "attendee-guide.html").read_text(encoding="utf-8")
+for required in ("studio-models", "studio-scorecard", "studio-alm", "studio-publish",
+                 "428fc189-ef8f-e8ff-bfc1-ac1aadb32905", "authoring-select-agent-model",
+                 "publication-channels-overview", "fixtures/foundry-catalog-processing.json",
+                 "foundry-prepare", "foundry-input", "foundry-run", "foundry-result",
+                 "foundry-trace", "foundry-tests"):
+    assert required in guide_text, f"Missing current two-talk setup detail: {required}"
+for removed in ("studio-dataverse", "register-retail-launch-draft", "ms app deploy",
+                "ms app clone", "Copy to Copilot Studio", "PreValidation",
+                "foundry-quote-comparison", "DockLink-R2", "FQ-01"):
+    assert removed not in guide_text, f"Unused demo reintroduced into attendee guide: {removed}"
+for case in cases:
+    assert case["caseId"] in guide_text, f"Missing Foundry walkthrough case {case['caseId']}"
+print("Deck check passed: 32 slides, two independent 60/30-minute schedules, private notes, three HTML endpoints, valid local links, source attribution and synthetic fixtures.")
