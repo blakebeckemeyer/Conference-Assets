@@ -1,0 +1,6 @@
+{
+  "base_url": "https://dtw-tool-demo.openai.azure.com/openai/v1/",
+  "deployment": "gpt-6.1-sol",
+  "tenant_id": "6aab181b-a190-4247-a5d7-cb792347c7fb",
+  "subscription_id": "c4fb1c99-fb99-4dc1-9926-a3a4356fd44a"
+}
