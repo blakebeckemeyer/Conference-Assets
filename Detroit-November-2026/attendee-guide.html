@@ -144,37 +144,38 @@ and what the product team must supply. Keep unknown values unknown.</code></pre>
     <section id="foundry">
       <h2>Beyond chat: turn supplier files into a usable catalog</h2>
       <p><strong>Your goal:</strong> follow mixed-format evidence into validated catalog drafts and a useful review queue, then decide whether a more specialized implementation earns its complexity. Fictional Northline Desk supplies desk lamps; no prior talk, launch files or Studio agent is required.</p>
-      <p><strong>Current readiness:</strong> this section is the walkthrough for the approved replacement demo. The <a href="fixtures/foundry-catalog-processing.json">design fixture</a> and slide illustrations define the cases and expected outcomes. Actual supplier PDFs, spreadsheet and images, the processing service, review interface, exports and Foundry runs are not built yet. Follow the live steps only after the presenter supplies that implementation. The fixture is an answer key, not model input or proof of a run.</p>
+      <p><strong>Start here:</strong> the <a href="foundry-demo/README.md">local Python demo</a> generates one real synthetic PDF and packaging image, sends them to your existing model deployment and checks the structured response in code. The November 4 live run succeeded: it retained the PDF's black and image's red evidence and routed the record to review. This is the first slice, not the complete catalog service. Spreadsheet ingestion, review UI, export and comparison runs remain unbuilt. The <a href="fixtures/foundry-catalog-processing.json">design fixture</a> is an answer key, not model input or proof of a run.</p>
       <nav aria-label="Foundry demo steps"><a href="#foundry-prepare">Before you start</a><a href="#foundry-input">Inspect inputs</a><a href="#foundry-run">Process a bundle</a><a href="#foundry-result">Review and export</a><a href="#foundry-trace">Compare and investigate</a><a href="#foundry-tests">Acceptance checks</a></nav>
       <article id="foundry-prepare">
-        <h3>1. Open the catalog service and identify the run configuration</h3>
+        <h3>1. Prepare the local demo and confirm access</h3>
         <ol>
-          <li>Use the processing/review application supplied by the presenter. A generic model playground is not the application: it does not supply the file adapters, reconciliation, validator or export code.</li>
-          <li>Identify the source-bundle version, implementation version, output-schema version and model deployment/version. Save these with the run ID so the comparison is reproducible.</li>
-          <li>Confirm the approved Foundry project and trace destination with the owner. It is not inferred from the Studio environment. Use synthetic data only and obtain approval for model, extraction, evaluation and telemetry consumption.</li>
+          <li>Open the repository in your editor. Follow <a href="foundry-demo/README.md">the exact setup commands</a> to create the Python environment, install dependencies, run the offline checks and generate the two inputs. If the inputs already exist, reuse them.</li>
+          <li>Open <code>foundry-demo/config.json</code>. The target is <code>dtw-tool-demo</code>, deployment <code>gpt-6.1-sol</code>, not an agent that you need to create. The script calls the Responses API directly.</li>
+          <li>Use the isolated Azure CLI login described in the README; keep <code>AZURE_CONFIG_DIR</code> set in the terminal running Python. Do not change your shared active profile or paste credentials into code.</li>
+          <li>The demo identity now has <strong>Cognitive Services OpenAI User</strong> covering <strong>dtw-tool-demo</strong>. The working endpoint in the configuration is <code>https://dtw-tool-demo.openai.azure.com/openai/v1/</code>; the earlier Foundry gateway returned HTTP 401. For another identity, follow the README's least-privilege access instructions. No role changes are made by the script.</li>
         </ol>
         <p><strong>Why Foundry rather than just Studio?</strong> The subject is the developer-owned service: model/extraction choices, custom processing logic, evidence preservation and measured acceptance tests. Studio can call that service or may already be sufficient for a simpler workflow. This demo does not depend on that integration, and does not claim that document/image processing, code, evaluation or governance are exclusive to Foundry.</p>
         <p>A fixed pipeline using Foundry model APIs is a valid starting point. Add a prompt or hosted agent only if managed orchestration or a code-based agent runtime is actually useful. Surrounding file processing, storage and application hosting still require their own implementation.</p>
       </article>
       <article id="foundry-input">
         <h3>2. Inspect the sources before running the model</h3>
-        <p>Open the prepared FC-03 source bundle side by side. The planned evidence is:</p>
+        <p>Open <code>foundry-demo/inputs/specification.pdf</code> and <code>foundry-demo/inputs/packaging.png</code> side by side. They implement the two-source portion of FC-03:</p>
         <table><thead><tr><th>Source</th><th>What to inspect</th><th>Why it matters</th></tr></thead><tbody>
           <tr><td>Specification PDF</td><td>NL-300 · black desk lamp · 250 mm base width · 24-month warranty</td><td>Extract text with page and field evidence.</td></tr>
-          <tr><td>Supplier spreadsheet</td><td>NL-300 · black · 250 mm · 24 months</td><td>Preserve the actual sheet/cell references.</td></tr>
+          <tr><td>Supplier spreadsheet · later</td><td>Not part of this first slice.</td><td>Sheet/cell extraction will be added separately.</td></tr>
           <tr><td>Packaging image</td><td>Red lamp, readable NL-300 label</td><td>The model number agrees, but the variant does not.</td></tr>
         </tbody></table>
-        <p><strong>Predict the outcome:</strong> the record must go to review. Two text sources saying black do not erase the image disagreement. The model must not invent a warranty from the picture. Keep the fixture's expected fields out of model context.</p>
+        <p><strong>Predict the outcome:</strong> the record must go to review. The PDF saying black does not erase the red image. The model must not invent a warranty from the picture. Keep the fixture's expected fields out of model context.</p>
       </article>
       <article id="foundry-run">
         <h3>3. Process one source bundle</h3>
         <ol>
-          <li>Select the prepared FC-03 bundle in the processing application. Use implementation A for the first run; retain the run ID.</li>
-          <li>Inspect the extracted candidates. Each field needs its value, source location and original representation; unknown values stay unknown.</li>
+          <li>After inference access is granted, open a terminal in <code>foundry-demo</code>, keep the isolated login configuration set, and run <code>.\.venv\Scripts\python.exe demo.py run --live</code>. This makes one potentially billable request; it does not create an agent or upload persistent Files API resources.</li>
+          <li>Open the printed <code>runs/&lt;run-id&gt;</code> directory. On success, inspect <code>extraction.json</code>: independent PDF/image observations, evidence and null values for unstated facts. On failure, inspect <code>manifest.json</code> and the terminal error; do not treat a partial directory as success.</li>
           <li>Follow the reconciliation result. Preserve black and red as conflicting color candidates rather than letting the last source overwrite the first.</li>
           <li>Inspect the code-owned checks: required fields, field types, decimal unit normalization, evidence references and unresolved conflicts. A parsing/tool failure must be explicit, not converted into an apparently successful empty row.</li>
         </ol>
-        <p>The prepared extraction configuration should express this behavior; it is not a chat prompt that creates the service:</p>
+        <p>The versioned instructions and output schema in <code>demo.py</code> express this behavior; the prompt alone does not create the processing code:</p>
         <pre><code>Extract sku, color, base width and warranty from supplied evidence.
 Retain source locations and original values for every candidate.
 Keep missing values null and preserve contradictory candidates.
@@ -184,8 +185,8 @@ Do not publish, approve or claim certification.</code></pre>
         <p><strong>Watch the division of labor:</strong> models interpret evidence; application code owns processing, rules and output routing. The application—not a prompt—converts 250 mm to 25.0 cm and keeps unresolved records out of the validated-draft export.</p>
       </article>
       <article id="foundry-result">
-        <h3>4. Inspect the review queue and the export separately</h3>
-        <p>Find FC-03 in the review queue. Open its evidence and check that the issue is actionable: resolve the black/red variant disagreement. Its expected record includes:</p>
+        <h3>4. Inspect the locally reconciled record</h3>
+        <p>Open <code>foundry-demo/runs/20261104T194827Z-de4b3c40/record.json</code> for the first successful local run, or your new run's <code>record.json</code>. There is no review UI yet. Check that the issue is actionable: resolve the black/red variant disagreement. The record includes:</p>
         <pre><code>{
   "sku": "NL-300",
   "color": null,
@@ -195,16 +196,17 @@ Do not publish, approve or claim certification.</code></pre>
   "issues": ["color-conflict"],
   "candidates": { "color": ["black", "red"] }
 }</code></pre>
-        <p>This shortened example omits the evidence object; the real record must retain source locators. Do not resolve the conflict by editing the output to match the answer key.</p>
+        <p>This shortened representation matches the first successful run's fields. It abbreviates candidates and omits the evidence array; the real record retains source IDs, PDF line evidence and model-reported image descriptions. Visually verify the image interpretation. Do not resolve the conflict by editing the output to match the answer key.</p>
         <ol>
-          <li>Process all five prepared cases. Reconcile the input count with all output records, including failed/review records.</li>
-          <li>Open the generated JSON/CSV draft export. Only FC-01 and FC-05 should pass these designed checks. Verify 250 mm → 25.0 cm and 254 mm → 25.4 cm.</li>
-          <li>Confirm FC-02, FC-03 and FC-04 remain in review with distinct reasons and evidence. A valid JSON shape alone is not proof of correct product data.</li>
+          <li>Compare <code>response.json</code> (what the model actually returned), <code>extraction.json</code> (parsed observations) and <code>record.json</code> (the code-owned decision).</li>
+          <li>Verify the code converted 250 mm to <code>"25.0"</code> cm and retained both black/red candidates rather than choosing a color.</li>
+          <li>Inspect <code>manifest.json</code> for input hashes, actual returned model, elapsed time and token usage. Cost is unknown without pricing; token count is not full service cost.</li>
         </ol>
-        <p><strong>What you leave with:</strong> catalog drafts, a review queue and a run manifest identifying sources/configuration. “Validated draft” means the configured checks passed; it is not retailer approval or permission to publish.</p>
+        <p><strong>What this slice produces:</strong> one evidence-linked JSON review record and a run manifest, once inference access works. No CSV export, automatic approval or publication is implemented. “Validated draft” means the configured checks passed; it is not proof of correct image interpretation or retailer approval.</p>
       </article>
       <article id="foundry-trace">
-        <h3>5. Compare implementations and investigate one actual failure</h3>
+        <h3>5. Later milestone: compare implementations and investigate a failure</h3>
+        <p>This is not runnable yet. Complete and inspect the first PDF/image result before building the second implementation or tracing UI.</p>
         <p><strong>A:</strong> general-purpose multimodal extraction. <strong>B:</strong> format-specific text/table extraction plus image analysis. Both use the same reconciliation/validation code. Neither is assumed to win.</p>
         <ol>
           <li>Open the prepared comparison results for A and B. Confirm identical input hashes, schema, rules and case set. Record differing models, adapters and prompts as part of each version.</li>
@@ -218,7 +220,7 @@ Do not publish, approve or claim certification.</code></pre>
       </article>
       <article id="foundry-tests">
         <h3>6. Check each acceptance case against the same oracle</h3>
-        <p>The <a href="fixtures/foundry-catalog-processing.json">fixture</a> specifies planned inputs and expected results, not ready-to-upload supplier documents. Keep it separate from model input. Once real synthetic files exist, attach their hashes and page/cell/image locators to the run manifest.</p>
+        <p>The <a href="fixtures/foundry-catalog-processing.json">fixture</a> specifies the full planned case set. Only the PDF/image portion of FC-03 has local source files and a successful live run so far. Keep the fixture separate from model input. The first slice records source hashes; complete the other files and assertions before claiming five-case coverage.</p>
         <table><thead><tr><th>Case</th><th>Source condition</th><th>Expected result</th></tr></thead><tbody>
           <tr><td>FC-01 · Consistent</td><td>NL-100; black; 250 mm; 24-month warranty; matching image.</td><td>Validated draft; width 25.0 cm, evidence retained.</td></tr>
           <tr><td>FC-02 · Model conflict</td><td>PDF says NL-200; spreadsheet says NL-201.</td><td>Review; canonical SKU null; both candidates retained.</td></tr>
