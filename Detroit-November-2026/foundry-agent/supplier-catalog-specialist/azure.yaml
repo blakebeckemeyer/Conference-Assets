@@ -1,0 +1,60 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+infra:
+    provider: microsoft.foundry
+name: supplier-catalog-specialist
+requiredVersions:
+    extensions:
+        azure.ai.agents: '>=1.0.0-beta.4'
+services:
+    ai-project:
+        deployments:
+            - model:
+                format: OpenAI
+                name: gpt-6.1-sol
+                version: "2026-09-29"
+              name: gpt-6.1-sol
+              sku:
+                capacity: 3
+                name: GlobalStandard
+        host: azure.ai.project
+    supplier-catalog-specialist:
+        agentEndpoint:
+            authorizationSchemes:
+                - type: AzureRbac
+                  isolationKeySource:
+                      kind: Entra
+                - type: BotService
+            protocols:
+                - activity
+        codeConfiguration:
+            entryPoint: main.py
+            runtime: python_3_13
+        container:
+            resources:
+                cpu: "0.5"
+                memory: 1Gi
+        description: |
+            Processes the fixed FC-03-NL300 synthetic source bundle, retains conflicting evidence, and returns a catalog review draft. Never approves or publishes.
+        displayName: Supplier Catalog Specialist
+        env:
+            PYTHONNOUSERSITE: "1"
+            FOUNDRY_AUTH_MODE: managed_identity
+            AZURE_OPENAI_ENDPOINT: ${AZURE_OPENAI_ENDPOINT}
+            AZURE_AI_MODEL_DEPLOYMENT_NAME: gpt-6.1-sol
+        host: azure.ai.agent
+        kind: hosted
+        language: python
+        metadata:
+            tags:
+                - AI Agent Hosting
+                - Activity Protocol
+                - Bring Your Own
+                - Python
+        name: supplier-catalog-specialist
+        project: src/catalog
+        protocols:
+            - protocol: activity
+              version: 2.0.0
+        uses:
+            - ai-project

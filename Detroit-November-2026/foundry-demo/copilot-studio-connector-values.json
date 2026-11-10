@@ -1,0 +1,29 @@
+{
+  "environmentUrl": "https://dtw-innovation.crm.dynamics.com/",
+  "apiHost": "ca-supplier-dev-f736.bluedesert-75e2f545.eastus.azurecontainerapps.io",
+  "openApiPath": "Detroit-November-2026/foundry-demo/catalog-api.openapi.json",
+  "oauth": {
+    "tenantId": "1b37c04e-260e-4189-a11b-0b8609ed3df0",
+    "authorizeUrl": "https://login.microsoftonline.com/1b37c04e-260e-4189-a11b-0b8609ed3df0/oauth2/v2.0/authorize",
+    "tokenUrl": "https://login.microsoftonline.com/1b37c04e-260e-4189-a11b-0b8609ed3df0/oauth2/v2.0/token",
+    "scope": "api://c1cfcc13-f250-45d7-ad61-03d4c72677c1/catalog.process"
+  },
+  "apiRegistration": {
+    "displayName": "supplier-catalog-processor-api",
+    "appId": "c1cfcc13-f250-45d7-ad61-03d4c72677c1",
+    "identifierUri": "api://c1cfcc13-f250-45d7-ad61-03d4c72677c1",
+    "delegatedScope": "catalog.process",
+    "signInAudience": "AzureADMyOrg",
+    "tenantId": "1b37c04e-260e-4189-a11b-0b8609ed3df0",
+    "servicePrincipalId": "156ab316-88c8-4e3f-9900-885b354a3943",
+    "scopeId": "64ed37ef-d850-4cb0-9846-985a5d52470f",
+    "scopeConsentType": "Admin"
+  },
+  "requiredRequestBody": {
+    "sourceBundleId": "FC-03-NL300"
+  },
+  "expectedUnauthorizedResponseBeforeConnectorAuth": {
+    "statusCode": 401,
+    "code": "invalid_token"
+  }
+}

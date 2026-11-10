@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "${AZURE_LOCATION}"
+    },
+    "appName": {
+      "value": "ca-supplier-dev-f736"
+    },
+    "containerAppsEnvironmentName": {
+      "value": "cae-supplier-dev-f736"
+    },
+    "containerRegistryName": {
+      "value": "crsupplierdevf736"
+    },
+    "imageName": {
+      "value": "${SERVICE_API_IMAGE_NAME}"
+    },
+    "catalogAllowedTenantIds": {
+      "value": [
+        "1b37c04e-260e-4189-a11b-0b8609ed3df0"
+      ]
+    },
+    "catalogApiAudience": {
+      "value": "c1cfcc13-f250-45d7-ad61-03d4c72677c1"
+    },
+    "catalogApiScope": {
+      "value": "catalog.process"
+    },
+    "existingTags": {
+      "value": {
+        "app-onboard-session-id": "f73648dd-e2a7-4df9-8b2d-f6c9b9d59bfc",
+        "app-onboard-skill": "true",
+        "created-at": "2026-11-05T16:34:31.5958683-05:00",
+        "deployed-by": "conference-demo",
+        "environment": "supplier-dev-f736"
+      }
+    }
+  }
+}

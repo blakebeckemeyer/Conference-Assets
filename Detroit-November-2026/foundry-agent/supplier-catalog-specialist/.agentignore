@@ -1,0 +1,7 @@
+.azure/
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+catalog-runs/

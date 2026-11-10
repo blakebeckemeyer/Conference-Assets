@@ -1,0 +1,354 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Supplier Catalog Processor",
+    "version": "1.0.0",
+    "description": "Process the fixed synthetic FC-03 bundle into an evidence-linked draft or review result. The demo API accepts only the FC-03-NL300 bundle ID; no publication or approval."
+  },
+  "host": "ca-supplier-dev-f736.bluedesert-75e2f545.eastus.azurecontainerapps.io",
+  "basePath": "/v1",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "EntraOAuth2": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://login.microsoftonline.com/1b37c04e-260e-4189-a11b-0b8609ed3df0/oauth2/v2.0/authorize",
+      "tokenUrl": "https://login.microsoftonline.com/1b37c04e-260e-4189-a11b-0b8609ed3df0/oauth2/v2.0/token",
+      "scopes": {
+        "api://c1cfcc13-f250-45d7-ad61-03d4c72677c1/catalog.process": "Process the fixed synthetic supplier bundle"
+      }
+    }
+  },
+  "security": [
+    {
+      "EntraOAuth2": [
+        "api://c1cfcc13-f250-45d7-ad61-03d4c72677c1/catalog.process"
+      ]
+    }
+  ],
+  "paths": {
+    "/catalog/process": {
+      "post": {
+        "operationId": "processSupplierCatalogBundle",
+        "summary": "Process a supplier catalog bundle",
+        "description": "Use only when the user asks to extract or validate a product from the supplied supplier specification PDF, workbook, and packaging image. Returns an evidence-linked draft or a needs-review result. Never approves, publishes, or contacts a supplier.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "The fixed synthetic demo bundle. The API does not accept arbitrary URLs, paths, or supplier files.",
+            "schema": {
+              "$ref": "#/definitions/ProcessBundleRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bundle processed. A 200 response may have status needs_review; inspect record.issues and candidates.",
+            "schema": {
+              "$ref": "#/definitions/ProcessBundleResponse"
+            }
+          },
+          "400": {
+            "description": "Malformed request or missing bundle ID.",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          },
+          "401": {
+            "description": "Missing, expired, or invalid Entra access token.",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          },
+          "403": {
+            "description": "The caller lacks the catalog.process delegated scope.",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          },
+          "404": {
+            "description": "The requested demo bundle ID is not available.",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          },
+          "422": {
+            "description": "The fixed workbook has an invalid layout.",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          },
+          "502": {
+            "description": "The model provider request failed or returned unusable output. No successful record is returned.",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          },
+          "503": {
+            "description": "The processor is temporarily unavailable.",
+            "schema": {
+              "$ref": "#/definitions/ApiError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ProcessBundleRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceBundleId"
+      ],
+      "properties": {
+        "clientRequestId": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Optional caller-generated correlation ID. It is not an idempotency guarantee."
+        },
+        "sourceBundleId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "enum": [
+            "FC-03-NL300"
+          ],
+          "description": "The fixed synthetic demo bundle. The API does not accept arbitrary URLs, paths, or supplier files."
+        }
+      }
+    },
+    "EvidenceCandidate": {
+      "type": "object",
+      "required": [
+        "sourceId",
+        "field",
+        "value",
+        "evidence"
+      ],
+      "properties": {
+        "sourceId": {
+          "type": "string",
+          "enum": [
+            "spec-001",
+            "spreadsheet-001",
+            "image-001"
+          ]
+        },
+        "field": {
+          "type": "string",
+          "enum": [
+            "sku",
+            "color",
+            "width_mm",
+            "warranty_months"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1,
+          "description": "PDF source line, workbook worksheet/cell/value locator, or model-reported image observation."
+        }
+      }
+    },
+    "CatalogRecord": {
+      "type": "object",
+      "required": [
+        "sku",
+        "color",
+        "width_cm",
+        "warranty_months",
+        "status",
+        "issues",
+        "candidates",
+        "evidence",
+        "published"
+      ],
+      "properties": {
+        "sku": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "color": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "width_cm": {
+          "type": "string",
+          "pattern": "^\\d+(\\.\\d+)?$",
+          "x-nullable": true,
+          "description": "Decimal centimeters represented as a string to avoid floating-point rounding."
+        },
+        "warranty_months": {
+          "type": "integer",
+          "minimum": 1,
+          "x-nullable": true
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "validated_draft",
+            "needs_review"
+          ]
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "candidates": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "sku": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EvidenceCandidate"
+              }
+            },
+            "color": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EvidenceCandidate"
+              }
+            },
+            "width_mm": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EvidenceCandidate"
+              }
+            },
+            "warranty_months": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EvidenceCandidate"
+              }
+            }
+          }
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EvidenceCandidate"
+          }
+        },
+        "published": {
+          "type": "boolean",
+          "enum": [
+            false
+          ],
+          "description": "Always false. This processor never publishes or approves a catalog entry."
+        }
+      }
+    },
+    "ProcessBundleResponse": {
+      "type": "object",
+      "required": [
+        "runId",
+        "sourceBundleId",
+        "status",
+        "record",
+        "model",
+        "elapsedMs"
+      ],
+      "properties": {
+        "runId": {
+          "type": "string",
+          "description": "Service-generated correlation ID for this processing attempt."
+        },
+        "sourceBundleId": {
+          "type": "string",
+          "description": "The opaque bundle ID processed by this run."
+        },
+        "clientRequestId": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "completed"
+          ],
+          "description": "The operation completed. Business review state is record.status."
+        },
+        "record": {
+          "$ref": "#/definitions/CatalogRecord"
+        },
+        "model": {
+          "type": "object",
+          "required": [
+            "deployment",
+            "returnedModel",
+            "inputTokens",
+            "outputTokens"
+          ],
+          "properties": {
+            "deployment": {
+              "type": "string"
+            },
+            "returnedModel": {
+              "type": "string"
+            },
+            "inputTokens": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "outputTokens": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "elapsedMs": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "ApiError": {
+      "type": "object",
+      "required": [
+        "code",
+        "message",
+        "runId"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string",
+          "description": "Safe diagnostic. Must not contain credentials, tokens, or uploaded source contents."
+        },
+        "runId": {
+          "type": "string",
+          "x-nullable": true
+        },
+        "retryable": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}
