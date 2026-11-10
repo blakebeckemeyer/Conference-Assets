@@ -25,12 +25,13 @@
       "durationMinutes": 30,
       "startAnchor": "talk-b",
       "firstSlide": 20,
-      "lastSlide": 32,
+      "lastSlide": 25,
       "segments": [
-        { "id": "b-why", "title": "Why engineer a catalog-processing service", "minutes": 5, "slides": [20, 21] },
-        { "id": "b-demo", "title": "Inspect sources, delegate processing and review actual evidence", "minutes": 12, "slides": [22, 23, 24, 25, 26] },
-        { "id": "b-proof", "title": "Validator, real SDK failure and acceptance-test boundaries", "minutes": 8, "slides": [27, 28, 29] },
-        { "id": "b-decision", "title": "Studio/service boundary, runtime choice and questions", "minutes": 5, "slides": [30, 31, 32] }
+        { "id": "b-recap", "title": "Recap: keep the experience", "minutes": 3, "slides": [20] },
+        { "id": "b-why", "title": "Why add a Foundry-hosted specialist", "minutes": 4, "slides": [21] },
+        { "id": "b-highlights", "title": "Foundry capabilities and our hosted agent", "minutes": 4, "slides": [22] },
+        { "id": "b-demo", "title": "Foundry portal, code, Studio delegation and actual result", "minutes": 14, "slides": [23] },
+        { "id": "b-close", "title": "Takeaway and questions", "minutes": 5, "slides": [24, 25] }
       ]
     }
   ]

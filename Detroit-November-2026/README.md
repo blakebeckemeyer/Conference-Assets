@@ -16,7 +16,7 @@ The deck works from local files without a server, build step, package installati
 
 **Talk A · 60 minutes** — product-launch facts become a sourced M365 brief, a Cowork Launch Review app, and a one-color IDE edit of that same app. Studio's reason to enter the story is governed business operation: environment security, full DEV/TEST/PROD ALM in both harnesses, deeper actions/workflows and supported channels. The selected GitHub Copilot-harness walkthrough compares models, inspects a prepared version/release and shows web delivery. No custom MCP server, Dataverse write or app-to-agent conversion is needed.
 
-**Talk B · 30 minutes — Beyond chat: engineering with Foundry.** Show the real FC-03 lamp PDF, workbook and packaging image, then call the CorpDev hosted specialist through the working Studio GitHub Copilot harness. Inspect the returned evidence-linked JSON review record and its unresolved color conflict. Explain the validator, the actual SDK integration failure/fix, and the difference between offline tests and model evaluations. Pacing: need 5; sources/live call/result 12; validator/failure/acceptance boundaries 8; operating decision and questions 5. The audience needs no Talk A context.
+**Talk B · 30 minutes — Beyond chat: engineering with Foundry.** Six slides: recap where Copilot/Cowork/Studio left us (3 minutes), why add Foundry (4), platform highlights versus our hosted agent's actual features (4), a continuous product demo (14), then takeaway and questions (5). In the demo show the FC-03 lamp sources, Foundry project/hosted specialist, shared Python code, Studio delegation and actual JSON review record. The recap supplies enough context for newcomers; the lamp remains a separate synthetic example. Repeated pipeline/review diagrams, unbuilt benchmarks and SDK history are removed from the main flow; engineering details remain optional guide references.
 
 **Presenter start:** [the 30-minute stage run sheet](attendee-guide.html#foundry-rehearsal) has the exact routing prompt, screen order, field-level pass criteria and 60-second presentation fallback. The presenter reported successful GitHub-harness execution after specialist v2 deployment. A saved result/recording and a timed field-level rehearsal are still required; none is fabricated by these docs. Use the actual working GitHub-harness agent, not the earlier standard-harness agent by assumption. Do not provision, publish, change security or use the older CAIS custom-connector route during this demo.
 
@@ -54,7 +54,7 @@ node .\Detroit-November-2026\scripts\launch-demo.mjs check
 
 | Path | Purpose |
 |---|---|
-| `index.html`, `deck.css`, `deck.js` | Audience deck: 19 Talk A slides and 13 standalone Talk B slides |
+| `index.html`, `deck.css`, `deck.js` | Audience deck: 19 Talk A slides and 6 Talk B slides |
 | `attendee-guide.html`, `guide.css` | One demo-only guide with `#m365`, `#cowork`, `#lifecycle`, `#studio` and step-by-step `#foundry` sections |
 | `presenter.html`, `presenter.css`, `presenter.js` | Private notes, talk-relative navigation, separate talk timer |
 | `data/run-of-show.json` | Independent 60- and 30-minute schedules mapped to slides |

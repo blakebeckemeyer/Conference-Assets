@@ -103,12 +103,16 @@ def check_link(source, link, all_pages):
 
 
 deck = parse_page("index.html")
-assert len(deck.slides) == deck.notes == 32, "Expected 32 slides with one inert private note template each"
+assert len(deck.slides) == deck.notes == 25, "Expected 25 slides with one inert private note template each"
 assert all(item["label"] == item["headingId"] and item["noteCount"] == 1 for item in deck.slides), (
     "Each slide needs an accessible title and one private note template"
 )
 assert all(item["title"] and item["minutes"] for item in deck.slides), "A slide title or note duration is missing"
-assert sum(bool(item["images"]) for item in deck.slides) >= 28, "Keep the deck visual-led"
+assert sum(bool(item["images"]) for item in deck.slides[:19]) >= 16, "Keep Talk A visual-led"
+assert [item["id"] for item in deck.slides[19:]] == [
+    "talk-b", "b-why", "b-highlights", "b-demo", "b-takeaway", "b-questions"
+], "Keep Talk B focused on recap, reason, highlights and the live demo"
+assert deck.slides[22]["images"], "Keep the demo's source illustration"
 svg_assets = set()
 for slide in deck.slides:
     for image in slide["images"]:
@@ -150,7 +154,10 @@ for presentation in presentations:
         segment_coverage.extend(slides)
         end = elapsed + segment["minutes"]
         label = f"{elapsed // 60:02}:{elapsed % 60:02}-{end // 60:02}:{end % 60:02}"
-        for filename in ("index.html", "attendee-guide.html", "deck.js"):
+        timing_files = ("index.html", "attendee-guide.html", "deck.js") if presentation["id"] == "talk-a" else (
+            "attendee-guide.html", "deck.js"
+        )
+        for filename in timing_files:
             assert label in (ROOT / filename).read_text(encoding="utf-8"), (
                 f"Talk-relative timing {label} missing from {filename}"
             )
@@ -158,7 +165,7 @@ for presentation in presentations:
     assert elapsed == presentation["durationMinutes"]
     assert segment_coverage == talk_slides, f"Unscheduled/duplicate slides in {presentation['id']}"
     scheduled_slides.extend(talk_slides)
-assert scheduled_slides == list(range(1, 33)), "Talks must cover each slide exactly once"
+assert scheduled_slides == list(range(1, 26)), "Talks must cover each slide exactly once"
 
 html_files = list(ROOT.rglob("*.html"))
 assert len(html_files) == 3 and {path.name for path in html_files} == {
@@ -168,6 +175,7 @@ guide = parse_page("attendee-guide.html")
 for section in ("start", "local", "m365", "cowork", "lifecycle", "studio", "foundry", "checks", "references"):
     assert section in guide.ids, f"Missing attendee guide section #{section}"
 assert "foundry-rehearsal" in guide.ids, "Keep the stage run sheet accessible from the guide"
+assert "foundry-studio-prompt" in guide.ids, "Keep Studio-to-Foundry prompting accessible from the guide"
 presenter = parse_page("presenter.html")
 all_pages = {
     (ROOT / "index.html").resolve(): deck,
@@ -196,7 +204,7 @@ for source in visuals["sources"]:
     for asset in source["assets"]:
         assert (ROOT / "assets" / asset).is_file(), f"Missing attributed visual {asset}"
 brand = json.loads((ROOT / "assets" / "brand-sources.json").read_text(encoding="utf-8"))
-assert "19 Talk A slides and 13 independent Talk B slides" in brand["surfaceRecord"]["contentBoundary"]
+assert "19 Talk A slides and 6 Talk B slides" in brand["surfaceRecord"]["contentBoundary"]
 
 expected = json.loads((ROOT / "fixtures" / "expected-facts.json").read_text(encoding="utf-8"))
 for product in expected["products"]:
@@ -253,4 +261,4 @@ for removed in ("studio-dataverse", "register-retail-launch-draft", "ms app depl
     assert removed not in guide_text, f"Unused demo reintroduced into attendee guide: {removed}"
 for case in cases:
     assert case["caseId"] in guide_text, f"Missing Foundry walkthrough case {case['caseId']}"
-print("Deck check passed: 32 slides, two independent 60/30-minute schedules, private notes, three HTML endpoints, valid local links, source attribution and synthetic fixtures.")
+print("Deck check passed: 25 slides, two independent 60/30-minute schedules, private notes, three HTML endpoints, valid local links, source attribution and synthetic fixtures.")

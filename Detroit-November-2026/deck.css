@@ -3,7 +3,7 @@ THESIS: Show the work, not a document about the work. Two independent AIS talks.
 OWN-WORLD: Official AIS navy/blue/orange; Arial; open white work surfaces,
 navy transitions, precise tables and diagrams that show information flow.
 STORY: Product facts become a brief, an editable app, and a reusable assistant;
-Foundry independently turns competing quotes into an evidence-led comparison.
+Foundry adds a hosted catalog specialist to the existing Studio experience.
 FIRST VIEWPORT: A large launch illustration beside the title; visual artifacts
 and full-width diagrams lead the content, with operational detail in the guide.
 FORM: Projector-first presentation; readable as a mobile/print document.
@@ -59,6 +59,7 @@ strong { font-weight: 700; }
 .cover h2 { font-size: clamp(48px, 5vw, 90px); }
 .cover p { max-width: 62ch; }
 .cover a { color: #b7dcff; }
+.cover h3 { color: #b7dcff; }
 .cover :focus-visible, .dark :focus-visible { outline-color: var(--orange); }
 .dark h3 { color: #b7dcff; }
 .dark .takeaway { color: #ffc078; }

@@ -27,10 +27,11 @@
         <tr><td>00:55-01:00</td><td>Questions</td></tr>
       </tbody></table>
       <table><thead><tr><th>Talk B</th><th>Segment</th></tr></thead><tbody>
-        <tr><td>00:00-00:05</td><td>Why engineer a catalog-processing service?</td></tr>
-        <tr><td>00:05-00:17</td><td>Inspect three sources, delegate processing, inspect the review record</td></tr>
-        <tr><td>00:17-00:25</td><td>Explain the validator, inspect a real failure, distinguish tests from benchmarks</td></tr>
-        <tr><td>00:25-00:30</td><td>Studio/service boundary, runtime choice and questions</td></tr>
+        <tr><td>00:00-00:03</td><td>Recap: Copilot, Cowork and Studio</td></tr>
+        <tr><td>00:03-00:07</td><td>Why add a Foundry-hosted specialist?</td></tr>
+        <tr><td>00:07-00:11</td><td>Foundry highlights and our hosted agent's features</td></tr>
+        <tr><td>00:11-00:25</td><td>Live demo: Foundry, code, Studio call and actual result</td></tr>
+        <tr><td>00:25-00:30</td><td>Keep what works: takeaway and questions</td></tr>
       </tbody></table>
       <p>Service demos require approved accounts, data access, licensing and spend. Local examples and illustrations are references, not evidence of a cloud run. Prepare service access and release permissions before presenting.</p>
     </section>
@@ -143,29 +144,29 @@ and what the product team must supply. Keep unknown values unknown.</code></pre>
     </section>
     <section id="foundry">
       <h2>Beyond chat: turn supplier files into a usable catalog</h2>
-      <p><strong>Your goal:</strong> show a real supplier-processing result that refuses to invent a product fact. Fictional Northline Desk supplies desk lamps. This story stands alone: the audience needs no Talk A context. A prepared Studio agent is the demonstration's entry point, not the subject of a second Studio setup walkthrough.</p>
+      <p><strong>Your goal:</strong> recap the Copilot/Cowork/Studio story, explain why we add a code-owned Foundry specialist, then spend the main block in the product. Fictional Northline Desk's lamp bundle makes the new capability concrete: a real supplier-processing result that refuses to invent a product fact. The brief recap makes this session accessible without Talk A. Studio remains the prepared caller; this is not another Studio setup walkthrough.</p>
       <p><strong>Current stage route:</strong> Copilot Studio's GitHub Copilot harness → native Foundry connected agent → CorpDev <code>supplier-catalog-specialist:2</code> → <code>gpt-6.1-sol</code> → shared Python reconciliation and validation → returned JSON review record. The presenter reported successful harness execution on November 9. Capture that actual result during rehearsal; a report of success is not a saved recording or a verified assertion for every returned field. See <a href="foundry-agent/supplier-catalog-specialist/README.md">the deployed specialist guide</a>. Do not use the older CAIS API/custom-connector route on stage.</p>
       <p><strong>Scope:</strong> one fixed, synthetic bundle is packaged with the specialist. The chat command does not upload documents or accept arbitrary suppliers. There is no review application, CSV export, approval/publish action, second extraction implementation, measured A/B comparison or completed Foundry evaluation suite. The <a href="fixtures/foundry-catalog-processing.json">design fixture</a> describes future cases, not five implemented bundles. The diagrams illustrate those broader ideas; label them accordingly.</p>
-      <nav aria-label="Foundry demo steps"><a href="#foundry-rehearsal">Stage run sheet</a><a href="#foundry-prepare">Before you start</a><a href="#foundry-input">Inspect inputs</a><a href="#foundry-run">Process a bundle</a><a href="#foundry-result">Review the result</a><a href="#foundry-trace">Investigate a failure</a><a href="#foundry-tests">Acceptance checks</a></nav>
+      <nav aria-label="Foundry demo steps"><a href="#foundry-rehearsal">Stage run sheet</a><a href="#foundry-prepare">Before you start</a><a href="#foundry-input">Inspect inputs</a><a href="#foundry-studio-prompt">Prompt the Studio agent</a><a href="#foundry-run">Process a bundle</a><a href="#foundry-result">Review the result</a><a href="#foundry-trace">Investigate a failure</a><a href="#foundry-tests">Acceptance checks</a></nav>
       <article id="foundry-rehearsal">
         <h3>Presenter run sheet: 30 minutes, one live model request</h3>
         <table><thead><tr><th>Clock</th><th>Show and do</th><th>Say / prove</th></tr></thead><tbody>
-          <tr><td>00:00-00:05</td><td>Slides 20-21. Introduce supplier onboarding and the service boundary.</td><td>“A useful result can be a refusal to pick a color. Models interpret sources; code owns the decision.”</td></tr>
-          <tr><td>00:05-00:07</td><td>Slide 22, then open the PDF, Products row 2 and packaging image.</td><td>Ask the room to spot black/black/red. Establish the conflict before showing the AI result.</td></tr>
-          <tr><td>00:07-00:09</td><td>Slide 23. Show the existing Foundry specialist, model and deployed version. Open the prepared GitHub-harness agent in Studio.</td><td>“Same processor, hosted as a specialist; this caller delegates the job. No rebuild or live provisioning.”</td></tr>
-          <tr><td>00:09-00:11</td><td>In a fresh Studio conversation send the rehearsed routing request below once. Open the tool activity showing <code>task: process FC-03-NL300</code>.</td><td>While it runs, explain the fixed bundle and one model request. Do not retry on a timer or pretend a queued action completed.</td></tr>
-          <tr><td>00:11-00:14</td><td>Slide 24, then the actual tool result, not only the orchestrator's prose summary.</td><td>Show the real run ID, <code>needs_review</code>, null color, three color candidates, width and warranty. Missing evidence is a failed check.</td></tr>
-          <tr><td>00:14-00:17</td><td>Slides 25-26. Return to the JSON and describe the human's next action.</td><td>“Resolve which variant is supplied. This is a review artifact, not a built review queue or a published listing.”</td></tr>
-          <tr><td>00:17-00:20</td><td>Slide 27, then the validator in <code>foundry-demo/demo.py</code>.</td><td>No A/B winner exists. Explain the measurable question: did this run preserve the conflict and normalize units correctly?</td></tr>
-          <tr><td>00:20-00:23</td><td>Slide 28 and a prepared, redacted excerpt of the actual SDK failure.</td><td>Request reached host → SDK constructor failed → no catalog handler. Dependency fix deployed as v2. This was an integration failure, not a hallucination.</td></tr>
-          <tr><td>00:23-00:25</td><td>Slide 29. Show offline checks and the five-case design separately.</td><td>38 focused local tests passed across two environments; they are not 38 live model evaluations. Only FC-03 is implemented.</td></tr>
-          <tr><td>00:25-00:30</td><td>Slides 30-32. Explain ownership and the demo security exception, then questions.</td><td>A direct model pipeline is valid. Hosted code earns its place when a reusable specialist/runtime is useful. Broader demo auth is not a production pattern.</td></tr>
+          <tr><td>00:00-00:03</td><td>Slide 20. Recap product knowledge → app → governed Studio conversation.</td><td>“Keep the experience. Add a specialist.” The recap supplies all earlier context; the lamp is a separate synthetic example.</td></tr>
+          <tr><td>00:03-00:07</td><td>Slide 21. Explain the code-owned processing boundary.</td><td>Custom parsing, rules, evidence and reusable hosting—not a claim that Studio cannot use code or images.</td></tr>
+          <tr><td>00:07-00:11</td><td>Slide 22. Contrast platform highlights with this hosted agent's implemented features.</td><td>Models, runtimes, tools and quality controls are the platform map. Our slice is Python, three source types, one model call, rules and returned JSON.</td></tr>
+          <tr><td>00:11-00:25</td><td>Slide 23 is the demo launchpad. Stay out of the slides for the screen sequence below.</td><td>Show the product and actual result rather than repeating the pipeline in multiple diagrams.</td></tr>
+          <tr><td>00:25-00:30</td><td>Slide 24 takeaway (2 minutes), then slide 25 questions (3 minutes).</td><td>Keep Studio; add the code-owned specialist. Disclose demo-only auth. No production-readiness claim.</td></tr>
         </tbody></table>
-        <p><strong>Routing request to rehearse:</strong></p>
-        <pre><code>Use the connected supplier catalog specialist to process FC-03-NL300.
-Send the specialist exactly: process FC-03-NL300
-Return its actual run ID and review record, including conflicting evidence.
-Do not resolve the color conflict, approve, or publish anything.</code></pre>
+        <h4>14-minute demo screen sequence</h4>
+        <ol>
+          <li><strong>11:00-13:00 · Sources:</strong> open the PDF, Products row 2 and packaging image. Ask the room to spot black/black/red.</li>
+          <li><strong>13:00-16:00 · Foundry and code:</strong> show <code>detroit-catalog</code>, specialist v2, model and deployed configuration. In the editor, show the Activity adapter and shared reconciliation/validation code. No live provisioning or configuration edits.</li>
+          <li><strong>16:00-18:00 · Studio caller:</strong> send the routing prompt once in the working GitHub-harness agent. Open the tool activity and verify <code>task: process FC-03-NL300</code>.</li>
+          <li><strong>18:00-23:00 · Actual result:</strong> inspect the run ID, unresolved color, all three observations, normalized width, warranty and unpublished status. Explain what the product team must confirm.</li>
+          <li><strong>23:00-25:00 · Connect the dots:</strong> show where code owns normalization and conflict handling. Finish on the returned artifact, not a tour of every engineering feature.</li>
+        </ol>
+        <p>SDK debugging history, future evaluation cases and A/B design remain <a href="#foundry-trace">optional engineering references</a>, not required stage segments. The repeated pipeline, hypothetical queue/export and benchmark slides have been removed from Part B.</p>
+        <p><strong>Routing request to rehearse:</strong> copy the <a href="#foundry-studio-prompt">Studio chat prompt below</a>. It names the connected tool and distinguishes the user's request from the exact command passed to Foundry.</p>
         <p>Verify the tool name in your working GitHub-harness agent; the observed tool was <code>SupplyCatalogue</code> / <strong>Supply Catalogue</strong>. Do not assume it is the earlier standard-harness <strong>Product Launch (copy)</strong> agent. Confirm the connection and successful tool invocation in the actual agent you will present.</p>
         <p><strong>Failure budget:</strong> at 60 seconds without a usable result, say “The live call has not completed; here is the captured rehearsal run.” Show the real saved tool result with its original timestamp, run ID and model/version. This is a presentation cutoff, not a promise that the remote request is cancelled; do not send a duplicate. If a call fails, retain the error and move on. Do not use the expected-facts fixture, an edited result or an unlabeled old CAIS run as a live fallback.</p>
       </article>
@@ -175,7 +176,7 @@ Do not resolve the color conflict, approve, or publish anything.</code></pre>
           <li>Open the deck at <code>index.html#talk-b</code>, private Presenter view, the three local source files, your working GitHub-harness Studio agent, and the CorpDev Foundry specialist. Pin these tabs in presentation order. Hide notifications and any credentials, connection headers, personal account details or unrelated projects before screen sharing.</li>
           <li>Confirm the Foundry project is <code>cog-b6qdlbxyhq22k / detroit-catalog</code> in <code>Detroit-InnoHubDemo</code>, the specialist is version 2, and the model is <code>gpt-6.1-sol</code>. Do not switch to the historical <code>dtw-tool-demo</code> CAIS configuration.</li>
           <li>In the exact Studio agent and browser you will present, start a new conversation and perform one paid rehearsal request. Check the actual tool payload and record against the checks below. The successful user report is encouraging; verify the field-level result before showing it to the audience.</li>
-          <li>Save a real tool-result copy or recording, UTC timestamp, run ID, observed elapsed time and the visible model/version. Prepare a redacted SDK-error excerpt separately. These captures are still a presenter prerequisite, not files claimed to exist in this repo. Do not expose tokens or infer price from token counts.</li>
+          <li>Save a real tool-result copy or recording, UTC timestamp, run ID, observed elapsed time and the visible model/version. A redacted SDK-error excerpt is optional for questions, not part of the main flow. These captures are still a presenter prerequisite, not files claimed to exist in this repo. Do not expose tokens or infer price from token counts.</li>
           <li>Stop changing the deployment after the rehearsal. No live package installation, consent, RBAC changes, agent creation, channel publication or SDK upgrades on stage. Hosted/model/Studio usage incurs charges.</li>
         </ol>
         <p><strong>Why Foundry rather than just Studio?</strong> The subject is the developer-owned service: model/extraction choices, custom processing logic, evidence preservation and measured acceptance tests. Studio can call that service or may already be sufficient for a simpler workflow. This demo does not depend on that integration, and does not claim that document/image processing, code, evaluation or governance are exclusive to Foundry.</p>
@@ -192,10 +193,53 @@ Do not resolve the color conflict, approve, or publish anything.</code></pre>
         </tbody></table>
         <p><strong>Predict the outcome:</strong> the record must go to review. The PDF and spreadsheet agree on black, but neither erases the red image. The model must not invent dimensions or a warranty from the picture. Keep the fixture's expected fields out of model context.</p>
       </article>
+      <article id="foundry-studio-prompt">
+        <h3>Prompt the Copilot Studio agent, not the Foundry portal</h3>
+        <p><strong>Where to type:</strong> in Copilot Studio, select <strong>Blake-DTW Innovation</strong> and open the exact GitHub Copilot-harness agent that successfully called the specialist. Open its test/Preview chat and start a new conversation. The working agent's name/ID still needs to be recorded during rehearsal; do not substitute the earlier standard-harness <strong>Product Launch (copy)</strong> agent. You do not need to publish the agent for this test-chat demonstration.</p>
+        <p><strong>Check before sending:</strong> the agent must already have the native Foundry connected agent available. The observed display name is <strong>Supply Catalogue</strong>, tool name <code>SupplyCatalogue</code>, with a <code>task</code> input. Its connection should target <code>cog-b6qdlbxyhq22k / detroit-catalog</code> and <code>supplier-catalog-specialist</code>. A prompt cannot create a missing connection or fix its authentication. If your working tool has a different display name, use that exact name in the chat prompt.</p>
+        <h4>1. Paste this into the Studio test chat once</h4>
+        <pre><code>Use the connected agent tool "Supply Catalogue" (SupplyCatalogue)
+to process the synthetic supplier bundle FC-03-NL300.
+Set its task input to exactly: process FC-03-NL300
+Call the specialist once; do not answer from your own knowledge.
+Return the actual specialist result, including runId, record,
+conflicting source evidence and any returned model/token metadata.
+Do not resolve conflicts, approve or publish anything.
+If the tool fails, report its error; do not invent a result or retry.</code></pre>
+        <p>This is the <strong>user request to the Studio orchestrator</strong>. It delegates to the hosted Foundry specialist; it is not a request to generate code, create an agent or process an uploaded attachment. Do not paste the expected-facts fixture or the expected color/width/warranty answers into this chat.</p>
+        <h4>2. Inspect what Studio actually sent to Foundry</h4>
+        <p>Expand the tool activity in the test chat/activity details (labels vary by Studio version). Confirm it selected <strong>Supply Catalogue</strong> and that the filled parameter is exactly:</p>
+        <pre><code>{
+  "task": "process FC-03-NL300"
+}</code></pre>
+        <p><strong>The distinction matters:</strong> the Studio prompt can be conversational, but the hosted adapter accepts only <code>process FC-03-NL300</code>. Sending the whole paragraph, an instruction to process another SKU or a file path is not a supported command. The specialist already contains the PDF, workbook and packaging image.</p>
+        <h4>3. Inspect the result, then explain it without another call</h4>
+        <p>Open the completed tool response before reading Studio's summary. Match its actual <code>runId</code> and <code>record</code> to the <a href="#foundry-result">result checks</a>. A “Processing…” message is only an acknowledgement, not the final JSON. If the tool was never called, or the final record is absent, do not call the demonstration successful.</p>
+        <p>After a successful result, this optional follow-up asks Studio to explain the existing evidence; it must not start another processing run:</p>
+        <pre><code>Using only the specialist result already returned in this conversation,
+explain why this item needs human review. Cite the conflicting source
+evidence and state what the product team must confirm next.
+Include the existing runId. Do not call any tool again, change a value,
+resolve the conflict, approve or publish anything.</code></pre>
+        <p>Watch the activity details: a prompt is not a technical guarantee against another tool call. For a strict one-call stage demo, skip the follow-up and explain the returned record yourself. If the initial call fails or has not completed within the presentation cutoff, retain its error/state and use the labeled rehearsal capture; do not resend it.</p>
+        <details>
+          <summary>Optional maker instructions for this narrow Studio caller</summary>
+          <p>These are suggested behavior instructions for a separately prepared demo caller, not a configuration change applied by this guide. Rehearse any instruction edit before the presentation. Keep existing unrelated behavior intact and use the actual connected tool name.</p>
+          <pre><code>For requests to process the synthetic FC-03-NL300 supplier bundle,
+delegate to the connected Supply Catalogue tool (SupplyCatalogue).
+Pass task exactly as: process FC-03-NL300
+Use the returned result as the source of truth; never fabricate a runId,
+record, evidence or successful tool execution.
+Do not automatically retry a failed or incomplete call.
+Explain an existing result without invoking the specialist again.
+This demo supports only the packaged bundle. Do not claim support for
+arbitrary uploads, other bundles, approval, export or publication.</code></pre>
+        </details>
+      </article>
       <article id="foundry-run">
         <h3>3. Process one source bundle</h3>
         <ol>
-          <li>Use the routing request in the run sheet from a fresh conversation in the working GitHub-harness agent. Verify the specialist receives exactly <code>process FC-03-NL300</code>. The sources are already packaged; do not attach a new file or pretend this is general document ingestion.</li>
+          <li>Use the <a href="#foundry-studio-prompt">Studio chat prompt and tool-call checks</a> from a fresh conversation in the working GitHub-harness agent. Verify the specialist receives exactly <code>process FC-03-NL300</code>. The sources are already packaged; do not attach a new file or pretend this is general document ingestion.</li>
           <li>Open the completed tool activity and actual JSON response. A success badge or a fluent summary alone is insufficient. Verify <code>runId</code>, <code>record</code>, model/token metadata and the returned evidence. If it fails, show the error and use the explicitly labeled rehearsal capture.</li>
           <li>Follow the reconciliation result. Preserve black from two text sources and red from the image as conflicting color candidates rather than letting the last source overwrite the others.</li>
           <li>Inspect the code-owned checks: required fields, field types, decimal unit normalization, evidence references and unresolved conflicts. A parsing/tool failure must be explicit, not converted into an apparently successful empty row.</li>

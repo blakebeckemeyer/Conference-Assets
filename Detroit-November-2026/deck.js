@@ -14,10 +14,11 @@
     'a-studio': '00:32-00:50',
     'a-ownership': '00:50-00:55',
     'a-questions': '00:55-01:00',
-    'b-why': '00:00-00:05',
-    'b-demo': '00:05-00:17',
-    'b-proof': '00:17-00:25',
-    'b-decision': '00:25-00:30'
+    'b-recap': '00:00-00:03',
+    'b-why': '00:03-00:07',
+    'b-highlights': '00:07-00:11',
+    'b-demo': '00:11-00:25',
+    'b-close': '00:25-00:30'
   };
   const talkRanges = Object.fromEntries(Object.keys(talkNames).map(id => {
     const indices = slides.flatMap((slide, index) => slide.dataset.talk === id ? [index] : []);
