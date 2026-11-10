@@ -4,7 +4,17 @@ This project was built with the microsoft-foundry skill. Before working on or an
 
 ## Detroit scope overrides
 
-- Use the existing CorpDev `Detroit-InnoHubDemo` resource group only.
+- The original CorpDev deployment uses the existing `Detroit-InnoHubDemo`
+  resource group only. The separately authorized DTW infrastructure deployment
+  uses subscription `b571e36c-4e62-4175-b8c1-062a4cf87b16`, resource group
+  `dtw-tool-demo`, and `infra/dtw.parameters.json`. Do not mix the two targets.
+- DTW hosted deployment uses `dtw/azure.yaml`, not the original CorpDev manifest.
+  The user also approved the hosted agent, supporting Bot/channels, and one
+  account-scoped Cognitive Services OpenAI User role for its runtime identity.
+  Studio targets the existing `DTW Tool Demo` draft in the Jones-Evans, KC
+  developer environment (`0343907b-5031-ed09-acc8-5e9701b25f1d`) with a new
+  connection, preserving existing connections. Do not publish the Studio agent.
+  Do not publish a Teams app or copy the CorpDev legacy BotService exception.
 - Infrastructure is `infra/corpdev.bicep`, applied with a resource-group
   deployment after validation and what-if. Do not run `azd provision`, `azd up`,
   or `azd down`; the root CAIS application is a separate deployment.

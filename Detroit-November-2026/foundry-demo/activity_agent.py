@@ -5,6 +5,7 @@ import logging
 import os
 from pathlib import Path
 from urllib.parse import urlparse
+from uuid import UUID
 
 from demo import ROOT, SOURCE_FILES, process_bundle
 
@@ -25,11 +26,11 @@ def inference_config():
         or parsed.username or parsed.password or parsed.query or parsed.fragment
         or parsed.port is not None or parsed.path not in ("", "/")
     ):
-        raise ValueError("A CorpDev Azure OpenAI account endpoint is required; the CAIS endpoint is excluded.")
+        raise ValueError("An explicit Azure OpenAI account endpoint is required; the original CAIS endpoint is excluded.")
     return {
         "base_url": endpoint.rstrip("/") + "/openai/v1/",
         "deployment": os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"],
-        "tenant_id": TENANT_ID,
+        "tenant_id": str(UUID(os.environ.get("AZURE_TENANT_ID", TENANT_ID))),
     }
 
 

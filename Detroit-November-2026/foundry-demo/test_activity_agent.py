@@ -28,6 +28,23 @@ class ConfigurationTests(unittest.TestCase):
         with patch.dict(os.environ, {}, clear=True), self.assertRaises(KeyError):
             activity_agent.inference_config()
 
+    def test_explicit_dtw_endpoint_and_tenant(self):
+        tenant_id = "f32b97f0-efb8-4bc3-91ee-18a6e5f635c9"
+        endpoint = "https://dtw-tool-demo-b571.openai.azure.com/"
+        with patch.dict(os.environ, {
+            **ENV,
+            "AZURE_OPENAI_ENDPOINT": endpoint,
+            "AZURE_TENANT_ID": tenant_id,
+        }, clear=True):
+            config = activity_agent.inference_config()
+        self.assertEqual(config["base_url"], endpoint + "openai/v1/")
+        self.assertEqual(config["tenant_id"], tenant_id)
+
+    def test_invalid_tenant_is_rejected(self):
+        with patch.dict(os.environ, {**ENV, "AZURE_TENANT_ID": "invalid"}, clear=True):
+            with self.assertRaises(ValueError):
+                activity_agent.inference_config()
+
     def test_rejects_cais_and_invalid_endpoints(self):
         for endpoint in [
             "https://dtw-tool-demo.openai.azure.com/",

@@ -5,6 +5,70 @@ the CAIS REST API and not a replacement of the earlier conference assets.
 It uses the official [Activity host sample](https://github.com/microsoft-foundry/foundry-samples/tree/main/samples/python/hosted-agents/bring-your-own/activity/echo)
 and requests authenticated Activity connectivity for native Copilot Studio delegation.
 
+## Separate DTW infrastructure target
+
+**Status:** the account, project, model, and hosted specialist version 1 are
+deployed. The specialist is active with Activity 2.0.0, `AzureRbac` (Entra
+isolation), and `BotServiceRbac`. The approved supporting Bot is
+`supplier-catalog-specialist-bot-f0ea37c8` (F0), with Teams and service-created
+WebChat/DirectLine channels. No Teams app is published.
+The agent instance has the approved Cognitive Services OpenAI User role on
+`dtw-tool-demo-b571` only; no project-identity inference role was added.
+
+`infra/dtw.parameters.json` targets the existing `dtw-tool-demo-b571` Foundry
+account in resource group `dtw-tool-demo`, East US, in subscription
+`b571e36c-4e62-4175-b8c1-062a4cf87b16`. It uses the same group-scoped template
+to deploy the `detroit-catalog` project and `gpt-6.1-sol` model (version
+`2026-09-29`, GlobalStandard, capacity 3), preserving the account's tags.
+The deployment returns the project endpoint, OpenAI endpoint, and model
+deployment name. Model inference is metered.
+
+Run from this specialist folder, keeping the explicit subscription and group:
+
+```powershell
+az deployment group what-if --subscription b571e36c-4e62-4175-b8c1-062a4cf87b16 --resource-group dtw-tool-demo --template-file .\infra\corpdev.bicep --parameters '@infra\dtw.parameters.json'
+az deployment group create --name dtw-foundry-project --subscription b571e36c-4e62-4175-b8c1-062a4cf87b16 --resource-group dtw-tool-demo --template-file .\infra\corpdev.bicep --parameters '@infra\dtw.parameters.json' --mode Incremental
+```
+
+The Bicep command is infrastructure only: it does not deploy the hosted agent,
+create Bot/channel resources, grant roles, or configure Copilot Studio. The root
+`infra/main.bicep` provisions the separate Container App API path and does not
+create a Foundry project. Do not use root `azd` configuration for this target.
+The original hosted manifest and Studio configuration below remain
+CorpDev-specific. The separate `dtw/azure.yaml` binds to the existing DTW
+project and deliberately does not copy the legacy `BotService` exception.
+
+For DTW hosted deployment, run `.\Prepare-Agent.ps1 -Dtw`, then use `azd`
+from `.\dtw` with an isolated `AZD_CONFIG_DIR` and environment `detroit-dtw`.
+The original preparation command without `-Dtw` still stages the CorpDev host.
+Bind the DTW environment to the explicit subscription/group above and set:
+
+| Environment value | DTW value |
+| --- | --- |
+| `FOUNDRY_PROJECT_ENDPOINT` | `https://dtw-tool-demo-b571.services.ai.azure.com/api/projects/detroit-catalog` |
+| `AZURE_OPENAI_ENDPOINT` | `https://dtw-tool-demo-b571.openai.azure.com/` |
+| `AZURE_TENANT_ID` | `f32b97f0-efb8-4bc3-91ee-18a6e5f635c9` |
+
+Use `azd deploy supplier-catalog-specialist --preview --no-prompt -e detroit-dtw`
+before the corresponding command without `--preview`. This deployment also
+ensures the Bot/channels; it must not be used without approval for those
+resources. Preview does not enumerate those side effects.
+The adapter accepts an explicit `AZURE_TENANT_ID`; omitting it preserves the
+original CorpDev tenant for the existing deployment.
+
+The Studio target is the existing `DTW Tool Demo` draft in the Jones-Evans, KC
+developer environment (`0343907b-5031-ed09-acc8-5e9701b25f1d`), not the CorpDev
+environment. The new Entra-user connection `Detroit DTW Catalog Foundry`
+points to the DTW project endpoint. Connected-agent entry
+`Supplier Catalog Specialist DTW` uses agent ID `supplier-catalog-specialist`
+and connection reference `azureagentservice_1` in
+[the DTW Tool Demo draft](https://copilotstudio.microsoft.com/environments/0343907b-5031-ed09-acc8-5e9701b25f1d/agents/781a5f55-6bc3-473d-b085-455c881026c5).
+The draft was saved and reloaded to verify persistence; the Studio agent was
+not republished and existing connections were not changed. No live processing
+message was sent, so end-to-end delegation remains unverified.
+
+## Original CorpDev hosted deployment
+
 **Status:** CorpDev infrastructure and hosted specialist version 2 are deployed.
 The specialist is `active` with Activity 2.0.0, `AzureRbac` (Entra isolation),
 and legacy `BotService` (explicitly approved for this demo only). The local
