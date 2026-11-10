@@ -12,17 +12,34 @@ from test_demo import SHEET_CELLS, sample
 
 
 ENV = {
-    "AZURE_OPENAI_ENDPOINT": "https://corpdev-catalog.openai.azure.com/",
+    "AZURE_OPENAI_ENDPOINT": "https://dtw-tool-demo-b571.openai.azure.com/",
     "AZURE_AI_MODEL_DEPLOYMENT_NAME": "gpt-6.1-sol",
+    "AZURE_TENANT_ID": "f32b97f0-efb8-4bc3-91ee-18a6e5f635c9",
 }
 
 
 class ConfigurationTests(unittest.TestCase):
-    def test_explicit_corpdev_endpoint(self):
+    def test_explicit_dtw_configuration(self):
         with patch.dict(os.environ, ENV, clear=True):
             config = activity_agent.inference_config()
         self.assertEqual(config["base_url"], ENV["AZURE_OPENAI_ENDPOINT"] + "openai/v1/")
-        self.assertEqual(config["tenant_id"], activity_agent.TENANT_ID)
+        self.assertEqual(config["tenant_id"], ENV["AZURE_TENANT_ID"])
+
+    def test_requires_explicit_tenant_without_corpdev_fallback(self):
+        environment = {key: value for key, value in ENV.items() if key != "AZURE_TENANT_ID"}
+        with patch.dict(os.environ, environment, clear=True), self.assertRaises(KeyError):
+            activity_agent.inference_config()
+
+    def test_rejects_invalid_tenants(self):
+        for tenant_id in ["", "not-a-tenant", "00000000-0000-0000-0000-000000000000"]:
+            with self.subTest(tenant_id=tenant_id), patch.dict(os.environ, {**ENV, "AZURE_TENANT_ID": tenant_id}, clear=True):
+                with self.assertRaises(ValueError):
+                    activity_agent.inference_config()
+
+    def test_explicit_alternative_tenant_is_not_replaced(self):
+        tenant_id = "11111111-1111-1111-1111-111111111111"
+        with patch.dict(os.environ, {**ENV, "AZURE_TENANT_ID": tenant_id}, clear=True):
+            self.assertEqual(activity_agent.inference_config()["tenant_id"], tenant_id)
 
     def test_missing_endpoint_never_uses_local_cais_config(self):
         with patch.dict(os.environ, {}, clear=True), self.assertRaises(KeyError):

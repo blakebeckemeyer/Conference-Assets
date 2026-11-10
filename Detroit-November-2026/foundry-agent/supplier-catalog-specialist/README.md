@@ -1,19 +1,225 @@
-# CorpDev Supplier Catalog Specialist
+# DTW Supplier Catalog Specialist
 
 This is the Foundry-hosted adaptation of the existing catalog processor, not
 the CAIS REST API and not a replacement of the earlier conference assets.
 It uses the official [Activity host sample](https://github.com/microsoft-foundry/foundry-samples/tree/main/samples/python/hosted-agents/bring-your-own/activity/echo)
 and requests authenticated Activity connectivity for native Copilot Studio delegation.
 
-**Status:** CorpDev infrastructure and hosted specialist version 2 are deployed.
-The specialist is `active` with Activity 2.0.0, `AzureRbac` (Entra isolation),
-and legacy `BotService` (explicitly approved for this demo only). The local
-Activity host returns HTTP 200 from `/readiness`. The native Studio connection
-and connected-agent draft entry are saved. Earlier calls failed as described
-below; after deploying v2, the presenter reported successful processing in the
-GitHub Copilot harness. Field-level rehearsal and a saved actual result are
-still required before the conference. Use the working GitHub-harness agent,
-not the earlier standard-harness agent by assumption.
+**Current status (November 10, 2026):** DTW is the canonical deployment target.
+The existing `supplier-catalog-specialist:2` is active with Activity 2.0.0;
+routing remains 100% to `@latest`. The repository default is `AzureRbac` (Entra
+isolation) plus `BotServiceRbac`. Since 19:18:37 UTC, the live DTW endpoint uses
+the separately approved [temporary `BotService` exception](#approved-temporary-demo-compatibility-exception)
+alongside unchanged `AzureRbac`/Entra. The deployed ZIP was downloaded and its SHA-256 verified as
+`7a8af1165a25909ff5221603a19dfba4c43b02549decc824b2b5e1ebf832bce7`.
+It contains the shared catalog processor, Activity adapter, compatible SDK
+requirements and all three synthetic FC-03 sources. No CorpDev fallback tenant
+is used; the DTW live exception has its own explicit approval.
+
+Deployment and the live policy change are verified. **The user now reports
+the demo is working under the compatibility exception**; no successful tool
+JSON or field-level verification artifact was supplied. Before the exception,
+the November 10 19:05:02 UTC Studio
+call returned `BotServiceRbac authorization requires a valid Entra tenant id
+for the activity caller`, request `f1f5a9730707119738f159d6f4268968`.
+The exception bypasses that additional check rather than repairing incoming
+Activity identity. No Studio/Teams publication was performed.
+
+## Canonical DTW target
+
+| Setting | Value |
+|---|---|
+| Tenant | `f32b97f0-efb8-4bc3-91ee-18a6e5f635c9` |
+| Subscription | `b571e36c-4e62-4175-b8c1-062a4cf87b16` |
+| Existing resource group / region | `dtw-tool-demo` / East US |
+| Existing account / project | `dtw-tool-demo-b571` / `detroit-catalog` |
+| Project endpoint | `https://dtw-tool-demo-b571.services.ai.azure.com/api/projects/detroit-catalog` |
+| Agent name / current version | `supplier-catalog-specialist` / `supplier-catalog-specialist:2` |
+| Model deployment | `gpt-6.1-sol`, model version `2026-09-29`, GlobalStandard capacity 3 |
+| Model endpoint | `https://dtw-tool-demo-b571.openai.azure.com/` |
+
+The existing runtime identity is unchanged and already has Cognitive Services
+OpenAI User on this DTW account. The model deployment is `Succeeded`. These
+read-backs verify configuration, not a model call or an Activity turn.
+CorpDev resources and the separate CAIS API remain untouched.
+
+## Repeat a source-only deployment
+
+While the live compatibility exception is active, the updater deliberately
+refuses both preview and deployment. First [restore `BotServiceRbac`](#roll-back-the-demo-exception);
+do not change the source defaults or guard to accept legacy mode.
+
+Use PowerShell 7.1 or later and an Azure CLI profile already signed in to the exact DTW
+tenant/subscription above. Use an isolated profile for a different account;
+the script refuses a mismatch and never switches shared authentication.
+
+```powershell
+# From this folder. Preview stages/packages locally but makes no cloud write.
+.\Deploy-Agent.ps1 -WhatIf
+
+# After deployment approval, update only the existing hosted specialist.
+.\Deploy-Agent.ps1
+```
+
+The script uses Microsoft's supported
+[source ZIP update API](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/deploy-hosted-agent-code#update-or-version-an-agent),
+not the AZD provisioning/publishing path. It packages an explicit seven-file
+allowlist, fixes ZIP timestamps for repeatable hashes, posts a version update,
+waits for `active`, and downloads that exact version to verify its hash.
+It preserves the endpoint configuration and runtime identity and detects
+unexpected changes. It never grants roles/consent, creates a Bot, publishes,
+invokes the agent, or changes CorpDev. Existing `@latest` routing selects the
+new version for new sessions; existing sessions can remain pinned to an older
+version. Source deployment and hosting incur normal Foundry usage charges.
+
+`azure.yaml` retains the corresponding source configuration, with
+`AZURE_TENANT_ID` and `AZURE_OPENAI_ENDPOINT` explicitly supplied. Do not use
+`azd up`/`provision` or the historical infrastructure template for this update.
+The adapter rejects missing/invalid tenant configuration and the original CAIS
+model endpoint instead of silently falling back to CorpDev or local config.
+
+## Approved temporary demo compatibility exception
+
+On November 10 the user explicitly approved replacing only this DTW endpoint's
+`BotServiceRbac` with legacy `BotService` for the fixed synthetic demo, retaining
+`AzureRbac` with Entra isolation and every other endpoint/runtime setting.
+The supported endpoint-only PATCH returned HTTP 200 at **19:18:37 UTC**.
+Only `agent_endpoint.authorization_schemes[1].type` changed. Independent
+read-back at **19:19:29 UTC** confirmed the same active v2 and downloaded ZIP
+hash above, unchanged source definition/environment and runtime identity
+`64fc7e7c-43fe-4f48-bc23-caa4541ede3d`, Activity, 100% `@latest` routing and
+`not_published`. No resources, roles, network configuration, consent, Studio
+binding or publication were changed. See the
+[deployment record](../../../.azure/deployment-plan.md) for the read-back and
+processing outcome. Approval and configuration read-back are not evidence
+that delegated processing succeeds.
+
+Microsoft documents
+[`BotService` as legacy compatibility](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-endpoint-authorization#bot-service-channel-authorization):
+Azure Bot Service still validates the channel request, but Foundry applies no
+additional user authorization rule on that channel. This removes the per-user
+RBAC/tenant check; it does not repair missing caller identity. Direct clients
+still need Azure RBAC. It is not anonymous access, a network-public change,
+or a grant of additional Azure roles. Keep Studio's Microsoft authentication,
+existing sharing, fixed synthetic inputs and prohibition on approval/publication.
+Do not use this exception for real supplier data or production.
+
+`azure.yaml` retains the secure `BotServiceRbac` default. The source-only updater
+intentionally refuses a live `BotService` endpoint. Restore the normal policy
+before source updates; do not weaken that safeguard to deploy during the exception.
+
+### Reported demo outcome
+
+After the live change, the user reported **"Demo is working"** for the native
+Studio demonstration. This is user-reported success in the explicit compatibility
+exception, not an independently captured successful tool response. No actual
+JSON, run ID, source-evidence record, model/token metadata or measured elapsed
+time was supplied; the expected fixture fields below are not observed results.
+The coordinator did not execute its separately approved processing call and
+did not retry. Preserve that distinction when presenting the outcome.
+
+The original caller-context defect remains unresolved: success with the
+additional check bypassed does not establish that `BotServiceRbac` now works.
+Capture a real returned record for field-level rehearsal evidence; any further
+processing call still needs its own approval.
+
+### Roll back the demo exception
+
+With the same explicitly selected DTW tenant/subscription and a Foundry-audience
+management token, restore the saved original authorization array using
+[Microsoft's endpoint update API](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/configure-agent-endpoint-authorization#inspect-the-current-endpoint-configuration).
+The fixed target is:
+
+```http
+PATCH https://dtw-tool-demo-b571.services.ai.azure.com/api/projects/detroit-catalog/agents/supplier-catalog-specialist?api-version=v1
+Content-Type: application/merge-patch+json
+Authorization: Bearer <Foundry-audience-token>
+
+{
+  "agent_endpoint": {
+    "authorization_schemes": [
+      {
+        "type": "AzureRbac",
+        "isolation_key_source": { "kind": "Entra" }
+      },
+      { "type": "BotServiceRbac" }
+    ]
+  }
+}
+```
+
+The update replaces the whole scheme array. Read the current agent immediately
+before applying it; expect exactly `AzureRbac`/Entra plus `BotService` and the
+recorded v2, identity, routing and publication state. Stop and review any drift
+rather than overwriting a concurrent change. The array above matches the saved
+original in full. Read back the
+agent afterward and confirm `BotServiceRbac`, Entra isolation, Activity,
+unchanged routing/version/identity, source/environment and publication state.
+The service returned no ETag during this change; pre-write comparison is not
+an atomic conditional-update guarantee. Never log the token.
+Do not add another Bot Service scheme alongside the existing one.
+
+## Native Studio integration and remaining verification
+
+The user-confirmed caller is
+[DTW Tool Demo](https://copilotstudio.microsoft.com/environments/0343907b-5031-ed09-acc8-5e9701b25f1d/agents/781a5f55-6bc3-473d-b085-455c881026c5),
+using the GitHub Copilot harness. Its saved connected agent is
+`Supplier Catalog Specialist DTW` (previously observed as `supply-cat`).
+Authenticated Studio read-back verified Agent ID `supplier-catalog-specialist`,
+connection alias `azureagentservice_1` and connection ID
+`b3547013461c46ebb920b8bd97bc04c6`, named `Detroit DTW Catalog Foundry`.
+The connection uses Entra ID User Login and its saved resource parameter is
+the exact canonical DTW project endpoint above. No rebind was needed.
+
+The main Studio draft instructions now route `FC-03-NL300` to that specialist
+with exactly `process FC-03-NL300`, allow one call per requested attempt,
+prohibit automatic retries and fabricated results/diagnoses, and preserve
+returned conflicts without approval/publication. The saved instructions
+survived reload. This was a draft update, not publication or a processing test.
+
+Read-only inspection of the user's November 10, 2026 19:05 UTC Preview history
+confirms `SupplierCatalogSpecialistDTW` received exactly
+`{"task":"process FC-03-NL300"}` and its tool trace failed `Http403`.
+The reported caller-tenant error has request ID
+`f1f5a9730707119738f159d6f4268968`. The prompt's historical tool name did not
+prevent correct selection. Studio already uses **Authenticate with Microsoft**;
+**No authentication** is disabled by DLP, and the selected mode exposes no
+tenant field. The history is not the outgoing Foundry Activity payload and
+does not establish which caller identity its gateway validated.
+
+For an approved binding update, use the DTW project endpoint above, Microsoft
+Entra ID User Login, and Agent ID `supplier-catalog-specialist` (the current
+hosted agent name, not a classic `asst_` assistant ID). Follow Microsoft's
+[native GH-harness Foundry instructions](https://learn.microsoft.com/en-us/microsoft-copilot-studio/agents-experience/add-agent-foundry).
+Use the documented `BotServiceRbac` scheme outside the separately approved demo
+exception above; neither another role nor a container tenant setting repairs
+missing incoming caller-tenant context. Recheck the saved
+binding before any future change, and obtain approval for draft changes, consent,
+publication or a live `process FC-03-NL300` test.
+
+The DTW workspace's last-day telemetry query had no match for the failed request
+ID, and the account/project had no diagnostic export settings. No exact outgoing
+Activity payload was captured. If the correct binding still fails, escalate the
+request ID, failure time and endpoint/authentication evidence to Microsoft;
+do not fabricate tenant claims or make further unapproved authorization changes.
+
+Offline checks use a local virtual environment with both this folder's and
+`..\..\foundry-demo\requirements.txt` dependencies installed:
+
+```powershell
+# From the repository root.
+.\Detroit-November-2026\foundry-demo\.venv\Scripts\python.exe -m unittest discover `
+  -s .\Detroit-November-2026\foundry-demo -p 'test_*.py' -q
+.\Detroit-November-2026\foundry-demo\.venv\Scripts\python.exe -m unittest discover `
+  -s .\Detroit-November-2026\foundry-agent\supplier-catalog-specialist -p 'test_activity_sdk.py' -q
+Invoke-Pester .\Detroit-November-2026\foundry-agent\supplier-catalog-specialist\Deploy-Agent.Tests.ps1
+```
+
+## Historical CorpDev deployment evidence
+
+The following records the previous deployment and its separately approved
+demo-only exception. It is not DTW setup guidance, a current binding assertion,
+or authorization to modify/delete CorpDev or copy its legacy security setting.
 
 **Authentication correction applied November 9, 2026:** the user separately
 approved adding `AzureRbac` with Entra isolation alongside `BotServiceRbac`.
@@ -59,7 +265,7 @@ user-reported success means this observation is not a confirmed remaining
 blocker. Preserve that distinction; no captured successful tool payload has
 been inspected by this session.
 
-Project endpoint:
+Historical CorpDev project endpoint:
 https://cog-b6qdlbxyhq22k.services.ai.azure.com/api/projects/detroit-catalog
 
 The approved project-scoped Foundry User assignment to the demo author is
@@ -77,7 +283,7 @@ Teams app publication/sideloading, further RBAC, and consent changes remain
 excluded. Evaluations were explicitly deferred. An exact model retail-price
 lookup returned no rows; inference, hosting and Studio usage are not free.
 
-Native Studio connection values:
+Historical CorpDev Studio connection values:
 
 - Project endpoint: the HTTPS endpoint above.
 - Agent name / ID: `supplier-catalog-specialist`
@@ -89,7 +295,7 @@ Native Studio connection values:
   `a579be29-2cc6-41d7-b176-7092013096d9`; connected-agent component
   `9dfe3998-d389-41fa-bea8-3c6bf5575961`.
 
-## Boundaries
+### Historical CorpDev boundaries
 
 - CorpDev tenant `1b37c04e-260e-4189-a11b-0b8609ed3df0`.
 - Subscription `ST Business Applications`
@@ -115,7 +321,7 @@ the dependency manifest, and the synthetic FC-03 PDF, workbook, and image.
 Do not edit these generated copies or add local config/credentials to them.
 The existing CAIS `config.json` is neither copied nor read by the adapter.
 
-The adapter requires `AZURE_OPENAI_ENDPOINT` and
+The adapter requires an explicit GUID `AZURE_TENANT_ID`, `AZURE_OPENAI_ENDPOINT` and
 `AZURE_AI_MODEL_DEPLOYMENT_NAME`. In hosted execution it uses managed identity.
 No key, client secret, or shared login profile is required by the code.
 Actual runtime identity access remains a deployment verification gate.
@@ -133,11 +339,11 @@ Local regression command from `..\..\foundry-demo`:
 .\.venv\Scripts\python.exe -m unittest test_demo test_activity_agent -q
 ```
 
-Installed-SDK compatibility regression from this folder, after installing
-`requirements.txt` in the local `.venv`:
+Installed-SDK compatibility regression from this folder, using the shared
+`foundry-demo\.venv` with both dependency manifests installed:
 
 ```powershell
-.\.venv\Scripts\python.exe -m unittest test_activity_sdk -q
+..\..\foundry-demo\.venv\Scripts\python.exe -m unittest test_activity_sdk -q
 ```
 
 Activity is asynchronous: `azd ai agent invoke` does not test this protocol.

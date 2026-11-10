@@ -1,13 +1,26 @@
 # Foundry slice: PDF + spreadsheet + image to a review record
 
 **Conference route update:** the stage demo now uses the
-[CorpDev hosted specialist v2](../foundry-agent/supplier-catalog-specialist/README.md)
-through Studio's GitHub Copilot harness, which the presenter reports is working.
+[DTW hosted specialist v2](../foundry-agent/supplier-catalog-specialist/README.md)
+through Studio's GitHub Copilot harness. DTW deployment is active and its source
+package and saved Studio binding are verified. The approved temporary DTW
+`BotService` exception was applied at 19:18:37 UTC on November 10, retaining
+`AzureRbac`/Entra, source v2/package, environment, identity, routing and
+publication state. It bypasses additional Bot-user authorization, not channel
+authentication, and does not repair caller-tenant propagation. The user
+subsequently reported **"Demo is working"** under that exception; no successful
+JSON, run ID, model/token metadata or field-level capture was supplied. The
+coordinator did not execute its approved Studio call or retry. Do not substitute
+earlier CorpDev evidence or expected fixture values for a captured DTW result.
 Use the [stage run sheet](../attendee-guide.html#foundry-rehearsal), not the
 historical CAIS API/custom-connector hookup below. This folder's processor and
 FC-03 sources are reused by that specialist; its `config.json` still targets
 the older direct-model route. No new deployment or consent is required by
 opening the rehearsal guide.
+The repository default remains `BotServiceRbac`; its source updater deliberately
+refuses the live legacy mode. Follow the specialist guide's full-array rollback
+before normal source deployment, real supplier data or production. This is
+not an anonymous/public endpoint or a change to this folder's historical API.
 
 This is a local Python application calling the existing `gpt-6.1-sol`
 deployment on `dtw-tool-demo`. It is a model-calling service, not a Foundry

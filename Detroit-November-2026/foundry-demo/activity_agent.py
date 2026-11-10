@@ -5,10 +5,10 @@ import logging
 import os
 from pathlib import Path
 from urllib.parse import urlparse
+from uuid import UUID
 
 from demo import ROOT, SOURCE_FILES, process_bundle
 
-TENANT_ID = "1b37c04e-260e-4189-a11b-0b8609ed3df0"
 BUNDLE_ID = "FC-03-NL300"
 COMMAND = f"process {BUNDLE_ID}"
 logger = logging.getLogger("supplier-catalog-specialist")
@@ -25,11 +25,14 @@ def inference_config():
         or parsed.username or parsed.password or parsed.query or parsed.fragment
         or parsed.port is not None or parsed.path not in ("", "/")
     ):
-        raise ValueError("A CorpDev Azure OpenAI account endpoint is required; the CAIS endpoint is excluded.")
+        raise ValueError("An explicit Azure OpenAI account endpoint is required; the original CAIS endpoint is excluded.")
+    tenant_id = UUID(os.environ["AZURE_TENANT_ID"])
+    if tenant_id.int == 0:
+        raise ValueError("AZURE_TENANT_ID must identify an explicit Entra tenant.")
     return {
         "base_url": endpoint.rstrip("/") + "/openai/v1/",
         "deployment": os.environ["AZURE_AI_MODEL_DEPLOYMENT_NAME"],
-        "tenant_id": TENANT_ID,
+        "tenant_id": str(tenant_id),
     }
 
 
