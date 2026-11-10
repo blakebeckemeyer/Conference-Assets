@@ -32,7 +32,7 @@
       "filename": "slides_from_black_box_to_glass_box_observability_for_your_ai_assets.pdf",
       "sha256": "94463C72DC8856BCE2ACAAA1AEC770D0651AC8047392FA1A04EF24C2C293B631",
       "pages": [3],
-      "usedOnSlides": ["b-demo-trace"],
+      "usedOnSlides": [],
       "assets": ["visuals/catalog-failure.svg"],
       "adaptation": "Original catalog-specific illustrated failure path inspired by page 3's silent-tool-failure lesson. Source session concerns Copilot Studio observability. No source figure, vendor trace UI or measured failure is reproduced; the new diagram shows candidate loss and inadequate validation as an explicit teaching hypothesis.",
       "currentReference": "https://learn.microsoft.com/azure/foundry/observability/concepts/trace-agent-concept"
@@ -43,7 +43,7 @@
       "filename": "slides_what_is_agent_quality,_and_how_do_i_get_there.pdf",
       "sha256": "DC19A325EC22B1C2D40B0FD654F310D52F2DD2809524850C8F7BD9B8FB30E900",
       "pages": [6, 7],
-      "usedOnSlides": ["b-evaluate"],
+      "usedOnSlides": [],
       "assets": ["visuals/evaluation-coverage.svg"],
       "adaptation": "Original scenario-specific matrix separates task outcomes, process and boundary cases. Expected assertions, not a completed evaluation or a copy of the source slide.",
       "currentReference": "https://learn.microsoft.com/azure/foundry/concepts/evaluation-evaluators/agent-evaluators"
