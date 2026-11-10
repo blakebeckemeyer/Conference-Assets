@@ -65,7 +65,7 @@ class HtmlPage(HTMLParser):
             self._capture_heading = False
         if tag == "template" and self._note is not None:
             note = " ".join(self._note)
-            match = re.search(r"\b(\d+)\s+minutes?\.", note)
+            match = re.search(r"\b(\d+)\s+minutes?(?:\.|, clock\b)", note)
             self._slide["minutes"] = int(match.group(1)) if match else None
             self._note = None
         if tag == "section" and self._slide:
@@ -167,6 +167,7 @@ assert len(html_files) == 3 and {path.name for path in html_files} == {
 guide = parse_page("attendee-guide.html")
 for section in ("start", "local", "m365", "cowork", "lifecycle", "studio", "foundry", "checks", "references"):
     assert section in guide.ids, f"Missing attendee guide section #{section}"
+assert "foundry-rehearsal" in guide.ids, "Keep the stage run sheet accessible from the guide"
 presenter = parse_page("presenter.html")
 all_pages = {
     (ROOT / "index.html").resolve(): deck,

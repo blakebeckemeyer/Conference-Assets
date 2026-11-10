@@ -1,0 +1,5 @@
+.copilot-azure/
+.venv/
+.playwright-mcp/
+__pycache__/
+*.pyc

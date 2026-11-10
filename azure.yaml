@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+infra:
+    module: api
+    provider: microsoft.foundry
+name: supplier-catalog-api
+resourceGroup: ${AZURE_RESOURCE_GROUP}
+services:
+    api:
+        apiVersion: 2025-01-01T00:00:00Z
+        docker:
+            context: .
+            path: Dockerfile
+            remoteBuild: true
+        host: containerapp
+        language: docker
+        module: api
+        project: ./Detroit-November-2026/foundry-demo
+        resourceGroup: ${AZURE_RESOURCE_GROUP}
+        resourceName: ca-supplier-dev-f736

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentName": {
+      "value": "supplier-dev-f736"
+    },
+    "location": {
+      "value": "eastus"
+    },
+    "sessionId": {
+      "value": "f73648dd-e2a7-4df9-8b2d-f6c9b9d59bfc"
+    },
+    "deployedBy": {
+      "value": "conference-demo"
+    },
+    "createdAt": {
+      "value": "2026-11-05T16:34:31.5958683-05:00"
+    },
+    "containerAppsEnvironmentName": {
+      "value": "cae-supplier-dev-f736"
+    },
+    "containerAppName": {
+      "value": "ca-supplier-dev-f736"
+    },
+    "containerRegistryName": {
+      "value": "crsupplierdevf736"
+    },
+    "logAnalyticsWorkspaceName": {
+      "value": "log-supplier-dev-f736"
+    },
+    "applicationInsightsName": {
+      "value": "appi-supplier-dev-f736"
+    },
+    "keyVaultName": {
+      "value": "kv-supplier-dev-f736"
+    },
+    "foundryAccountName": {
+      "value": "dtw-tool-demo"
+    },
+    "catalogAllowedTenantIds": {
+      "value": [
+        "1b37c04e-260e-4189-a11b-0b8609ed3df0"
+      ]
+    },
+    "catalogApiAudience": {
+      "value": "c1cfcc13-f250-45d7-ad61-03d4c72677c1"
+    },
+    "deployerObjectId": {
+      "value": ""
+    },
+    "containerImage": {
+      "value": "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest"
+    }
+  }
+}

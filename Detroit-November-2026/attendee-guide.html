@@ -28,8 +28,8 @@
       </tbody></table>
       <table><thead><tr><th>Talk B</th><th>Segment</th></tr></thead><tbody>
         <tr><td>00:00-00:05</td><td>Why engineer a catalog-processing service?</td></tr>
-        <tr><td>00:05-00:17</td><td>PDF, spreadsheet and image → catalog drafts and review queue</td></tr>
-        <tr><td>00:17-00:25</td><td>Compare implementations, inspect a failure and evaluate</td></tr>
+        <tr><td>00:05-00:17</td><td>Inspect three sources, delegate processing, inspect the review record</td></tr>
+        <tr><td>00:17-00:25</td><td>Explain the validator, inspect a real failure, distinguish tests from benchmarks</td></tr>
         <tr><td>00:25-00:30</td><td>Studio/service boundary, runtime choice and questions</td></tr>
       </tbody></table>
       <p>Service demos require approved accounts, data access, licensing and spend. Local examples and illustrations are references, not evidence of a cloud run. Prepare service access and release permissions before presenting.</p>
@@ -143,36 +143,61 @@ and what the product team must supply. Keep unknown values unknown.</code></pre>
     </section>
     <section id="foundry">
       <h2>Beyond chat: turn supplier files into a usable catalog</h2>
-      <p><strong>Your goal:</strong> follow mixed-format evidence into validated catalog drafts and a useful review queue, then decide whether a more specialized implementation earns its complexity. Fictional Northline Desk supplies desk lamps; no prior talk, launch files or Studio agent is required.</p>
-      <p><strong>Start here:</strong> the <a href="foundry-demo/README.md">local Python demo</a> generates one real synthetic PDF and packaging image, sends them to your existing model deployment and checks the structured response in code. The November 4 live run succeeded: it retained the PDF's black and image's red evidence and routed the record to review. This is the first slice, not the complete catalog service. Spreadsheet ingestion, review UI, export and comparison runs remain unbuilt. The <a href="fixtures/foundry-catalog-processing.json">design fixture</a> is an answer key, not model input or proof of a run.</p>
-      <nav aria-label="Foundry demo steps"><a href="#foundry-prepare">Before you start</a><a href="#foundry-input">Inspect inputs</a><a href="#foundry-run">Process a bundle</a><a href="#foundry-result">Review and export</a><a href="#foundry-trace">Compare and investigate</a><a href="#foundry-tests">Acceptance checks</a></nav>
+      <p><strong>Your goal:</strong> show a real supplier-processing result that refuses to invent a product fact. Fictional Northline Desk supplies desk lamps. This story stands alone: the audience needs no Talk A context. A prepared Studio agent is the demonstration's entry point, not the subject of a second Studio setup walkthrough.</p>
+      <p><strong>Current stage route:</strong> Copilot Studio's GitHub Copilot harness → native Foundry connected agent → CorpDev <code>supplier-catalog-specialist:2</code> → <code>gpt-6.1-sol</code> → shared Python reconciliation and validation → returned JSON review record. The presenter reported successful harness execution on November 9. Capture that actual result during rehearsal; a report of success is not a saved recording or a verified assertion for every returned field. See <a href="foundry-agent/supplier-catalog-specialist/README.md">the deployed specialist guide</a>. Do not use the older CAIS API/custom-connector route on stage.</p>
+      <p><strong>Scope:</strong> one fixed, synthetic bundle is packaged with the specialist. The chat command does not upload documents or accept arbitrary suppliers. There is no review application, CSV export, approval/publish action, second extraction implementation, measured A/B comparison or completed Foundry evaluation suite. The <a href="fixtures/foundry-catalog-processing.json">design fixture</a> describes future cases, not five implemented bundles. The diagrams illustrate those broader ideas; label them accordingly.</p>
+      <nav aria-label="Foundry demo steps"><a href="#foundry-rehearsal">Stage run sheet</a><a href="#foundry-prepare">Before you start</a><a href="#foundry-input">Inspect inputs</a><a href="#foundry-run">Process a bundle</a><a href="#foundry-result">Review the result</a><a href="#foundry-trace">Investigate a failure</a><a href="#foundry-tests">Acceptance checks</a></nav>
+      <article id="foundry-rehearsal">
+        <h3>Presenter run sheet: 30 minutes, one live model request</h3>
+        <table><thead><tr><th>Clock</th><th>Show and do</th><th>Say / prove</th></tr></thead><tbody>
+          <tr><td>00:00-00:05</td><td>Slides 20-21. Introduce supplier onboarding and the service boundary.</td><td>“A useful result can be a refusal to pick a color. Models interpret sources; code owns the decision.”</td></tr>
+          <tr><td>00:05-00:07</td><td>Slide 22, then open the PDF, Products row 2 and packaging image.</td><td>Ask the room to spot black/black/red. Establish the conflict before showing the AI result.</td></tr>
+          <tr><td>00:07-00:09</td><td>Slide 23. Show the existing Foundry specialist, model and deployed version. Open the prepared GitHub-harness agent in Studio.</td><td>“Same processor, hosted as a specialist; this caller delegates the job. No rebuild or live provisioning.”</td></tr>
+          <tr><td>00:09-00:11</td><td>In a fresh Studio conversation send the rehearsed routing request below once. Open the tool activity showing <code>task: process FC-03-NL300</code>.</td><td>While it runs, explain the fixed bundle and one model request. Do not retry on a timer or pretend a queued action completed.</td></tr>
+          <tr><td>00:11-00:14</td><td>Slide 24, then the actual tool result, not only the orchestrator's prose summary.</td><td>Show the real run ID, <code>needs_review</code>, null color, three color candidates, width and warranty. Missing evidence is a failed check.</td></tr>
+          <tr><td>00:14-00:17</td><td>Slides 25-26. Return to the JSON and describe the human's next action.</td><td>“Resolve which variant is supplied. This is a review artifact, not a built review queue or a published listing.”</td></tr>
+          <tr><td>00:17-00:20</td><td>Slide 27, then the validator in <code>foundry-demo/demo.py</code>.</td><td>No A/B winner exists. Explain the measurable question: did this run preserve the conflict and normalize units correctly?</td></tr>
+          <tr><td>00:20-00:23</td><td>Slide 28 and a prepared, redacted excerpt of the actual SDK failure.</td><td>Request reached host → SDK constructor failed → no catalog handler. Dependency fix deployed as v2. This was an integration failure, not a hallucination.</td></tr>
+          <tr><td>00:23-00:25</td><td>Slide 29. Show offline checks and the five-case design separately.</td><td>38 focused local tests passed across two environments; they are not 38 live model evaluations. Only FC-03 is implemented.</td></tr>
+          <tr><td>00:25-00:30</td><td>Slides 30-32. Explain ownership and the demo security exception, then questions.</td><td>A direct model pipeline is valid. Hosted code earns its place when a reusable specialist/runtime is useful. Broader demo auth is not a production pattern.</td></tr>
+        </tbody></table>
+        <p><strong>Routing request to rehearse:</strong></p>
+        <pre><code>Use the connected supplier catalog specialist to process FC-03-NL300.
+Send the specialist exactly: process FC-03-NL300
+Return its actual run ID and review record, including conflicting evidence.
+Do not resolve the color conflict, approve, or publish anything.</code></pre>
+        <p>Verify the tool name in your working GitHub-harness agent; the observed tool was <code>SupplyCatalogue</code> / <strong>Supply Catalogue</strong>. Do not assume it is the earlier standard-harness <strong>Product Launch (copy)</strong> agent. Confirm the connection and successful tool invocation in the actual agent you will present.</p>
+        <p><strong>Failure budget:</strong> at 60 seconds without a usable result, say “The live call has not completed; here is the captured rehearsal run.” Show the real saved tool result with its original timestamp, run ID and model/version. This is a presentation cutoff, not a promise that the remote request is cancelled; do not send a duplicate. If a call fails, retain the error and move on. Do not use the expected-facts fixture, an edited result or an unlabeled old CAIS run as a live fallback.</p>
+      </article>
       <article id="foundry-prepare">
-        <h3>1. Prepare the local demo and confirm access</h3>
+        <h3>1. Rehearse the deployed route before taking the stage</h3>
         <ol>
-          <li>Open the repository in your editor. Follow <a href="foundry-demo/README.md">the exact setup commands</a> to create the Python environment, install dependencies, run the offline checks and generate the two inputs. If the inputs already exist, reuse them.</li>
-          <li>Open <code>foundry-demo/config.json</code>. The target is <code>dtw-tool-demo</code>, deployment <code>gpt-6.1-sol</code>, not an agent that you need to create. The script calls the Responses API directly.</li>
-          <li>Use the isolated Azure CLI login described in the README; keep <code>AZURE_CONFIG_DIR</code> set in the terminal running Python. Do not change your shared active profile or paste credentials into code.</li>
-          <li>The demo identity now has <strong>Cognitive Services OpenAI User</strong> covering <strong>dtw-tool-demo</strong>. The working endpoint in the configuration is <code>https://dtw-tool-demo.openai.azure.com/openai/v1/</code>; the earlier Foundry gateway returned HTTP 401. For another identity, follow the README's least-privilege access instructions. No role changes are made by the script.</li>
+          <li>Open the deck at <code>index.html#talk-b</code>, private Presenter view, the three local source files, your working GitHub-harness Studio agent, and the CorpDev Foundry specialist. Pin these tabs in presentation order. Hide notifications and any credentials, connection headers, personal account details or unrelated projects before screen sharing.</li>
+          <li>Confirm the Foundry project is <code>cog-b6qdlbxyhq22k / detroit-catalog</code> in <code>Detroit-InnoHubDemo</code>, the specialist is version 2, and the model is <code>gpt-6.1-sol</code>. Do not switch to the historical <code>dtw-tool-demo</code> CAIS configuration.</li>
+          <li>In the exact Studio agent and browser you will present, start a new conversation and perform one paid rehearsal request. Check the actual tool payload and record against the checks below. The successful user report is encouraging; verify the field-level result before showing it to the audience.</li>
+          <li>Save a real tool-result copy or recording, UTC timestamp, run ID, observed elapsed time and the visible model/version. Prepare a redacted SDK-error excerpt separately. These captures are still a presenter prerequisite, not files claimed to exist in this repo. Do not expose tokens or infer price from token counts.</li>
+          <li>Stop changing the deployment after the rehearsal. No live package installation, consent, RBAC changes, agent creation, channel publication or SDK upgrades on stage. Hosted/model/Studio usage incurs charges.</li>
         </ol>
         <p><strong>Why Foundry rather than just Studio?</strong> The subject is the developer-owned service: model/extraction choices, custom processing logic, evidence preservation and measured acceptance tests. Studio can call that service or may already be sufficient for a simpler workflow. This demo does not depend on that integration, and does not claim that document/image processing, code, evaluation or governance are exclusive to Foundry.</p>
         <p>A fixed pipeline using Foundry model APIs is a valid starting point. Add a prompt or hosted agent only if managed orchestration or a code-based agent runtime is actually useful. Surrounding file processing, storage and application hosting still require their own implementation.</p>
+        <p><strong>Security narration:</strong> the approved demo endpoint retains <code>AzureRbac</code> for direct clients and uses legacy <code>BotService</code> for this integration. Bot Service tokens are still validated, but the Bot path does not check the end user's tenant/Foundry role. Do not call this anonymous access or production-ready authorization. Restore a reviewed user-bound authorization design before real supplier data or broad release. No security change is part of rehearsal.</p>
       </article>
       <article id="foundry-input">
         <h3>2. Inspect the sources before running the model</h3>
-        <p>Open <code>foundry-demo/inputs/specification.pdf</code> and <code>foundry-demo/inputs/packaging.png</code> side by side. They implement the two-source portion of FC-03:</p>
+        <p>Open <code>foundry-demo/bundles/FC-03/specification.pdf</code>, <code>foundry-demo/bundles/FC-03/supplier.xlsx</code> and <code>foundry-demo/bundles/FC-03/packaging.png</code> side by side. Together they implement the synthetic FC-03 bundle:</p>
         <table><thead><tr><th>Source</th><th>What to inspect</th><th>Why it matters</th></tr></thead><tbody>
           <tr><td>Specification PDF</td><td>NL-300 · black desk lamp · 250 mm base width · 24-month warranty</td><td>Extract text with page and field evidence.</td></tr>
-          <tr><td>Supplier spreadsheet · later</td><td>Not part of this first slice.</td><td>Sheet/cell extraction will be added separately.</td></tr>
+          <tr><td>Supplier spreadsheet</td><td>Products!A2:D2 · NL-300 · black · 250 mm · 24 months.</td><td>The app parses cells locally and keeps exact cell locators as evidence.</td></tr>
           <tr><td>Packaging image</td><td>Red lamp, readable NL-300 label</td><td>The model number agrees, but the variant does not.</td></tr>
         </tbody></table>
-        <p><strong>Predict the outcome:</strong> the record must go to review. The PDF saying black does not erase the red image. The model must not invent a warranty from the picture. Keep the fixture's expected fields out of model context.</p>
+        <p><strong>Predict the outcome:</strong> the record must go to review. The PDF and spreadsheet agree on black, but neither erases the red image. The model must not invent dimensions or a warranty from the picture. Keep the fixture's expected fields out of model context.</p>
       </article>
       <article id="foundry-run">
         <h3>3. Process one source bundle</h3>
         <ol>
-          <li>After inference access is granted, open a terminal in <code>foundry-demo</code>, keep the isolated login configuration set, and run <code>.\.venv\Scripts\python.exe demo.py run --live</code>. This makes one potentially billable request; it does not create an agent or upload persistent Files API resources.</li>
-          <li>Open the printed <code>runs/&lt;run-id&gt;</code> directory. On success, inspect <code>extraction.json</code>: independent PDF/image observations, evidence and null values for unstated facts. On failure, inspect <code>manifest.json</code> and the terminal error; do not treat a partial directory as success.</li>
-          <li>Follow the reconciliation result. Preserve black and red as conflicting color candidates rather than letting the last source overwrite the first.</li>
+          <li>Use the routing request in the run sheet from a fresh conversation in the working GitHub-harness agent. Verify the specialist receives exactly <code>process FC-03-NL300</code>. The sources are already packaged; do not attach a new file or pretend this is general document ingestion.</li>
+          <li>Open the completed tool activity and actual JSON response. A success badge or a fluent summary alone is insufficient. Verify <code>runId</code>, <code>record</code>, model/token metadata and the returned evidence. If it fails, show the error and use the explicitly labeled rehearsal capture.</li>
+          <li>Follow the reconciliation result. Preserve black from two text sources and red from the image as conflicting color candidates rather than letting the last source overwrite the others.</li>
           <li>Inspect the code-owned checks: required fields, field types, decimal unit normalization, evidence references and unresolved conflicts. A parsing/tool failure must be explicit, not converted into an apparently successful empty row.</li>
         </ol>
         <p>The versioned instructions and output schema in <code>demo.py</code> express this behavior; the prompt alone does not create the processing code:</p>
@@ -186,7 +211,7 @@ Do not publish, approve or claim certification.</code></pre>
       </article>
       <article id="foundry-result">
         <h3>4. Inspect the locally reconciled record</h3>
-        <p>Open <code>foundry-demo/runs/20261104T194827Z-de4b3c40/record.json</code> for the first successful local run, or your new run's <code>record.json</code>. There is no review UI yet. Check that the issue is actionable: resolve the black/red variant disagreement. The record includes:</p>
+        <p>Use the actual tool response from this Studio conversation. There is no review UI yet. Check that the issue is actionable: resolve the black/red variant disagreement. The following is an abbreviated expected shape, not a capture of your current run:</p>
         <pre><code>{
   "sku": "NL-300",
   "color": null,
@@ -194,19 +219,26 @@ Do not publish, approve or claim certification.</code></pre>
   "warranty_months": 24,
   "status": "needs_review",
   "issues": ["color-conflict"],
-  "candidates": { "color": ["black", "red"] }
+  "candidates": {
+    "color": [
+      {"source_id": "spec-001", "value": "black", "evidence": "Color: black"},
+      {"source_id": "spreadsheet-001", "value": "black", "evidence": "Products!B2 = black"},
+      {"source_id": "image-001", "value": "red", "evidence": "The depicted desk lamp is red."}
+    ]
+  }
 }</code></pre>
-        <p>This shortened representation matches the first successful run's fields. It abbreviates candidates and omits the evidence array; the real record retains source IDs, PDF line evidence and model-reported image descriptions. Visually verify the image interpretation. Do not resolve the conflict by editing the output to match the answer key.</p>
+        <p>The real record should retain source IDs, PDF line evidence, exact spreadsheet cell references and model-reported image descriptions. Check <code>published: false</code> in the actual result even though it is omitted from this shortened example. Visually verify the image interpretation. Do not resolve the conflict by editing the output to match the answer key.</p>
         <ol>
-          <li>Compare <code>response.json</code> (what the model actually returned), <code>extraction.json</code> (parsed observations) and <code>record.json</code> (the code-owned decision).</li>
-          <li>Verify the code converted 250 mm to <code>"25.0"</code> cm and retained both black/red candidates rather than choosing a color.</li>
-          <li>Inspect <code>manifest.json</code> for input hashes, actual returned model, elapsed time and token usage. Cost is unknown without pricing; token count is not full service cost.</li>
+          <li>Expand the actual tool result and match the run ID to any separately retrieved evidence. Hosted run files live under <code>$HOME/catalog-runs</code> in the hosted session, not your local <code>foundry-demo/runs</code>. Do not promise to open local files from the hosted run. Use the captured result if hosted evidence retrieval is not rehearsed.</li>
+          <li>Verify the code converted 250 mm to <code>"25.0"</code> cm and retained all three black/black/red color observations rather than choosing a color.</li>
+          <li>Inspect the returned model, <code>elapsedMs</code> and token metadata when available. The outer tool duration includes orchestration and connector overhead and is not the same metric. Manifest hashes require actual hosted evidence retrieval; cost remains unknown without pricing and token count is not full service cost.</li>
         </ol>
-        <p><strong>What this slice produces:</strong> one evidence-linked JSON review record and a run manifest, once inference access works. No CSV export, automatic approval or publication is implemented. “Validated draft” means the configured checks passed; it is not proof of correct image interpretation or retailer approval.</p>
+        <p><strong>What this slice produces:</strong> one evidence-linked JSON review record and a run manifest. No CSV export, automatic approval or publication is implemented. “Validated draft” means the configured checks passed; it is not proof of correct image interpretation or retailer approval.</p>
       </article>
       <article id="foundry-trace">
-        <h3>5. Later milestone: compare implementations and investigate a failure</h3>
-        <p>This is not runnable yet. Complete and inspect the first PDF/image result before building the second implementation or tracing UI.</p>
+        <h3>5. Show a real engineering failure; keep comparison work separate</h3>
+        <p>The captured hosted failure is concrete: Activity arrived, then SDK <code>1.0.0b1</code> passed <code>is_authenticated</code> to Agents SDK <code>1.9.0</code>, whose constructor no longer accepted it. The model handler never ran. A real-SDK local regression reproduced it; Activity <code>1.0.0b4</code> fixed it and was deployed as specialist v2. Show a redacted saved excerpt, not a failing live deployment. The presenter subsequently reported successful harness execution; the earlier placeholder-callback observation is not a confirmed remaining blocker.</p>
+        <p><strong>Not part of this live demo:</strong> a second extraction implementation, catalog tracing UI and measured comparison. The following is a future experiment, not completed work:</p>
         <p><strong>A:</strong> general-purpose multimodal extraction. <strong>B:</strong> format-specific text/table extraction plus image analysis. Both use the same reconciliation/validation code. Neither is assumed to win.</p>
         <ol>
           <li>Open the prepared comparison results for A and B. Confirm identical input hashes, schema, rules and case set. Record differing models, adapters and prompts as part of each version.</li>
@@ -220,7 +252,8 @@ Do not publish, approve or claim certification.</code></pre>
       </article>
       <article id="foundry-tests">
         <h3>6. Check each acceptance case against the same oracle</h3>
-        <p>The <a href="fixtures/foundry-catalog-processing.json">fixture</a> specifies the full planned case set. Only the PDF/image portion of FC-03 has local source files and a successful live run so far. Keep the fixture separate from model input. The first slice records source hashes; complete the other files and assertions before claiming five-case coverage.</p>
+        <p><strong>Live FC-03 pass criteria:</strong> actual specialist invocation, nonempty real run ID, SKU <code>NL-300</code>, <code>status: needs_review</code>, <code>color: null</code>, black/black/red evidence from all three sources, width <code>"25.0"</code> cm, warranty <code>24</code> months and <code>published: false</code>. Preserve the actual response; do not prefill a result. A normal-language answer that hides a failed tool call does not pass.</p>
+        <p>The <a href="fixtures/foundry-catalog-processing.json">fixture</a> specifies the full planned case set. Only FC-03 has the built sources and processor path. Keep the fixture separate from model input; complete the other four bundles before claiming five-case live coverage.</p>
         <table><thead><tr><th>Case</th><th>Source condition</th><th>Expected result</th></tr></thead><tbody>
           <tr><td>FC-01 · Consistent</td><td>NL-100; black; 250 mm; 24-month warranty; matching image.</td><td>Validated draft; width 25.0 cm, evidence retained.</td></tr>
           <tr><td>FC-02 · Model conflict</td><td>PDF says NL-200; spreadsheet says NL-201.</td><td>Review; canonical SKU null; both candidates retained.</td></tr>
