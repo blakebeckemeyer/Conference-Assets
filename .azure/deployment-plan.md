@@ -113,6 +113,37 @@ defect is not repaired or independently traced by this workaround. Restore the
 secure policy as described above before normal source deployment, real supplier
 data or production; separately authorize any additional processing verification.
 
+### Access side effects to reconcile at closeout
+
+The connector investigation made one Power Platform administrative ACL change
+before the later Activity caller-tenant failure:
+
+- Environment: `0343907b-5031-ed09-acc8-5e9701b25f1d`.
+- Original connection:
+  `shared-azureagentser-02b35a76-7231-4904-84d9-67d8be3d9764`.
+- Added `CanView` for **Power Virtual Agents Service**, service principal
+  `e4af4ca3-101d-42f7-9628-57b4ea081da5`, application
+  `9d8f559b-5984-46a4-902a-ad4271e83efa`.
+
+Read-back confirmed the grant persisted, but the reported token-exchange
+denial continued. The later verified Studio binding uses connection
+`b3547013461c46ebb920b8bd97bc04c6`; this session added no ACL grant to that
+connection. Treat these as distinct Power Platform objects. Deleting Azure
+resources does not verify removal of a Studio agent, a connection, its
+credentials or the original connection's grant. Closeout must inventory their
+current state and shared dependencies separately, then record any explicitly
+approved removal; no removal is claimed by this record.
+
+The known connection owner `87ff0a40-0f7d-4311-b847-67d416c1e258` already had
+subscription-inherited **Owner** and **Foundry User** without assignment
+conditions. Runtime `64fc7e7c-43fe-4f48-bc23-caa4541ede3d` already had
+**Cognitive Services OpenAI User** on the DTW account. These existing grants
+were reused, not created during the DTW migration or compatibility change.
+Do not delete inherited owner permissions or unrelated tenant service
+principals as if they were demo-created access. Restoring `BotServiceRbac`
+removes the live compatibility exception but does not decommission hosting,
+models or other billable resources.
+
 Canonical setup:
 `Detroit-November-2026/foundry-agent/supplier-catalog-specialist/README.md`.
 

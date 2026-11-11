@@ -171,6 +171,13 @@ connection alias `azureagentservice_1` and connection ID
 The connection uses Entra ID User Login and its saved resource parameter is
 the exact canonical DTW project endpoint above. No rebind was needed.
 
+The separately inspected classic assistant `Agent773`
+(`asst_7ykRjfrBnr4JtHiCFkEGl1cE`) had empty instructions and no tools. Its ID
+came from a different Foundry page, not this saved Studio entry. It was left
+unchanged and is neither evidence of a wrong binding nor a catalog deployment
+target. Establish the saved connection and hosted agent name before diagnosing
+a binding mismatch; do not create or replace agents based on a display name.
+
 The main Studio draft instructions now route `FC-03-NL300` to that specialist
 with exactly `process FC-03-NL300`, allow one call per requested attempt,
 prohibit automatic retries and fabricated results/diagnoses, and preserve

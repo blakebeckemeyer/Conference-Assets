@@ -125,6 +125,15 @@ the exact DTW project endpoint in the specialist guide. This is not the original
 `shared-azureagentser-02b35a76-7231-4904-84d9-67d8be3d9764` connection; its
 administrative grant is not evidence about the current connection.
 
+Read-only RBAC checks during the investigation showed that the known connection
+owner already had **Owner** and **Foundry User**, inherited from the DTW
+subscription with no assignment conditions. The hosted runtime already had
+account-scoped **Cognitive Services OpenAI User**. No additional DTW Azure role
+was needed or assigned by this session. These grants do not identify the user
+or tenant represented in the failed Activity; another owner grant is not a
+repair for invalid caller-tenant context. Network reachability is separate:
+the request already reached Foundry and received an authorization response.
+
 The Studio draft instructions were saved to route this bundle to the named
 specialist once, preserve returned evidence/conflicts, and stop on failure
 without an automatic retry, approval or publication. They survived reload;
