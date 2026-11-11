@@ -7,13 +7,25 @@ and requests authenticated Activity connectivity for native Copilot Studio deleg
 
 ## Separate DTW infrastructure target
 
-**Status:** the account, project, model, and hosted specialist version 1 are
-deployed. The specialist is active with Activity 2.0.0, `AzureRbac` (Entra
-isolation), and `BotServiceRbac`. The approved supporting Bot is
+**Initial deployment record (November 10, 2026):** the account, project, model,
+and hosted specialist version 1 were deployed. Read-back confirmed Activity
+2.0.0, `AzureRbac` (Entra isolation), and `BotServiceRbac`.
+The approved supporting Bot was
 `supplier-catalog-specialist-bot-f0ea37c8` (F0), with Teams and service-created
-WebChat/DirectLine channels. No Teams app is published.
-The agent instance has the approved Cognitive Services OpenAI User role on
+WebChat/DirectLine channels. No Teams app was published by this deployment.
+The agent instance received the approved Cognitive Services OpenAI User role on
 `dtw-tool-demo-b571` only; no project-identity inference role was added.
+
+**Follow-up supersedes this snapshot:** [PR #8](https://github.com/blakebeckemeyer/Conference-Assets/pull/8)
+canonicalizes DTW, deploys version 2, requires an explicit tenant, and records
+the separately approved endpoint-only `BotService` compatibility exception
+and subsequent user-reported "Demo is working." That report is not an
+independently captured successful result JSON or field-level verification.
+Legacy `BotService` removes the additional per-user RBAC/tenant check on the
+Bot channel; it is not the secure default or a production recommendation.
+Use that follow-up's deployment and rollback guidance, not the historical
+commands below, for subsequent changes. This snapshot does not establish that
+resources still exist after the separately coordinated demo teardown.
 
 `infra/dtw.parameters.json` targets the existing `dtw-tool-demo-b571` Foundry
 account in resource group `dtw-tool-demo`, East US, in subscription
@@ -23,7 +35,10 @@ to deploy the `detroit-catalog` project and `gpt-6.1-sol` model (version
 The deployment returns the project endpoint, OpenAI endpoint, and model
 deployment name. Model inference is metered.
 
-Run from this specialist folder, keeping the explicit subscription and group:
+Initial provisioning commands, recorded for reproducibility only. Do not run
+these during closeout/teardown; they can recreate billable resources. Run from
+this specialist folder only after new provisioning approval, keeping the
+explicit subscription and group:
 
 ```powershell
 az deployment group what-if --subscription b571e36c-4e62-4175-b8c1-062a4cf87b16 --resource-group dtw-tool-demo --template-file .\infra\corpdev.bicep --parameters '@infra\dtw.parameters.json'
@@ -38,7 +53,7 @@ The original hosted manifest and Studio configuration below remain
 CorpDev-specific. The separate `dtw/azure.yaml` binds to the existing DTW
 project and deliberately does not copy the legacy `BotService` exception.
 
-For DTW hosted deployment, run `.\Prepare-Agent.ps1 -Dtw`, then use `azd`
+The initial DTW hosted deployment used `.\Prepare-Agent.ps1 -Dtw`, then `azd`
 from `.\dtw` with an isolated `AZD_CONFIG_DIR` and environment `detroit-dtw`.
 The original preparation command without `-Dtw` still stages the CorpDev host.
 Bind the DTW environment to the explicit subscription/group above and set:
@@ -53,8 +68,9 @@ Use `azd deploy supplier-catalog-specialist --preview --no-prompt -e detroit-dtw
 before the corresponding command without `--preview`. This deployment also
 ensures the Bot/channels; it must not be used without approval for those
 resources. Preview does not enumerate those side effects.
-The adapter accepts an explicit `AZURE_TENANT_ID`; omitting it preserves the
-original CorpDev tenant for the existing deployment.
+This initial adapter accepted an explicit `AZURE_TENANT_ID` with a CorpDev
+fallback. PR #8 intentionally replaces that fallback with a required, validated
+tenant; do not restore the fallback when integrating the two changes.
 
 The Studio target is the existing `DTW Tool Demo` draft in the Jones-Evans, KC
 developer environment (`0343907b-5031-ed09-acc8-5e9701b25f1d`), not the CorpDev
@@ -64,8 +80,26 @@ points to the DTW project endpoint. Connected-agent entry
 and connection reference `azureagentservice_1` in
 [the DTW Tool Demo draft](https://copilotstudio.microsoft.com/environments/0343907b-5031-ed09-acc8-5e9701b25f1d/agents/781a5f55-6bc3-473d-b085-455c881026c5).
 The draft was saved and reloaded to verify persistence; the Studio agent was
-not republished and existing connections were not changed. No live processing
-message was sent, so end-to-end delegation remains unverified.
+not republished and existing connections were not changed. This initial session
+sent no live processing message and did not verify end-to-end delegation.
+The later DTW outcome and its evidence limits are recorded in PR #8 above.
+
+### Initial deployment lessons
+
+- Inspect the intended entry point before provisioning: root `infra/main.bicep`
+  is the REST API route and expects an existing Foundry account. A Foundry
+  account with project management enabled is not itself a project or agent.
+- Check global account/registry names, regional model availability, and quota
+  before deployment. Use explicit subscription, group, and tenant bindings;
+  never transplant the CorpDev target or its authorization exception by default.
+- Hosted deployment preview does not inventory automatic Bot/channel creation
+  or inference roles. Obtain approval for those side effects separately.
+- Package source inside the AZD project directory; parent-relative service paths
+  are rejected. Stage only the seven allowlisted runtime/source fixture files.
+- The embedded browser blocked connector OAuth pop-ups. Native Playwright Chrome
+  completed the Entra-user connection without changing browser security settings.
+  Save and reload the Studio draft to establish persistence; connection creation
+  and an active hosted version alone do not prove delegated processing.
 
 ## Original CorpDev hosted deployment
 
