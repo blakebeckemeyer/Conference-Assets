@@ -24,7 +24,7 @@ services:
                 - type: AzureRbac
                   isolationKeySource:
                       kind: Entra
-                - type: BotService
+                - type: BotServiceRbac
             protocols:
                 - activity
         codeConfiguration:
@@ -41,6 +41,7 @@ services:
             PYTHONNOUSERSITE: "1"
             FOUNDRY_AUTH_MODE: managed_identity
             AZURE_OPENAI_ENDPOINT: ${AZURE_OPENAI_ENDPOINT}
+            AZURE_TENANT_ID: ${AZURE_TENANT_ID}
             AZURE_AI_MODEL_DEPLOYMENT_NAME: gpt-6.1-sol
         host: azure.ai.agent
         kind: hosted

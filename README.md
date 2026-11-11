@@ -3,10 +3,33 @@ See what talks I've given, the slide decks as PDFs, and any code assets I shared
 
 The Launch Review app is in [Launch Review](Launch%20Review/README.md).
 
+The November 10 DTW deployment closeout, lessons learned, and scoped cleanup
+record are in the [demo teardown runbook](Detroit-November-2026/TEARDOWN.md).
+
 - [Detroit - November 10, 2026: From spec sheet to shelf](Detroit-November-2026/README.md):
   an evolving product-launch use case and offline HTML deck spanning M365
   declarative agents, Microsoft 365 Copilot Cowork, Copilot Studio and Foundry.
   Initial local foundation; platform integrations are not yet deployed.
+
+## Detroit Foundry infrastructure
+
+**Post-demo closeout:** the hosted specialist and today's Studio demo assets
+have been removed; the demo is no longer available. At November 11, 2026
+01:53:22 UTC, final read-backs confirmed the resource group absent and retained
+Key Vault, Foundry and Log Analytics demo objects purged. Previously incurred
+usage may still appear on later bills.
+See the [teardown runbook](Detroit-November-2026/TEARDOWN.md) and
+[final record](.azure/deployment-plan.md#teardown-status-completed-demo-unavailable).
+The instructions below retain historical deployment
+evidence, not permission to recreate resources.
+
+The Foundry account, project, and model template is
+[`corpdev.bicep`](Detroit-November-2026/foundry-agent/supplier-catalog-specialist/infra/corpdev.bicep),
+not the repository-root `infra/main.bicep`, which provisions the separate
+Container App API infrastructure.
+The [DTW deployment instructions](Detroit-November-2026/foundry-agent/supplier-catalog-specialist/README.md#separate-dtw-infrastructure-target)
+use `infra/dtw.parameters.json` for the new `dtw-tool-demo` resource group.
+Hosted-agent deployment and Copilot Studio integration are separate steps.
 
 ## Detroit Dataverse MCP
 

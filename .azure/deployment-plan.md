@@ -1,8 +1,197 @@
-# API-Only Azure Deployment Plan
+# Catalog Deployment Record
 
-> **Status:** Validated
+## Teardown status: completed, demo unavailable
 
-## Current work: CorpDev Foundry migration
+**Final closeout, November 11, 2026 01:53:22 UTC:** the teardown coordinator
+reported verified removal of the hosted specialist and sessions, its two
+blueprint applications and four principals (absent from active and deleted
+Graph collections), today's Studio parent and all nine components, both
+connection references, and the new `b3547013461c46ebb920b8bd97bc04c6`
+connection. Dataverse creation evidence established that `DTW Tool Demo`
+itself was created November 10 at 17:36:29 UTC; it was not an older tenant
+asset to preserve. The demo is no longer available.
+
+The original September-created connection was preserved. Today's `CanView`
+grant was revoked through the official owner-scoped `modifyPermissions` route
+after the admin-scoped route returned `ConnectionSharingNotAllowed`; read-back
+showed the owner as its sole grant. Key Vault and Foundry soft-deleted objects
+were purged and their lists were empty. The Azure Power Platform account and
+the separate tenant billing policy `fe05b4d4-f15a-401f-8523-8a8262b95e1c`
+(`DTWDemoNovember`) were deleted; the policy deletion returned HTTP 204 and its
+list was empty.
+
+Resource group `dtw-tool-demo` reached `exists=false` at **01:50:15 UTC**
+after the Container Apps environment's asynchronous deletion. A retained Log
+Analytics workspace required additional cleanup: `--force` on an already-deleted
+workspace had returned success without purging it. The coordinator recreated
+only the same empty group, recovered the exact original workspace and verified
+customer ID `256578fb-f8c7-4047-af15-7b823ee8317c`, then permanently deleted it.
+The retained list and group inventory were empty before removing that temporary
+group, which reached `exists=false` at **01:52:28 UTC**. No other demo
+infrastructure was reprovisioned.
+
+The [teardown runbook](../Detroit-November-2026/TEARDOWN.md) now records the
+exact inventory, executed cleanup commands and service-retention behavior.
+Fresh **01:53:22 UTC** read-backs confirmed the group absent, only the three
+original subscription groups remaining, all matching deleted Key Vault,
+Foundry and Log Analytics lists empty, and the demo billing policy absent.
+The identified demo teardown is complete; this does not certify unrelated
+tenant assets or prevent previously incurred usage from appearing on later
+bills. No cloud cleanup was performed by this documentation update.
+
+The deployment, user-reported success and temporary exception below are
+historical evidence, not current availability. The exception ended with agent
+deletion; no policy rollback on a live endpoint is claimed. Do not run these
+historical provisioning commands to recreate the demo during closeout.
+
+## Historical demo target: DTW hosted catalog specialist
+
+On November 10 the user explicitly directed migration away from CorpDev to
+the existing DTW project. This supersedes the historical CorpDev target below,
+not the restrictions on unapproved roles, consent, publication or live tests.
+
+- Tenant `f32b97f0-efb8-4bc3-91ee-18a6e5f635c9`, subscription
+  `b571e36c-4e62-4175-b8c1-062a4cf87b16`, existing group `dtw-tool-demo`.
+- Existing account/project `dtw-tool-demo-b571 / detroit-catalog`, East US.
+- DTW version 1 already contained the shared processor, compatible SDK pins
+  and FC-03 sources. Do not infer a missing hosted deployment from an unrelated
+  classic Assistant page.
+- Updated the repository adapter to require a validated `AZURE_TENANT_ID`,
+  removing the hard-coded CorpDev fallback; aligned canonical source/setup
+  with DTW and `AzureRbac`/Entra plus `BotServiceRbac`.
+- Used the supported multipart source-version API through `Deploy-Agent.ps1`
+  to update the existing specialist, without provisioning or AZD side effects.
+- `supplier-catalog-specialist:2` is active. Uploaded/downloaded ZIP SHA-256:
+  `7a8af1165a25909ff5221603a19dfba4c43b02549decc824b2b5e1ebf832bce7`.
+  Seven allowlisted files contain the processor, adapter, requirements and
+  three synthetic sources, without credentials, local config or runs.
+- Endpoint configuration and runtime identity were unchanged. Activity 2.0.0,
+  routing 100% `@latest`, `AzureRbac` with Entra isolation, `BotServiceRbac`
+  and `not_published` were confirmed by read-back. The existing model is
+  `Succeeded`; the runtime already has account-scoped Cognitive Services
+  OpenAI User. No role, consent, Bot, project or model creation was needed.
+- Local shared processor/adapter regressions: 40 passed; real installed-SDK
+  compatibility: 1 passed; source-deployment safeguard regressions: 8 passed.
+- No CorpDev writes/deletes, Studio draft edits, publication or specialist
+  invocation occurred. Active deployment is not successful delegated processing.
+
+An earlier user-run call failed Activity caller-tenant validation with
+`BotServiceRbac`, request `5ecc66ee0c1e39d247d9e3c2005d7989`. This differs from
+the earlier token-exchange ACL failure. Neither redeployment nor setting the
+container's tenant supplies missing incoming Activity caller identity.
+
+Subsequent authenticated Studio inspection confirmed the saved native entry
+`Supplier Catalog Specialist DTW`, Agent ID `supplier-catalog-specialist`, and
+connection `azureagentservice_1` / `b3547013461c46ebb920b8bd97bc04c6`.
+The connection's saved resource parameter is the exact DTW project endpoint
+and its authentication set is `entraIDUserLogin`. This is a different connection
+from the original token-exchange error. Under the user's explicit Studio-update
+authorization, main draft instructions were saved and read back after reload:
+route the fixed bundle once to this specialist, preserve actual evidence and
+conflicts, and do not retry, approve or publish. No processing call or
+publication was made. Caller-context propagation remains unverified; no
+matching gateway trace was found in the available DTW workspace query.
+The historical CorpDev `BotService` exception was not copied during migration;
+the later DTW-only approval and live change are recorded below.
+
+Subsequent read-only Studio History inspection resolved the current failure
+time: November 10, 2026 19:05:02 UTC (14:05 Eastern), request
+`f1f5a9730707119738f159d6f4268968`. The existing Preview run selected
+`SupplierCatalogSpecialistDTW`, passed `{"task":"process FC-03-NL300"}`, and its
+`ToolCallTrace` recorded `Failed`, `Http403`, duration 3407 ms. The raw trace
+does not expose the outgoing Foundry Activity or its normalized caller.
+Studio Safety & access already selects Authenticate with Microsoft; DLP
+disables No authentication, and that mode exposes no tenant input.
+An exact-ID query over six DTW log tables for the preceding 24 hours returned
+no rows; account/project diagnostic exports remained absent. These observations
+do not establish a supported customer-side tenant-setting repair. Microsoft
+needs to correlate caller identity across SendActivityV2, Bot Service and
+Foundry. No additional processing attempt or configuration change was made
+during this inspection.
+
+### Approved DTW-only live compatibility exception
+
+The user explicitly approved replacing only this specialist's `BotServiceRbac`
+with legacy `BotService`, retaining direct-client `AzureRbac` with Entra
+isolation. A supported endpoint-only PATCH returned HTTP 200 on November 10,
+2026 at **19:18:37 UTC**. The sole configuration change was
+`agent_endpoint.authorization_schemes[1].type`. Bot Service still validates
+the channel, but its additional per-user RBAC/tenant check is removed.
+This is a temporary synthetic-demo workaround, not a caller-context repair,
+anonymous/public access or an expansion of network access.
+
+Fresh read-back and an independent verification at **19:19:29 UTC** confirmed:
+
+- Active `supplier-catalog-specialist:2` and the downloaded ZIP SHA-256 above
+  are unchanged, as are all version objects, the source definition and runtime
+  environment.
+- Runtime identity `64fc7e7c-43fe-4f48-bc23-caa4541ede3d`, Activity, 100% `@latest`
+  routing, Entra isolation and `not_published` are unchanged.
+- The full agent comparison allowed only the approved policy change and
+  service `updated_at` metadata. Two fresh pre-write reads checked for drift;
+  no ETag was returned, so atomic `If-Match` protection is not claimed.
+- No resources, roles, network configuration, consent, Studio binding/draft
+  or publication were changed, and this policy operation invoked no processing.
+
+Sanitized before/after state and the original full rollback array were retained
+in session artifacts without tokens or headers. The
+[specialist rollback procedure](../Detroit-November-2026/foundry-agent/supplier-catalog-specialist/README.md#roll-back-the-demo-exception)
+restores exactly `AzureRbac`/Entra plus `BotServiceRbac` after checking for drift.
+Repository `azure.yaml` keeps that default; `Deploy-Agent.ps1` deliberately
+refuses legacy mode. Restore normal policy before a source deployment, real
+supplier data or production; do not relax the guard.
+
+### User-reported working demo
+
+After the live policy change, the user reported **"Demo is working"** and asked
+for documentation and a draft PR. This records user-reported operation of the
+native Studio route under the approved compatibility exception. No successful
+tool JSON, run ID, source-evidence record, model/token metadata, elapsed-time
+capture or field-level pass result was supplied. Expected fixture values are
+not substituted for that missing output.
+
+The coordinator did not execute its separately approved Studio processing call
+and made no retry. Configuration preservation is independently verified;
+successful operation is user-reported. The original caller-tenant propagation
+defect is not repaired or independently traced by this workaround. Restore the
+secure policy as described above before normal source deployment, real supplier
+data or production; separately authorize any additional processing verification.
+
+### Access side effects to reconcile at closeout
+
+The connector investigation made one Power Platform administrative ACL change
+before the later Activity caller-tenant failure:
+
+- Environment: `0343907b-5031-ed09-acc8-5e9701b25f1d`.
+- Original connection:
+  `shared-azureagentser-02b35a76-7231-4904-84d9-67d8be3d9764`.
+- Added `CanView` for **Power Virtual Agents Service**, service principal
+  `e4af4ca3-101d-42f7-9628-57b4ea081da5`, application
+  `9d8f559b-5984-46a4-902a-ad4271e83efa`.
+
+Read-back confirmed the grant persisted, but the reported token-exchange
+denial continued. The later verified Studio binding uses connection
+`b3547013461c46ebb920b8bd97bc04c6`; this session added no ACL grant to that
+connection. Treat these as distinct Power Platform objects. Deleting Azure
+resources does not verify removal of a Studio agent, a connection, its
+credentials or the original connection's grant. These required separate
+inventory and dependency checks; their subsequently verified removals are
+recorded in [the final teardown record above](#teardown-status-completed-demo-unavailable).
+
+The known connection owner `87ff0a40-0f7d-4311-b847-67d416c1e258` already had
+subscription-inherited **Owner** and **Foundry User** without assignment
+conditions. Runtime `64fc7e7c-43fe-4f48-bc23-caa4541ede3d` already had
+**Cognitive Services OpenAI User** on the DTW account. These existing grants
+were reused, not created during the DTW migration or compatibility change.
+Do not delete inherited owner permissions or unrelated tenant service
+principals as if they were demo-created access. Restoring `BotServiceRbac`
+removes the live compatibility exception but does not decommission hosting,
+models or other billable resources.
+
+Canonical setup:
+`Detroit-November-2026/foundry-agent/supplier-catalog-specialist/README.md`.
+
+## Historical CorpDev Foundry migration
 
 The user explicitly authorized a new Foundry-hosted catalog specialist in the
 existing `Detroit-InnoHubDemo` resource group, callable by Copilot Studio through
