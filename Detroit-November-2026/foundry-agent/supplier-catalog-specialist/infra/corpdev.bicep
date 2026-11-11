@@ -6,11 +6,13 @@ param location string = 'eastus'
 param accountName string = 'cog-${uniqueString(resourceGroup().id, location)}'
 param projectName string = 'detroit-catalog'
 param modelCapacity int = 3
+param tags object = {}
 
 resource account 'Microsoft.CognitiveServices/accounts@2025-06-01' = {
   name: accountName
   location: location
   kind: 'AIServices'
+  tags: tags
   sku: {
     name: 'S0'
   }
@@ -67,5 +69,6 @@ resource project 'Microsoft.CognitiveServices/accounts/projects@2025-06-01' = {
 output AZURE_AI_PROJECT_ID string = project.id
 output AZURE_AI_ACCOUNT_NAME string = account.name
 output AZURE_AI_PROJECT_NAME string = project.name
+output AZURE_AI_MODEL_DEPLOYMENT_NAME string = model.name
 output AZURE_OPENAI_ENDPOINT string = 'https://${account.name}.openai.azure.com/'
 output FOUNDRY_PROJECT_ENDPOINT string = 'https://${account.name}.services.ai.azure.com/api/projects/${project.name}'

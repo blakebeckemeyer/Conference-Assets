@@ -29,12 +29,19 @@ This project was built with the microsoft-foundry skill. Before working on or an
   that user report from independently verified configuration and expected
   fixtures. Do not treat caller-context propagation as repaired or invoke
   additional processing without separate approval.
-- `infra/corpdev.bicep` is a historical alternative, not DTW infrastructure.
-  Do not run `azd provision`, `azd up`, or `azd down`; the root CAIS application
+- Historical initial DTW provisioning used the group-scoped
+  `infra/corpdev.bicep` template with `infra/dtw.parameters.json`, the isolated
+  `dtw/azure.yaml` manifest, supporting Bot/channels and approved account-scoped
+  runtime inference access. Retain these reproducibility assets, not an
+  instruction to recreate resources during closeout. The main `azure.yaml`
+  now also uses the canonical explicit DTW configuration.
+- Do not run `azd provision`, `azd up`, or `azd down`; the root CAIS application
   is a separate deployment. CorpDev resources must not be changed or deleted
-  as part of this migration.
+  as part of this migration. Studio uses the existing `DTW Tool Demo` draft in
+  environment `0343907b-5031-ed09-acc8-5e9701b25f1d`; do not publish it.
 - Run `Prepare-Agent.ps1` to stage the shared processor and adapter from
-  `../../foundry-demo`. Do not edit the generated `src/catalog` copies.
+  `../../foundry-demo` into `src/catalog`. `-Dtw` stages the same seven files
+  into the isolated `dtw/src/catalog` directory. Do not edit generated copies.
 - Native Copilot Studio delegation, not Teams publication, is the target.
   Do not create Bot/channel resources or role assignments without approval.
 - Use isolated CLI/AZD authentication; never change shared profiles.

@@ -8,6 +8,16 @@ The Launch Review app is in [Launch Review](Launch%20Review/README.md).
   declarative agents, Microsoft 365 Copilot Cowork, Copilot Studio and Foundry.
   Initial local foundation; platform integrations are not yet deployed.
 
+## Detroit Foundry infrastructure
+
+The Foundry account, project, and model template is
+[`corpdev.bicep`](Detroit-November-2026/foundry-agent/supplier-catalog-specialist/infra/corpdev.bicep),
+not the repository-root `infra/main.bicep`, which provisions the separate
+Container App API infrastructure.
+The [DTW deployment instructions](Detroit-November-2026/foundry-agent/supplier-catalog-specialist/README.md#separate-dtw-infrastructure-target)
+use `infra/dtw.parameters.json` for the new `dtw-tool-demo` resource group.
+Hosted-agent deployment and Copilot Studio integration are separate steps.
+
 ## Detroit Dataverse MCP
 
 The repository-scoped server **`dataverse-dtw-innovation`** is configured in

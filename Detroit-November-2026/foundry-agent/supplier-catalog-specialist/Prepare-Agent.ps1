@@ -1,6 +1,8 @@
+param([switch]$Dtw)
+
 $ErrorActionPreference = 'Stop'
 $source = Join-Path $PSScriptRoot '..\..\foundry-demo'
-$target = Join-Path $PSScriptRoot 'src\catalog'
+$target = Join-Path $PSScriptRoot $(if ($Dtw) { 'dtw\src\catalog' } else { 'src\catalog' })
 $files = @{
     'demo.py' = 'demo.py'
     'activity_agent.py' = 'main.py'
