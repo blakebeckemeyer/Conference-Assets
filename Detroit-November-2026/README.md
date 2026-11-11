@@ -4,6 +4,17 @@
 **Audience:** business leaders, makers and developers
 **Format:** one offline HTML deck, two self-contained presentations, 90 minutes total. The inter-talk break is intentionally unscheduled.
 
+**Post-demo closeout (November 11, 2026 01:31 UTC):** the hosted specialist,
+today-created Studio parent/binding, new connection and both references were
+removed; today's original-connection ACL grant was revoked while preserving
+that older connection. The demo is no longer available. Azure resource group
+`dtw-tool-demo` was still `Deleting`, with the Container Apps environment
+remaining; final deletion is not yet verified. See the
+[teardown checkpoint](../.azure/deployment-plan.md#teardown-status-demo-unavailable-azure-group-deletion-still-verifying).
+The detailed `TEARDOWN.md` runbook is forthcoming in the separate closeout
+change. Deployment/exception/success notes below describe the earlier demo,
+not a currently running service or permission to reprovision.
+
 ## Open and present
 
 Open `index.html#talk-a` for the 60-minute Microsoft 365 Copilot, Cowork and Copilot Studio talk, or `index.html#talk-b` for the separate 30-minute Foundry talk. The buttons at the top of the deck and presenter console jump to either talk. Each has its own slide range and clock; switching talks resets the private presenter timer.

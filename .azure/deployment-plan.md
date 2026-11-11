@@ -1,6 +1,39 @@
 # Catalog Deployment Record
 
-## Current target: DTW hosted catalog specialist
+## Teardown status: demo unavailable, Azure group deletion still verifying
+
+**Closeout update, November 11, 2026 01:31 UTC:** the teardown coordinator
+reported verified removal of the hosted specialist and sessions, its two
+blueprint applications and four principals (absent from active and deleted
+Graph collections), today's Studio parent and all nine components, both
+connection references, and the new `b3547013461c46ebb920b8bd97bc04c6`
+connection. Dataverse creation evidence established that `DTW Tool Demo`
+itself was created November 10 at 17:36:29 UTC; it was not an older tenant
+asset to preserve. The demo is no longer available.
+
+The original September-created connection was preserved. Today's `CanView`
+grant was revoked through the official owner-scoped `modifyPermissions` route
+after the admin-scoped route returned `ConnectionSharingNotAllowed`; read-back
+showed the owner as its sole grant. Key Vault and Foundry soft-deleted objects
+were purged and their lists were empty. The Azure Power Platform account and
+the separate tenant billing policy `fe05b4d4-f15a-401f-8523-8a8262b95e1c`
+(`DTWDemoNovember`) were deleted; the policy deletion returned HTTP 204 and its
+list was empty.
+
+**Not yet complete at this checkpoint:** resource group `dtw-tool-demo`
+remained `Deleting`, with only Container Apps environment
+`cae-supplier-dev-b571` remaining and a bounded ARM wait in progress. Do not
+equate the removals above with verified resource-group deletion or zero
+remaining charges. Final verification and the detailed
+`Detroit-November-2026/TEARDOWN.md` runbook are owned by the separate closeout
+change. No cloud cleanup was performed by this documentation update.
+
+The deployment, user-reported success and temporary exception below are
+historical evidence, not current availability. The exception ended with agent
+deletion; no policy rollback on a live endpoint is claimed. Do not run these
+historical provisioning commands to recreate the demo during closeout.
+
+## Historical demo target: DTW hosted catalog specialist
 
 On November 10 the user explicitly directed migration away from CorpDev to
 the existing DTW project. This supersedes the historical CorpDev target below,
@@ -130,9 +163,9 @@ denial continued. The later verified Studio binding uses connection
 `b3547013461c46ebb920b8bd97bc04c6`; this session added no ACL grant to that
 connection. Treat these as distinct Power Platform objects. Deleting Azure
 resources does not verify removal of a Studio agent, a connection, its
-credentials or the original connection's grant. Closeout must inventory their
-current state and shared dependencies separately, then record any explicitly
-approved removal; no removal is claimed by this record.
+credentials or the original connection's grant. These required separate
+inventory and dependency checks; their subsequently verified removals are
+recorded in [the teardown checkpoint above](#teardown-status-demo-unavailable-azure-group-deletion-still-verifying).
 
 The known connection owner `87ff0a40-0f7d-4311-b847-67d416c1e258` already had
 subscription-inherited **Owner** and **Foundry User** without assignment

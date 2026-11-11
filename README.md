@@ -10,6 +10,13 @@ The Launch Review app is in [Launch Review](Launch%20Review/README.md).
 
 ## Detroit Foundry infrastructure
 
+**Post-demo closeout:** the hosted specialist and today's Studio demo assets
+have been removed; the demo is no longer available. Azure resource-group
+deletion is still being verified. See the [teardown checkpoint](.azure/deployment-plan.md#teardown-status-demo-unavailable-azure-group-deletion-still-verifying);
+the detailed `Detroit-November-2026/TEARDOWN.md` runbook is forthcoming in the
+separate closeout change. The instructions below retain historical deployment
+evidence, not permission to recreate resources.
+
 The Foundry account, project, and model template is
 [`corpdev.bicep`](Detroit-November-2026/foundry-agent/supplier-catalog-specialist/infra/corpdev.bicep),
 not the repository-root `infra/main.bicep`, which provisions the separate

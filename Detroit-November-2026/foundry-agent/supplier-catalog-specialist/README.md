@@ -1,5 +1,17 @@
 # DTW Supplier Catalog Specialist
 
+**Post-demo closeout (November 11, 2026 01:31 UTC):** the specialist and
+sessions, generated blueprint identities, today's Studio parent/components,
+both connection references and the new connection have been removed. The demo
+is unavailable; the former endpoint's `BotService` exception is historical,
+not a still-active policy or a verified rollback. The original connection was
+preserved with today's grant revoked. Resource-group deletion was still being
+verified, with the Container Apps environment remaining. See the
+[teardown checkpoint](../../../.azure/deployment-plan.md#teardown-status-demo-unavailable-azure-group-deletion-still-verifying);
+the separate closeout change will supply `../../TEARDOWN.md` with final results.
+The deployment commands and policy rollback below are retained as history:
+do not rerun them to recreate a deleted service during closeout.
+
 This is the Foundry-hosted adaptation of the existing catalog processor, not
 the CAIS REST API and not a replacement of the earlier conference assets.
 It uses the official [Activity host sample](https://github.com/microsoft-foundry/foundry-samples/tree/main/samples/python/hosted-agents/bring-your-own/activity/echo)
