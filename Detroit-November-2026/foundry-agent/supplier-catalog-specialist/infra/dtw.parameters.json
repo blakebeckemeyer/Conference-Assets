@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "eastus"
+    },
+    "accountName": {
+      "value": "dtw-tool-demo-b571"
+    },
+    "projectName": {
+      "value": "detroit-catalog"
+    },
+    "modelCapacity": {
+      "value": 3
+    },
+    "tags": {
+      "value": {
+        "environment": "supplier-dev-b571",
+        "deployed-by": "conference-demo",
+        "app-onboard-session-id": "5f12cdd7-5edb-41d8-a20f-4704b0b10ad5"
+      }
+    }
+  }
+}
