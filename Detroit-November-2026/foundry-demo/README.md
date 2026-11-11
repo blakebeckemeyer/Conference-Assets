@@ -1,9 +1,10 @@
 # Foundry slice: PDF + spreadsheet + image to a review record
 
 **Post-demo closeout:** the hosted specialist and today's Studio demo assets
-were removed; the demo is no longer available. Resource-group deletion is
-still being verified. See the [teardown checkpoint](../../.azure/deployment-plan.md#teardown-status-demo-unavailable-azure-group-deletion-still-verifying);
-the detailed `../TEARDOWN.md` runbook is forthcoming in the closeout change.
+were removed; the demo is no longer available. Resource-group deletion and
+retained workspace cleanup are still being verified. See the
+[teardown checkpoint](../../.azure/deployment-plan.md#teardown-status-demo-unavailable-azure-group-deletion-still-verifying)
+and [teardown runbook](../TEARDOWN.md).
 The route/status notes below are historical, not authorization to reprovision.
 
 **Conference route update:** the stage demo now uses the

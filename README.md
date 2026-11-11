@@ -15,9 +15,10 @@ record are in the [demo teardown runbook](Detroit-November-2026/TEARDOWN.md).
 
 **Post-demo closeout:** the hosted specialist and today's Studio demo assets
 have been removed; the demo is no longer available. Azure resource-group
-deletion is still being verified. See the [teardown checkpoint](.azure/deployment-plan.md#teardown-status-demo-unavailable-azure-group-deletion-still-verifying);
-the detailed `Detroit-November-2026/TEARDOWN.md` runbook is forthcoming in the
-separate closeout change. The instructions below retain historical deployment
+deletion and retained Log Analytics workspace cleanup are still being verified.
+See the [teardown runbook](Detroit-November-2026/TEARDOWN.md) and
+[checkpoint](.azure/deployment-plan.md#teardown-status-demo-unavailable-azure-group-deletion-still-verifying).
+The instructions below retain historical deployment
 evidence, not permission to recreate resources.
 
 The Foundry account, project, and model template is

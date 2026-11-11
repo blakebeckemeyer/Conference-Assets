@@ -24,9 +24,17 @@ list was empty.
 remained `Deleting`, with only Container Apps environment
 `cae-supplier-dev-b571` remaining and a bounded ARM wait in progress. Do not
 equate the removals above with verified resource-group deletion or zero
-remaining charges. Final verification and the detailed
-`Detroit-November-2026/TEARDOWN.md` runbook are owned by the separate closeout
-change. No cloud cleanup was performed by this documentation update.
+remaining charges. A subsequent coordinator report identified the environment
+as `ScheduledForDelete` and a retained Log Analytics workspace: `--force` on
+the already-deleted workspace returned success without purging its retained
+entry. That cleanup is also unverified. The documented recovery/permanent-delete
+procedure may require recreating only the same empty group after its deletion,
+then deleting it again; it must not reprovision the demo.
+
+The [teardown runbook](../Detroit-November-2026/TEARDOWN.md) now records the
+exact inventory, cleanup commands and service-retention behavior. Final
+resource-group and workspace verification remain owned by the closeout
+coordinator. No cloud cleanup was performed by this documentation update.
 
 The deployment, user-reported success and temporary exception below are
 historical evidence, not current availability. The exception ended with agent

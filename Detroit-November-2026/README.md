@@ -9,10 +9,11 @@ today-created Studio parent/binding, new connection and both references were
 removed; today's original-connection ACL grant was revoked while preserving
 that older connection. The demo is no longer available. Azure resource group
 `dtw-tool-demo` was still `Deleting`, with the Container Apps environment
-remaining; final deletion is not yet verified. See the
+remaining; final group deletion and retained Log Analytics workspace cleanup
+are not yet verified. See the
 [teardown checkpoint](../.azure/deployment-plan.md#teardown-status-demo-unavailable-azure-group-deletion-still-verifying).
-The detailed `TEARDOWN.md` runbook is forthcoming in the separate closeout
-change. Deployment/exception/success notes below describe the earlier demo,
+The [teardown runbook](TEARDOWN.md) records the cleanup procedure and pending
+retention checks. Deployment/exception/success notes below describe the earlier demo,
 not a currently running service or permission to reprovision.
 
 ## Open and present
