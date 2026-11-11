@@ -4,15 +4,16 @@ This project was built with the microsoft-foundry skill. Before working on or an
 
 ## Detroit scope overrides
 
-- Post-demo closeout at November 11, 2026 01:31 UTC: the hosted specialist and
+- Completed closeout at November 11, 2026 01:53:22 UTC: the hosted specialist and
   today's Studio parent/components, new connection/references and generated
   blueprint identities were removed. The original connection was preserved
-  with today's ACL grant revoked. Resource-group deletion and retained
-  Log Analytics workspace cleanup are still verifying.
+  with today's ACL grant revoked. Final read-backs confirmed the group absent
+  and retained Key Vault, Foundry and Log Analytics demo objects purged.
   Targets and live-policy notes below are historical. Do not recreate the demo,
   run source updates/tests against deleted resources, or attempt policy rollback
   during cleanup. Consult `.azure/deployment-plan.md` at repository root and
-  the [closeout runbook](../../TEARDOWN.md) for the recorded retention checks.
+  the [closeout runbook](../../TEARDOWN.md) for the final evidence. Previously
+  incurred usage may still be billed later.
 - The canonical target is DTW tenant `f32b97f0-efb8-4bc3-91ee-18a6e5f635c9`,
   subscription `b571e36c-4e62-4175-b8c1-062a4cf87b16`, existing resource group
   `dtw-tool-demo`, account `dtw-tool-demo-b571`, project `detroit-catalog`.

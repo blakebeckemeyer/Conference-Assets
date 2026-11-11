@@ -1,9 +1,11 @@
 # Foundry slice: PDF + spreadsheet + image to a review record
 
 **Post-demo closeout:** the hosted specialist and today's Studio demo assets
-were removed; the demo is no longer available. Resource-group deletion and
-retained workspace cleanup are still being verified. See the
-[teardown checkpoint](../../.azure/deployment-plan.md#teardown-status-demo-unavailable-azure-group-deletion-still-verifying)
+were removed; the demo is no longer available. Final read-backs at November 11,
+2026 01:53:22 UTC confirmed the group absent and retained Key Vault, Foundry
+and Log Analytics demo objects purged. Previously incurred usage may be billed
+later. See the
+[final teardown record](../../.azure/deployment-plan.md#teardown-status-completed-demo-unavailable)
 and [teardown runbook](../TEARDOWN.md).
 The route/status notes below are historical, not authorization to reprovision.
 

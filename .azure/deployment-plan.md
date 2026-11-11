@@ -1,8 +1,8 @@
 # Catalog Deployment Record
 
-## Teardown status: demo unavailable, Azure group deletion still verifying
+## Teardown status: completed, demo unavailable
 
-**Closeout update, November 11, 2026 01:31 UTC:** the teardown coordinator
+**Final closeout, November 11, 2026 01:53:22 UTC:** the teardown coordinator
 reported verified removal of the hosted specialist and sessions, its two
 blueprint applications and four principals (absent from active and deleted
 Graph collections), today's Studio parent and all nine components, both
@@ -20,21 +20,24 @@ the separate tenant billing policy `fe05b4d4-f15a-401f-8523-8a8262b95e1c`
 (`DTWDemoNovember`) were deleted; the policy deletion returned HTTP 204 and its
 list was empty.
 
-**Not yet complete at this checkpoint:** resource group `dtw-tool-demo`
-remained `Deleting`, with only Container Apps environment
-`cae-supplier-dev-b571` remaining and a bounded ARM wait in progress. Do not
-equate the removals above with verified resource-group deletion or zero
-remaining charges. A subsequent coordinator report identified the environment
-as `ScheduledForDelete` and a retained Log Analytics workspace: `--force` on
-the already-deleted workspace returned success without purging its retained
-entry. That cleanup is also unverified. The documented recovery/permanent-delete
-procedure may require recreating only the same empty group after its deletion,
-then deleting it again; it must not reprovision the demo.
+Resource group `dtw-tool-demo` reached `exists=false` at **01:50:15 UTC**
+after the Container Apps environment's asynchronous deletion. A retained Log
+Analytics workspace required additional cleanup: `--force` on an already-deleted
+workspace had returned success without purging it. The coordinator recreated
+only the same empty group, recovered the exact original workspace and verified
+customer ID `256578fb-f8c7-4047-af15-7b823ee8317c`, then permanently deleted it.
+The retained list and group inventory were empty before removing that temporary
+group, which reached `exists=false` at **01:52:28 UTC**. No other demo
+infrastructure was reprovisioned.
 
 The [teardown runbook](../Detroit-November-2026/TEARDOWN.md) now records the
-exact inventory, cleanup commands and service-retention behavior. Final
-resource-group and workspace verification remain owned by the closeout
-coordinator. No cloud cleanup was performed by this documentation update.
+exact inventory, executed cleanup commands and service-retention behavior.
+Fresh **01:53:22 UTC** read-backs confirmed the group absent, only the three
+original subscription groups remaining, all matching deleted Key Vault,
+Foundry and Log Analytics lists empty, and the demo billing policy absent.
+The identified demo teardown is complete; this does not certify unrelated
+tenant assets or prevent previously incurred usage from appearing on later
+bills. No cloud cleanup was performed by this documentation update.
 
 The deployment, user-reported success and temporary exception below are
 historical evidence, not current availability. The exception ended with agent
@@ -173,7 +176,7 @@ connection. Treat these as distinct Power Platform objects. Deleting Azure
 resources does not verify removal of a Studio agent, a connection, its
 credentials or the original connection's grant. These required separate
 inventory and dependency checks; their subsequently verified removals are
-recorded in [the teardown checkpoint above](#teardown-status-demo-unavailable-azure-group-deletion-still-verifying).
+recorded in [the final teardown record above](#teardown-status-completed-demo-unavailable).
 
 The known connection owner `87ff0a40-0f7d-4311-b847-67d416c1e258` already had
 subscription-inherited **Owner** and **Foundry User** without assignment

@@ -1,15 +1,16 @@
 # DTW Supplier Catalog Specialist
 
-**Post-demo closeout (November 11, 2026 01:31 UTC):** the specialist and
+**Completed closeout (November 11, 2026 01:53:22 UTC):** the specialist and
 sessions, generated blueprint identities, today's Studio parent/components,
 both connection references and the new connection have been removed. The demo
 is unavailable; the former endpoint's `BotService` exception is historical,
 not a still-active policy or a verified rollback. The original connection was
-preserved with today's grant revoked. Resource-group deletion was still being
-verified, with the Container Apps environment remaining; retained Log Analytics
-workspace cleanup is also pending. See the
-[teardown checkpoint](../../../.azure/deployment-plan.md#teardown-status-demo-unavailable-azure-group-deletion-still-verifying);
-the [teardown runbook](../../TEARDOWN.md) records the procedure and pending checks.
+preserved with today's grant revoked. Final read-backs confirmed the resource
+group absent and retained Key Vault, Foundry and Log Analytics demo objects
+purged. See the
+[final teardown record](../../../.azure/deployment-plan.md#teardown-status-completed-demo-unavailable);
+the [teardown runbook](../../TEARDOWN.md) records the executed procedure and
+verification. Previously incurred usage may still be billed later.
 The deployment commands and policy rollback below are retained as history:
 do not rerun them to recreate a deleted service during closeout.
 

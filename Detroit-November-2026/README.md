@@ -4,16 +4,16 @@
 **Audience:** business leaders, makers and developers
 **Format:** one offline HTML deck, two self-contained presentations, 90 minutes total. The inter-talk break is intentionally unscheduled.
 
-**Post-demo closeout (November 11, 2026 01:31 UTC):** the hosted specialist,
+**Completed closeout (November 11, 2026 01:53:22 UTC):** the hosted specialist,
 today-created Studio parent/binding, new connection and both references were
 removed; today's original-connection ACL grant was revoked while preserving
-that older connection. The demo is no longer available. Azure resource group
-`dtw-tool-demo` was still `Deleting`, with the Container Apps environment
-remaining; final group deletion and retained Log Analytics workspace cleanup
-are not yet verified. See the
-[teardown checkpoint](../.azure/deployment-plan.md#teardown-status-demo-unavailable-azure-group-deletion-still-verifying).
-The [teardown runbook](TEARDOWN.md) records the cleanup procedure and pending
-retention checks. Deployment/exception/success notes below describe the earlier demo,
+that older connection. The demo is no longer available. Final read-backs
+confirmed resource group `dtw-tool-demo` absent and matching retained Key
+Vault, Foundry and Log Analytics objects purged. See the
+[final teardown record](../.azure/deployment-plan.md#teardown-status-completed-demo-unavailable).
+The [teardown runbook](TEARDOWN.md) records the executed cleanup and verification.
+Previously incurred usage may still be billed later.
+Deployment/exception/success notes below describe the earlier demo,
 not a currently running service or permission to reprovision.
 
 ## Open and present

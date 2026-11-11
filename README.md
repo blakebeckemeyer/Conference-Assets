@@ -14,10 +14,12 @@ record are in the [demo teardown runbook](Detroit-November-2026/TEARDOWN.md).
 ## Detroit Foundry infrastructure
 
 **Post-demo closeout:** the hosted specialist and today's Studio demo assets
-have been removed; the demo is no longer available. Azure resource-group
-deletion and retained Log Analytics workspace cleanup are still being verified.
+have been removed; the demo is no longer available. At November 11, 2026
+01:53:22 UTC, final read-backs confirmed the resource group absent and retained
+Key Vault, Foundry and Log Analytics demo objects purged. Previously incurred
+usage may still appear on later bills.
 See the [teardown runbook](Detroit-November-2026/TEARDOWN.md) and
-[checkpoint](.azure/deployment-plan.md#teardown-status-demo-unavailable-azure-group-deletion-still-verifying).
+[final record](.azure/deployment-plan.md#teardown-status-completed-demo-unavailable).
 The instructions below retain historical deployment
 evidence, not permission to recreate resources.
 
