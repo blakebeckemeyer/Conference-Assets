@@ -8,6 +8,11 @@ of this deletion. Dataverse subsequently confirmed that the DTW Tool Demo
 parent agent itself was created that day, so the user's final instruction
 includes that exact parent, not just its connected specialist.
 
+**Teardown completed November 10 at 20:53 EST (November 11 at 01:53 UTC).**
+The dedicated group, demo Studio objects, billing policy and added connection
+grant are gone. The retained Key Vault, Foundry account and log workspace
+were permanently purged. Earlier resources and environments were preserved.
+
 ## Lessons and review sequence
 
 The initial deployment is recorded in [PR #7](https://github.com/blakebeckemeyer/Conference-Assets/pull/7);
@@ -251,6 +256,35 @@ delete that temporary group. Do not recover the whole demo or redeploy Bicep.
 Prefer permanently deleting the active workspace before group deletion, as
 shown above.
 
+That recovery was necessary in this teardown. The original group reached
+`exists=false` at 01:50:15 UTC after the managed environment's asynchronous
+deletion. Only an empty group and the original log workspace were temporarily
+restored. The recovered workspace's customer ID was checked against the
+original `256578fb-f8c7-4047-af15-7b823ee8317c` before permanent deletion.
+The retained-workspace list was then empty, and the empty group was removed
+again by 01:52:28 UTC. No model, agent, app, billing policy or other demo
+infrastructure was redeployed.
+
+The scoped recovery commands, after verifying the original group is absent:
+
+```powershell
+az group create --subscription $subscription --name $group --location eastus `
+  --tags purpose=teardown-only deployed-by=conference-demo
+az monitor log-analytics workspace recover --subscription $subscription `
+  --resource-group $group --workspace-name log-supplier-dev-b571
+az monitor log-analytics workspace show --subscription $subscription `
+  --resource-group $group --workspace-name log-supplier-dev-b571 --query customerId
+# Require the original customer ID above before continuing.
+az monitor log-analytics workspace delete --subscription $subscription `
+  --resource-group $group --workspace-name log-supplier-dev-b571 --force true --yes
+az monitor log-analytics workspace list-deleted-workspaces --subscription $subscription
+az resource list --subscription $subscription --resource-group $group
+# Require no retained matching workspace and an EMPTY group before deleting it.
+az group delete --subscription $subscription --name $group --yes
+az group exists --subscription $subscription --name $group
+# Required result: false. Stop on any failed command or unexpected resource.
+```
+
 The Foundry service automatically removed both recorded identity blueprints
 and their four principals. Successful, ID-filtered Microsoft Graph collection
 reads confirmed no matching active applications/principals **or** recycled
@@ -260,19 +294,25 @@ permission changes were needed.
 
 ## Execution record
 
-Closeout started November 10 local time (November 11 UTC). Cleanup status
-will be recorded here from post-operation read-backs; an inventory or an
-accepted deletion request is not a completed teardown.
+Closeout started November 10 local time (November 11 UTC). All times below
+are November 11 UTC. Outcomes are successful post-operation read-backs,
+not just accepted requests.
 
 | Area | Verified outcome |
 |---|---|
-| Azure resource group | Pending deletion |
+| Azure resource group | Original group absent at 01:50:15 UTC; temporary log-cleanup group also absent at 01:52:28 UTC; final `exists=false` at 01:53:22 UTC |
 | Power Platform billing | Azure account absent; separate policy deleted HTTP 204 and policy list empty at 01:30:38 UTC |
 | Studio demo parent/components/connection/references | Parent and nine components deleted by 01:25:36 UTC; empty parent/component/reference reads and new-connection deletion at 01:26:04 UTC; connector list retained only the September connection at 01:28:58 UTC |
 | Original-connection ACL grant | Revoked through owner interface at 01:29:59 UTC; original Owner preserved |
 | Directory agent identities | Both blueprint apps/four principals absent from active and recycled collections at 01:29:20 UTC; both resource-managed principals absent at 01:31:05 UTC |
-| Soft-deleted resources | Key Vault and Foundry purged; lists empty at 01:28:58 UTC. Log Analytics retained-workspace cleanup still in progress |
+| Soft-deleted resources | Key Vault, Foundry and Log Analytics permanently purged; all three filtered retained-resource lists empty at 01:53:22 UTC |
 | CorpDev, CAIS, older connections and existing environments | Excluded from deletion |
+
+Final subscription group inventory contained only the three original groups:
+`rg-KCJones-Evans-2268_ai`, `kc-ais-spec-flow-rg` and `kc-rg`. The final
+Power Platform policy list still excluded the demo policy. This is verified
+removal of the identified demo assets, not a claim about unrelated tenant
+assets or a guarantee that previously incurred usage cannot be billed later.
 
 References: [delete an Azure resource group](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/delete-resource-group),
 [Key Vault recovery and purge](https://learn.microsoft.com/en-us/azure/key-vault/general/soft-delete-overview),
