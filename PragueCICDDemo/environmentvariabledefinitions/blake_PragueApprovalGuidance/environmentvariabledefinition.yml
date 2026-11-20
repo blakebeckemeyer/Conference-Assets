@@ -1,0 +1,18 @@
+environmentvariabledefinition:
+  '@schemaname': blake_PragueApprovalGuidance
+  defaultvalue: Review deployment evidence before approving.
+  description:
+    '@default': Demo-only release review guidance for the Prague CI/CD talk.
+    label:
+      '@description': Demo-only release review guidance for the Prague CI/CD talk.
+      '@languagecode': 1033
+  displayname:
+    '@default': Prague Demo Approval Guidance
+    label:
+      '@description': Prague Demo Approval Guidance
+      '@languagecode': 1033
+  introducedversion: 1.0.0.0
+  iscustomizable: 1
+  isrequired: 0
+  secretstore: 0
+  type: 100000000

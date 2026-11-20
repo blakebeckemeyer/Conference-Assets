@@ -1,0 +1,4 @@
+SolutionComponents:
+  Component:
+  - '@path': /environmentvariabledefinitions/blake_PragueApprovalGuidance
+  - '@path': /publishers/blake
