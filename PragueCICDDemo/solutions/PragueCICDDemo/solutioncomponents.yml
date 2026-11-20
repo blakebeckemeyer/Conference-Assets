@@ -1,4 +1,44 @@
 SolutionComponents:
   Component:
+  - '@path': /entities/blake_praguereleasecheck
+  - '@path': /entities/blake_praguereleasecheck/attributes/blake_decision.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/blake_evidencelink.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/blake_name.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/blake_praguereleasecheckid.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/blake_releaseversion.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/blake_reviewnotes.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/createdby.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/createdon.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/createdonbehalfby.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/importsequencenumber.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/modifiedby.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/modifiedon.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/modifiedonbehalfby.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/overriddencreatedon.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/ownerid.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/owningbusinessunit.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/owningteam.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/owninguser.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/statecode.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/statuscode.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/timezoneruleversionnumber.yml
+  - '@path': /entities/blake_praguereleasecheck/attributes/utcconversiontimezonecode.yml
+  - '@path': /entities/blake_praguereleasecheck/formxml/card/b42b2a58-ee9e-436d-adc1-415c3931c159
+  - '@path': /entities/blake_praguereleasecheck/formxml/main/d4c7d3f7-9776-45cc-b67b-591df8a05bff
+  - '@path': /entities/blake_praguereleasecheck/formxml/quick/ba7aadb6-5fea-4239-b6f5-81e538ca14cb
+  - '@path': /entities/blake_praguereleasecheck/ribbondiffs
+  - '@path': /entities/blake_praguereleasecheck/savedqueries/253ea731-eb69-4f83-ac81-8519eb7b1485
+  - '@path': /entities/blake_praguereleasecheck/savedqueries/584529c7-802c-4d31-aac0-af7b2924ea9b
+  - '@path': /entities/blake_praguereleasecheck/savedqueries/6d9bd406-6b19-4786-8174-8e3c2af63588
+  - '@path': /entities/blake_praguereleasecheck/savedqueries/778fae02-729e-4c63-8893-268062ae72fd
+  - '@path': /entities/blake_praguereleasecheck/savedqueries/edb4a36a-4562-4237-a18a-bb2553f0ab40
+  - '@path': /entities/blake_praguereleasecheck/savedqueries/f9316f8a-b30b-4723-8e32-2dfc2ca9f6b5
+  - '@path': /entities/blake_praguereleasecheck/savedqueries/fbc87792-1993-48ae-83c9-7a1bdbcac4ff
+  - '@path': /entityrelationships/business_unit_blake_praguereleasecheck
+  - '@path': /entityrelationships/lk_blake_praguereleasecheck_createdby
+  - '@path': /entityrelationships/lk_blake_praguereleasecheck_modifiedby
+  - '@path': /entityrelationships/owner_blake_praguereleasecheck
+  - '@path': /entityrelationships/team_blake_praguereleasecheck
+  - '@path': /entityrelationships/user_blake_praguereleasecheck
   - '@path': /environmentvariabledefinitions/blake_PragueApprovalGuidance
   - '@path': /publishers/blake

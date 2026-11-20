@@ -1,0 +1,53 @@
+savedquery:
+  IsCustomizable: 1
+  CanBeDeleted: 0
+  isquickfindquery: 1
+  isprivate: 0
+  isdefault: 1
+  savedqueryid: '{6d9bd406-6b19-4786-8174-8e3c2af63588}'
+  layoutxml:
+    grid:
+      '@name': resultset
+      '@jump': blake_name
+      '@select': 1
+      '@icon': 1
+      '@preview': 1
+      row:
+        '@name': result
+        '@id': blake_praguereleasecheckid
+        cell:
+        - '@name': blake_name
+          '@width': 300
+        - '@name': createdon
+          '@width': 125
+  querytype: 4
+  fetchxml:
+    fetch:
+      '@version': 1.0
+      '@mapping': logical
+      entity:
+        '@name': blake_praguereleasecheck
+        attribute:
+        - '@name': blake_praguereleasecheckid
+        - '@name': blake_name
+        - '@name': createdon
+        order:
+          '@attribute': blake_name
+          '@descending': false
+        filter:
+        - '@type': and
+          condition:
+            '@attribute': statecode
+            '@operator': eq
+            '@value': 0
+        - '@type': or
+          '@isquickfindfields': 1
+          condition:
+            '@attribute': blake_name
+            '@operator': like
+            '@value': '{0}'
+  IntroducedVersion: 1.0
+  LocalizedNames:
+    LocalizedName:
+      '@description': Quick Find Active Prague Release Checks
+      '@languagecode': 1033
